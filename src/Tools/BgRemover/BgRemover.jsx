@@ -8,7 +8,7 @@ const BgRemover = () => {
     const [loading, setLoading] = useState(false);
     const [file, setFile] = useState(null);
 
-    const apiKey = 'TMwFe8334uSD3raKKhnF4DSv';
+    const apiKey = import.meta.env.VITE_REMOVE_BG_API_KEY;
 
     const handleFileChange = (e) => {
         const selectedFile = e.target.files[0];
@@ -48,8 +48,8 @@ const BgRemover = () => {
             console.error("Error removing background:", error);
             if (error.response && error.response.status === 402) {
                 alert("API credits exhausted or payment required.");
-            } else if (error.response && error.response.status === 401) {
-                alert("Invalid API Key.");
+            } else if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+                alert("Invalid or Missing API Key. Please check your .env file or restart the server.");
             } else {
                 alert("Failed to remove background. " + (error.message || ""));
             }
