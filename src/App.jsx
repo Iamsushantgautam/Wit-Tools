@@ -6,12 +6,20 @@ import BgRemover from './Tools/BgRemover/BgRemover';
 import ImgCompressor from './Tools/ImgCompressor/ImgCompressor'; // Import new tool
 import PdfCompressor from './Tools/PdfCompressor/PdfCompressor'; // New Tool
 import Watermark from './Tools/Watermark/Watermark'; // New Tool
+import PdfSecurity from './Tools/PdfSecurity/PdfSecurity'; // New Tool
+import ProfilePhotoMaker from './Tools/ProfilePhotoMaker/ProfilePhotoMaker'; // New Tool
 import './App.css';
 
 // Simple Icon Components (SVG)
 const PdfIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+  </svg>
+);
+
+const UserIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
   </svg>
 );
 
@@ -46,6 +54,12 @@ const WatermarkIcon = () => (
   </svg>
 );
 
+const SecurityIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+  </svg>
+);
+
 
 function App() {
   return (
@@ -60,6 +74,7 @@ function App() {
           {/* <Link to="/pdf-to-img" className="nav-link">PDF to Img</Link> */}
           <Link to="/img-compressor" className="nav-link">Compress</Link>
           <Link to="/watermark" className="nav-link">Watermark</Link>
+          <Link to="/profile-maker" className="nav-link">Profile Maker</Link>
           <Link to="/qr-generator" className="nav-link">QR</Link>
           <Link to="/bg-remover" className="nav-link">BG Remover</Link>
         </div>
@@ -72,6 +87,8 @@ function App() {
           <Route path="/img-compressor" element={<ImgCompressor />} />
           <Route path="/pdf-compressor" element={<PdfCompressor />} />
           <Route path="/watermark" element={<Watermark />} />
+          <Route path="/pdf-security" element={<PdfSecurity />} />
+          <Route path="/profile-maker" element={<ProfilePhotoMaker />} />
           {/* <Route path="/pdf-to-img" element={<PdfToImg />} /> */}
           <Route path="/qr-generator" element={<QrGenerator />} />
           <Route path="/bg-remover" element={<BgRemover />} />
@@ -100,6 +117,17 @@ function Home() {
           <div className="tool-content">
             <h3>Image to PDF</h3>
             <p>Quickly convert images to PDFs for easy sharing.</p>
+          </div>
+        </Link>
+
+        {/* Profile Photo Maker (New) */}
+        <Link to="/profile-maker" className="tool-card">
+          <div className="tool-icon-wrapper icon-orange">
+            <UserIcon />
+          </div>
+          <div className="tool-content">
+            <h3>Profile Pic Maker</h3>
+            <p>Create pro profile photos with custom backgrounds.</p>
           </div>
         </Link>
 
@@ -133,6 +161,17 @@ function Home() {
           <div className="tool-content">
             <h3>Watermark</h3>
             <p>Add text or image watermarks to Photos & PDFs.</p>
+          </div>
+        </Link>
+
+        {/* PDF Security Tool */}
+        <Link to="/pdf-security" className="tool-card">
+          <div className="tool-icon-wrapper icon-purple">
+            <SecurityIcon />
+          </div>
+          <div className="tool-content">
+            <h3>PDF Password</h3>
+            <p>Add or remove passwords from your PDF files.</p>
           </div>
         </Link>
 
