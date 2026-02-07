@@ -1,0 +1,332 @@
+/* BgRemover.css */
+
+.bg-remover-container {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    background-color: #f6f6f6;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+.bg-hero-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    gap: 4rem;
+    /* Spacing between left and right */
+}
+
+@media (min-width: 900px) {
+    .bg-hero-section {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        /* Vertically align image/text with card */
+        text-align: left;
+    }
+}
+
+/* Left Content Styles */
+.left-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-right: 2rem;
+}
+
+@media (min-width: 900px) {
+    .left-content {
+        align-items: flex-start;
+    }
+}
+
+/* Sample image placeholder - hidden by default unless we have the asset, relying on text */
+.hero-image-placeholder {
+    width: 300px;
+    height: auto;
+    margin-bottom: 2rem;
+    border-radius: 20px;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: #2e2e2e;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+@media (min-width: 900px) {
+    .hero-title {
+        text-align: left;
+    }
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #555;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 2rem;
+}
+
+.free-badge {
+    background-color: #0b72e6;
+    /* Vivid Blue */
+    color: white;
+    padding: 0.2rem 1.2rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Right Content (Upload Card) Styles */
+.right-content {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.upload-card {
+    background: white;
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    max-width: 440px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s;
+    min-height: 400px;
+    /* Ensure card has height like in design */
+    justify-content: center;
+    /* Center content vertically */
+}
+
+/* Button & Interactions */
+.upload-btn-label {
+    background-color: #0b72e6;
+    color: white;
+    font-size: 1.35rem;
+    /* Large button text */
+    font-weight: 600;
+    padding: 1rem 3rem;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(11, 114, 230, 0.25);
+    transition: all 0.3s ease;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    border: none;
+}
+
+.upload-btn-label:hover {
+    background-color: #085ebd;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 25px rgba(11, 114, 230, 0.35);
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.drop-text {
+    font-size: 1.1rem;
+    color: #4b5563;
+    /* Gray-600 */
+    margin-bottom: 0.5rem;
+}
+
+.paste-text {
+    font-size: 0.9rem;
+    color: #9ca3af;
+    /* Gray-400 */
+    margin-bottom: 3rem;
+    /* text-decoration: underline; */
+    cursor: pointer;
+}
+
+.sample-section {
+    text-align: left;
+    width: 100%;
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.sample-thumbnails {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    /* Align thumbnails */
+    width: 100%;
+}
+
+.sample-thumb {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    object-fit: cover;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+    background-color: #eee;
+}
+
+.sample-thumb:hover {
+    border-color: #0b72e6;
+    transform: scale(1.05);
+}
+
+/* Result State Styles - Updated for Comparison */
+.result-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.comparison-view {
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.comparison-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    width: 50%;
+    /* Ensure equal width */
+}
+
+.comparison-label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #555;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.result-image-wrapper {
+    width: 100%;
+    /* Checkerboard pattern for transparency */
+    background-image:
+        linear-gradient(45deg, #ccc 25%, transparent 25%),
+        linear-gradient(-45deg, #ccc 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, #ccc 75%),
+        linear-gradient(-45deg, transparent 75%, #ccc 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    background-color: white;
+
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    height: 250px;
+    /* Fixed height for consistency */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.result-image-wrapper img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.action-buttons-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+
+/* Adjust Upload Card for wider content */
+.upload-card {
+    background: white;
+    border-radius: 24px;
+    padding: 2rem;
+    /* Reduced padding slightly to fit more content */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    max-width: 600px;
+    /* Increased max-width to fit side-by-side */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s;
+    min-height: 400px;
+    justify-content: center;
+}
+
+/* Updated Hero Image Placeholder */
+.hero-image-placeholder {
+    width: 100%;
+    max-width: 400px;
+    /* Limit width */
+    height: auto;
+    object-fit: cover;
+    margin-bottom: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    /* Add shadow to make it pop */
+}
+
+
+.download-btn {
+    background-color: #0b72e6;
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s;
+    box-shadow: 0 4px 10px rgba(11, 114, 230, 0.3);
+}
+
+.download-btn:hover {
+    background-color: #085ebd;
+    transform: translateY(-1px);
+}
+
+.reset-btn {
+    background: none;
+    border: none;
+    color: #6b7280;
+    cursor: pointer;
+    text-decoration: underline;
+    font-size: 0.9rem;
+    padding: 5px;
+}
+
+.reset-btn:hover {
+    color: #333;
+}
