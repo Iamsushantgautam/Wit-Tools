@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { PDFDocument, rgb, degrees } from 'pdf-lib';
+import { PDFDocument, rgb, degrees, StandardFonts } from 'pdf-lib';
 import * as pdfjsLib from 'pdfjs-dist';
+
 // Use worker from public folder
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
@@ -319,7 +320,7 @@ const Watermark = () => {
         <div className="watermark-tool-container">
             <div className="tool-header">
                 <h2>Photo & PDF Watermark</h2>
-                <p>Protect your content with custom text or image watermarks.</p>
+                <p>Protect your content with professional custom text or image watermarks instantly.</p>
             </div>
 
             <div className="watermark-card">
@@ -349,41 +350,29 @@ const Watermark = () => {
                                     onChange={handleFileChange}
                                     hidden
                                 />
-                                <div style={{ textAlign: 'center' }}>
-                                    <span style={{ fontSize: '3rem', display: 'block', marginBottom: '1rem' }}>
-                                        {activeTab === 'image' ? '🖼️' : '📄'}
-                                    </span>
-                                    <span>Click to Upload {activeTab === 'image' ? 'Image' : 'PDF'}</span>
+                                <div className="placeholder-content">
+                                    <div className="icon-wrapper">
+                                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                                            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                            <polyline points="21 15 16 10 5 21"></polyline>
+                                        </svg>
+                                    </div>
+                                    <h3>Click or drag to upload {activeTab === 'image' ? 'Image' : 'PDF'}</h3>
+                                    <p>Supports {activeTab === 'image' ? 'JPG, PNG, WEBP' : 'PDF'} up to 20MB</p>
                                 </div>
                             </div>
                         ) : (
-                            <canvas ref={canvasRef} className="preview-canvas" />
+                            <div className="canvas-wrapper">
+                                <canvas ref={canvasRef} className="preview-canvas" />
+                            </div>
                         )}
                     </div>
 
                     <div className="controls-area">
-                        {/* Watermark Layout Toggle */}
-                        <div className="control-group">
-                            <label className="control-label">Layout</label>
-                            <div className="toggle-switch">
-                                <div
-                                    className={`toggle-option ${layout === 'single' ? 'active' : ''}`}
-                                    onClick={() => setLayout('single')}
-                                >
-                                    Single
-                                </div>
-                                <div
-                                    className={`toggle-option ${layout === 'tile' ? 'active' : ''}`}
-                                    onClick={() => setLayout('tile')}
-                                >
-                                    Tile (Repeated)
-                                </div>
-                            </div>
-                        </div>
-
                         {/* Watermark Type Toggle */}
                         <div className="control-group">
-                            <label className="control-label">Type</label>
+                            <label className="control-label">TYPE</label>
                             <div className="toggle-switch">
                                 <div
                                     className={`toggle-option ${wmType === 'text' ? 'active' : ''}`}
@@ -403,7 +392,7 @@ const Watermark = () => {
                         {/* Content Inputs */}
                         <div className="control-group">
                             <label className="control-label">
-                                {wmType === 'text' ? 'Watermark Text' : 'Upload Logo Image'}
+                                {wmType === 'text' ? 'WATERMARK TEXT' : 'UPLOAD LOGO IMAGE'}
                             </label>
                             {wmType === 'text' ? (
                                 <input
@@ -411,10 +400,11 @@ const Watermark = () => {
                                     className="control-input"
                                     value={wmText}
                                     onChange={(e) => setWmText(e.target.value)}
+                                    placeholder="e.g. Confidential"
                                 />
                             ) : (
                                 <div className="custom-file-input-wrapper">
-                                    <label htmlFor="logo-upload" className="secondary-btn" style={{ textAlign: 'center', display: 'block', cursor: 'pointer' }}>
+                                    <label htmlFor="logo-upload" className="secondary-btn" style={{ textAlign: 'center', display: 'block', cursor: 'pointer', background: '#f8fafc' }}>
                                         {wmImage ? "Change Logo" : "Choose Logo File"}
                                     </label>
                                     <input
@@ -428,6 +418,57 @@ const Watermark = () => {
                                 </div>
                             )}
                         </div>
+
+                        {/* Layout Toggle - Re-adding based on state */}
+                        <div className="control-group">
+                            <label className="control-label">LAYOUT</label>
+                            <div className="toggle-switch">
+                                <div
+                                    className={`toggle-option ${layout === 'single' ? 'active' : ''}`}
+                                    onClick={() => setLayout('single')}
+                                >
+                                    Single
+                                </div>
+                                <div
+                                    className={`toggle-option ${layout === 'tile' ? 'active' : ''}`}
+                                    onClick={() => setLayout('tile')}
+                                >
+                                    Tile (Repeated)
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Position Inputs (Only for Single) */}
+                        {layout === 'single' && (
+                            <div className="control-group">
+                                <div className="control-row">
+                                    <div style={{ flex: 1 }}>
+                                        <label className="control-label">POSITION X (%)</label>
+                                        <input
+                                            type="number"
+                                            className="control-input"
+                                            style={{ width: '100%' }}
+                                            min="0"
+                                            max="100"
+                                            value={x}
+                                            onChange={(e) => setX(parseInt(e.target.value) || 0)}
+                                        />
+                                    </div>
+                                    <div style={{ flex: 1 }}>
+                                        <label className="control-label">POSITION Y (%)</label>
+                                        <input
+                                            type="number"
+                                            className="control-input"
+                                            style={{ width: '100%' }}
+                                            min="0"
+                                            max="100"
+                                            value={y}
+                                            onChange={(e) => setY(parseInt(e.target.value) || 0)}
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        )}
 
                         {/* Gap Input (Only for Tile) */}
                         {layout === 'tile' && (
@@ -461,42 +502,10 @@ const Watermark = () => {
                             </div>
                         )}
 
-                        {/* Position Inputs (Only for Single) */}
-                        {layout === 'single' && (
-                            <div className="control-group">
-                                <div className="control-row">
-                                    <div style={{ flex: 1 }}>
-                                        <label className="control-label">Position X (%)</label>
-                                        <input
-                                            type="number"
-                                            className="control-input"
-                                            style={{ width: '100%' }}
-                                            min="0"
-                                            max="100"
-                                            value={x}
-                                            onChange={(e) => setX(parseInt(e.target.value) || 0)}
-                                        />
-                                    </div>
-                                    <div style={{ flex: 1 }}>
-                                        <label className="control-label">Position Y (%)</label>
-                                        <input
-                                            type="number"
-                                            className="control-input"
-                                            style={{ width: '100%' }}
-                                            min="0"
-                                            max="100"
-                                            value={y}
-                                            onChange={(e) => setY(parseInt(e.target.value) || 0)}
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        )}
-
                         <div className="control-group">
                             <div className="control-row">
                                 <div style={{ flex: 1 }}>
-                                    <label className="control-label">Scale</label>
+                                    <label className="control-label">SCALE</label>
                                     <input
                                         type="number"
                                         className="control-input"
@@ -509,7 +518,7 @@ const Watermark = () => {
                                     />
                                 </div>
                                 <div style={{ flex: 1 }}>
-                                    <label className="control-label">Rotation (deg)</label>
+                                    <label className="control-label">ROTATION (DEG)</label>
                                     <input
                                         type="number"
                                         className="control-input"
@@ -524,14 +533,18 @@ const Watermark = () => {
                         </div>
 
                         <div className="control-group">
-                            <label className="control-label">Opacity (%)</label>
+                            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <label className="control-label">OPACITY (%)</label>
+                                <span style={{ fontSize: '0.8rem', color: '#64748b' }}>{Math.round(opacity * 100)}%</span>
+                            </div>
                             <input
-                                type="number"
-                                className="control-input"
+                                type="range"
+                                className="slider-input"
                                 min="0"
                                 max="100"
                                 value={Math.round(opacity * 100)}
                                 onChange={(e) => setOpacity((parseFloat(e.target.value) || 0) / 100)}
+                                style={{ width: '100%' }}
                             />
                         </div>
 
@@ -539,16 +552,31 @@ const Watermark = () => {
                             <div className="control-group">
                                 <div className="control-row">
                                     <div style={{ flex: 1 }}>
-                                        <label className="control-label">Color</label>
-                                        <input type="color" value={color} onChange={(e) => setColor(e.target.value)} style={{ width: '100%', height: '40px' }} />
+                                        <label className="control-label">COLOR</label>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                            <input
+                                                type="color"
+                                                value={color}
+                                                onChange={(e) => setColor(e.target.value)}
+                                                className="color-picker-input"
+                                                style={{ width: '40px', height: '40px', padding: '0', border: '1px solid #e2e8f0', borderRadius: '8px', cursor: 'pointer' }}
+                                            />
+                                            <span style={{ fontSize: '0.9rem', color: '#64748b' }}>{color}</span>
+                                        </div>
                                     </div>
                                     <div style={{ flex: 1 }}>
-                                        <label className="control-label">Font Size</label>
-                                        <input type="number" value={fontSize} onChange={(e) => setFontSize(parseInt(e.target.value))} className="control-input" style={{ width: '100%' }} />
+                                        <label className="control-label">FONT SIZE</label>
+                                        <input
+                                            type="number"
+                                            value={fontSize}
+                                            onChange={(e) => setFontSize(parseInt(e.target.value))}
+                                            className="control-input"
+                                            style={{ width: '100%' }}
+                                        />
                                     </div>
                                 </div>
 
-                                <label className="control-label" style={{ marginTop: '0.5rem' }}>Font Family</label>
+                                <label className="control-label" style={{ marginTop: '0.8rem' }}>FONT FAMILY</label>
                                 <select
                                     className="control-input"
                                     value={font}
@@ -563,14 +591,30 @@ const Watermark = () => {
 
                         <div className="action-buttons">
                             <button className="primary-btn" onClick={handleDownload} disabled={!file || (wmType === 'text' && !wmText) || (wmType === 'image' && !wmImage)}>
+                                <span style={{ marginRight: '8px' }}>📥</span>
                                 {isProcessing ? 'Processing...' : 'Download Watermarked File'}
                             </button>
-                            <button className="secondary-btn" onClick={() => setFile(null)}>
-                                Reset
+                            <button className="secondary-btn" onClick={() => {
+                                setFile(null);
+                                setWmText('Confidential');
+                                setX(50);
+                                setY(50);
+                                setScale(1);
+                                setRotation(-45);
+                                setOpacity(0.5);
+                                setColor('#000000');
+                                setFontSize(48);
+                                setWmType('text');
+                            }}>
+                                Reset All Settings
                             </button>
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div className="tool-footer">
+                <span>Safe & Secure</span> • <span>Fast Processing</span> • <span>Privacy Policy</span>
             </div>
         </div>
     );
