@@ -3,6 +3,9 @@ import ImgToPdf from './Tools/ImgToPdf/ImgToPdf';
 // import PdfToImg from './Tools/PdfToImg/PdfToImg';
 import QrGenerator from './Tools/QrGenerator/QrGenerator';
 import BgRemover from './Tools/BgRemover/BgRemover';
+import ImgCompressor from './Tools/ImgCompressor/ImgCompressor'; // Import new tool
+import PdfCompressor from './Tools/PdfCompressor/PdfCompressor'; // New Tool
+import Watermark from './Tools/Watermark/Watermark'; // New Tool
 import './App.css';
 
 // Simple Icon Components (SVG)
@@ -31,6 +34,18 @@ const ImgIcon = () => (
   </svg>
 );
 
+const CompressIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25" />
+  </svg>
+);
+
+const WatermarkIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M9.53 16.122a3 3 0 00-5.78 1.128 2.25 2.25 0 01-2.4 2.245 4.5 4.5 0 008.4-2.245c0-.399-.078-.78-.22-1.128zm0 0a15.998 15.998 0 003.388-1.62m-5.043-.025a15.994 15.994 0 011.622-3.395m3.42 3.42a15.995 15.995 0 004.764-4.648l3.876-5.814a1.151 1.151 0 00-1.597-1.597L14.146 6.32a15.996 15.996 0 00-4.649 4.763m3.42 3.42a6.776 6.776 0 00-3.42-3.42" />
+  </svg>
+);
+
 
 function App() {
   return (
@@ -43,7 +58,9 @@ function App() {
           <Link to="/" className="nav-link">Home</Link>
           <Link to="/img-to-pdf" className="nav-link">Img to PDF</Link>
           {/* <Link to="/pdf-to-img" className="nav-link">PDF to Img</Link> */}
-          <Link to="/qr-generator" className="nav-link">QR Generator</Link>
+          <Link to="/img-compressor" className="nav-link">Compress</Link>
+          <Link to="/watermark" className="nav-link">Watermark</Link>
+          <Link to="/qr-generator" className="nav-link">QR</Link>
           <Link to="/bg-remover" className="nav-link">BG Remover</Link>
         </div>
       </nav>
@@ -52,6 +69,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/img-to-pdf" element={<ImgToPdf />} />
+          <Route path="/img-compressor" element={<ImgCompressor />} />
+          <Route path="/pdf-compressor" element={<PdfCompressor />} />
+          <Route path="/watermark" element={<Watermark />} />
           {/* <Route path="/pdf-to-img" element={<PdfToImg />} /> */}
           <Route path="/qr-generator" element={<QrGenerator />} />
           <Route path="/bg-remover" element={<BgRemover />} />
@@ -79,7 +99,40 @@ function Home() {
           </div>
           <div className="tool-content">
             <h3>Image to PDF</h3>
-            <p>Quickly convert images to PDFs for easy sharing, storage, and professional presentation.</p>
+            <p>Quickly convert images to PDFs for easy sharing.</p>
+          </div>
+        </Link>
+
+        {/* PDF Compressor */}
+        <Link to="/pdf-compressor" className="tool-card">
+          <div className="tool-icon-wrapper icon-red">
+            <PdfIcon />
+          </div>
+          <div className="tool-content">
+            <h3>Compress PDF</h3>
+            <p>Reduce PDF size significantly by optimizing pages.</p>
+          </div>
+        </Link>
+
+        {/* Image Compressor */}
+        <Link to="/img-compressor" className="tool-card">
+          <div className="tool-icon-wrapper icon-green">
+            <CompressIcon />
+          </div>
+          <div className="tool-content">
+            <h3>Compress Image</h3>
+            <p>Reduce image size while maintaining quality.</p>
+          </div>
+        </Link>
+
+        {/* Watermark Tool */}
+        <Link to="/watermark" className="tool-card">
+          <div className="tool-icon-wrapper icon-blue">
+            <WatermarkIcon />
+          </div>
+          <div className="tool-content">
+            <h3>Watermark</h3>
+            <p>Add text or image watermarks to Photos & PDFs.</p>
           </div>
         </Link>
 
@@ -90,7 +143,7 @@ function Home() {
           </div>
           <div className="tool-content">
             <h3>QR Generator</h3>
-            <p>Create QR codes for text, URLs, and more. Customize and download instantly.</p>
+            <p>Create Custom QR codes instantly.</p>
           </div>
         </Link>
 
@@ -101,7 +154,7 @@ function Home() {
           </div>
           <div className="tool-content">
             <h3>Remove Background</h3>
-            <p>Automatically remove image backgrounds with AI precision. Download transparent images.</p>
+            <p>Automatically remove image backgrounds with AI.</p>
           </div>
         </Link>
 
