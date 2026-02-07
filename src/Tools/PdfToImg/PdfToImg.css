@@ -1,0 +1,105 @@
+/* PdfToImg.css */
+/* Reuse similar classes for consistency */
+
+.pdf-to-img-container {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    background-color: #f9fafb;
+    min-height: 100vh;
+}
+
+.tool-header {
+    /* Same as ImgToPdf */
+    margin-bottom: 2rem;
+    text-align: center;
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.tool-header h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin: 0;
+    font-weight: 600;
+}
+
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+}
+
+.custom-file-upload {
+    /* Same as ImgToPdf */
+    display: inline-block;
+    padding: 12px 24px;
+    cursor: pointer;
+    background-color: #eef2ff;
+    color: #4f46e5;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    border: 1px dashed #4f46e5;
+    text-align: center;
+    width: 100%;
+}
+
+.custom-file-upload:hover {
+    background-color: #e0e7ff;
+}
+
+/* Specific for PdfToImg */
+.pdf-preview {
+    width: 100%;
+    margin-top: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    background: #f8f8f8;
+    text-align: center;
+}
+
+.page-preview {
+    margin-bottom: 20px;
+    display: inline-block;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+.page-preview img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.download-btn {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #10b981;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.download-btn:hover {
+    background-color: #059669;
+}

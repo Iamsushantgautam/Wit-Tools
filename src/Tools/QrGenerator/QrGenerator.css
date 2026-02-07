@@ -1,0 +1,95 @@
+/* QrGenerator.css */
+
+.qr-generator-container {
+    display: flex;
+    flex-direction: column;
+    padding: 2rem;
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    background-color: #f9fafb;
+    min-height: 100vh;
+}
+
+.tool-header {
+    margin-bottom: 2rem;
+    text-align: center;
+    background-color: #ffffff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+}
+
+.tool-header h2 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin: 0;
+    font-weight: 600;
+}
+
+.input-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-field:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
+}
+
+.generate-btn {
+    padding: 12px 24px;
+    background-color: #4f46e5;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    box-shadow: 0 4px 6px rgba(79, 70, 229, 0.3);
+}
+
+.generate-btn:hover {
+    background-color: #4338ca;
+}
+
+.qr-code-display {
+    margin-top: 2rem;
+    text-align: center;
+    padding: 2rem;
+    background-color: #f3f4f6;
+    border-radius: 12px;
+}
+
+.download-link {
+    margin-top: 1rem;
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #10b981;
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-weight: 500;
+}
+
+.download-link:hover {
+    background-color: #059669;
+}
