@@ -96,8 +96,8 @@ const Home = () => {
                         <CompressIcon />
                     </div>
                     <div className="tool-content">
-                        <h3>Compress Image</h3>
-                        <p>Reduce image size while maintaining quality.</p>
+                        <h3>Resize & Compress</h3>
+                        <p>Resize dimensions and reduce image file size.</p>
                     </div>
                 </Link>
 
@@ -131,6 +131,20 @@ const Home = () => {
                     <div className="tool-content">
                         <h3>QR Generator</h3>
                         <p>Create Custom QR codes instantly.</p>
+                    </div>
+                </Link>
+
+                {/* Image Resizer (New) */}
+                <Link to="/img-resizer" className="tool-card">
+                    <div className="tool-icon-wrapper icon-blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5A2.25 2.25 0 006 10.5h4.5a2.25 2.25 0 002.25-2.25v-4.5A2.25 2.25 0 0010.5 1.5H6a2.25 2.25 0 00-2.25 2.25zM13.5 13.5h.75m0 0H15m-1.5 0h-.75m.75 0v.75m0-1.5V13.5m.75 6H15m3 0h.75m-1.5 0h-.75m.75 0v.75m0-1.5V19.5" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-2.25-2.25M21 7.5v4.5m0-4.5h-4.5" />
+                        </svg>
+                    </div>
+                    <div className="tool-content">
+                        <h3>Lossless Resizer</h3>
+                        <p>Resize images without losing any quality.</p>
                     </div>
                 </Link>
 
