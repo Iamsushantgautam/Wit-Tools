@@ -18,6 +18,7 @@ const Navbar = () => {
                 <div className="nav-links desktop-only">
                     <Link to="/" className="nav-link">Home</Link>
                     <Link to="/img-to-pdf" className="nav-link">Img to PDF</Link>
+                    <Link to="/img-resizer" className="nav-link">Resizer</Link>
                     <Link to="/img-compressor" className="nav-link">Compress</Link>
                     <Link to="/watermark" className="nav-link">Watermark</Link>
                     <Link to="/profile-maker" className="nav-link">Profile Maker</Link>

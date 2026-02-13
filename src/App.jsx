@@ -14,6 +14,7 @@ import PdfCompressor from './Tools/PdfCompressor/PdfCompressor';
 import Watermark from './Tools/Watermark/Watermark';
 import PdfSecurity from './Tools/PdfSecurity/PdfSecurity';
 import ProfilePhotoMaker from './Tools/ProfilePhotoMaker/ProfilePhotoMaker';
+import ImgResizer from './Tools/ImgResizer/ImgResizer';
 
 import './App.css';
 
@@ -25,6 +26,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/img-to-pdf" element={<ImgToPdf />} />
+          <Route path="/img-resizer" element={<ImgResizer />} />
           <Route path="/img-compressor" element={<ImgCompressor />} />
           <Route path="/pdf-compressor" element={<PdfCompressor />} />
           <Route path="/watermark" element={<Watermark />} />
