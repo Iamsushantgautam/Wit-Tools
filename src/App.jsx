@@ -15,8 +15,11 @@ import Watermark from './Tools/Watermark/Watermark';
 import PdfSecurity from './Tools/PdfSecurity/PdfSecurity';
 import ProfilePhotoMaker from './Tools/ProfilePhotoMaker/ProfilePhotoMaker';
 import ImgResizer from './Tools/ImgResizer/ImgResizer';
+import PdfToImg from './Tools/PdfToImg/PdfToImg';
+import NotFound from './components/NotFound/NotFound';
 
 import './App.css';
+
 
 function App() {
   return (
@@ -34,10 +37,13 @@ function App() {
           <Route path="/profile-maker" element={<ProfilePhotoMaker />} />
           <Route path="/qr-generator" element={<QrGenerator />} />
           <Route path="/bg-remover" element={<BgRemover />} />
+          <Route path="/pdf-to-img" element={<PdfToImg />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </div>
   );
 }
+
 
 export default App;
