@@ -1,105 +1,431 @@
 /* PdfToImg.css */
-/* Reuse similar classes for consistency */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --secondary: #10b981;
+    --secondary-hover: #059669;
+    --danger: #ef4444;
+    --bg-gradient: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --glass-border: rgba(255, 255, 255, 0.4);
+    --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
 
 .pdf-to-img-container {
-    display: flex;
-    flex-direction: column;
-    padding: 2rem;
-    font-family: 'Poppins', sans-serif;
-    color: #333;
-    background-color: #f9fafb;
     min-height: 100vh;
-}
-
-.tool-header {
-    /* Same as ImgToPdf */
-    margin-bottom: 2rem;
-    text-align: center;
-    background-color: #ffffff;
-    padding: 1.5rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-}
-
-.tool-header h2 {
-    font-size: 1.8rem;
-    color: #2c3e50;
-    margin: 0;
-    font-weight: 600;
-}
-
-.upload-section {
+    padding: 3rem 1rem;
+    font-family: 'Outfit', sans-serif;
+    background: var(--bg-gradient);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 1.5rem;
-    background-color: #ffffff;
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.tool-header {
+    text-align: center;
+    margin-bottom: 3rem;
     max-width: 800px;
 }
 
-.custom-file-upload {
-    /* Same as ImgToPdf */
-    display: inline-block;
-    padding: 12px 24px;
+.tool-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to right, #4f46e5, #06b6d4);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.tool-header p {
+    font-size: 1.1rem;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+.main-content {
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.upload-card {
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 3rem;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.upload-card.dragging {
+    border-color: var(--primary);
+    background: rgba(79, 70, 229, 0.05);
+    transform: scale(1.01);
+}
+
+.drop-zone {
+    width: 100%;
+    border: 2px dashed #cbd5e1;
+    border-radius: 16px;
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    background-color: #eef2ff;
-    color: #4f46e5;
-    border-radius: 8px;
+    transition: all 0.2s ease;
+    background: rgba(255, 255, 255, 0.5);
+}
+
+.drop-zone:hover {
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.upload-icon {
+    width: 64px;
+    height: 64px;
+    color: var(--primary);
+    margin-bottom: 1.5rem;
+    opacity: 0.8;
+}
+
+.upload-card h3 {
+    font-size: 1.25rem;
+    color: #334155;
+    margin-bottom: 0.5rem;
+}
+
+.upload-card p {
+    color: #94a3b8;
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+}
+
+.browse-btn {
+    background: var(--primary);
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.3);
+}
+
+.browse-btn:hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.4);
+}
+
+.file-info {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background: #f1f5f9;
+    border-radius: 12px;
+    margin-top: 1rem;
+}
+
+.file-details {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.pdf-icon-mini {
+    width: 32px;
+    height: 32px;
+    color: var(--danger);
+}
+
+.file-name {
+    font-weight: 600;
+    color: #475569;
+    font-size: 0.95rem;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    margin-top: 1.5rem;
+}
+
+.convert-btn {
+    flex: 1;
+    background: var(--primary);
+    color: white;
+    padding: 1rem;
+    border-radius: 12px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    transition: all 0.3s ease;
+}
+
+.convert-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.convert-btn:not(:disabled):hover {
+    background: var(--primary-hover);
+    transform: translateY(-2px);
+}
+
+.clear-btn {
+    padding: 1rem 1.5rem;
+    background: #f1f5f9;
+    color: #64748b;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
     font-weight: 500;
     transition: all 0.2s ease;
-    border: 1px dashed #4f46e5;
-    text-align: center;
+}
+
+.clear-btn:hover {
+    background: #e2e8f0;
+    color: #475569;
+}
+
+/* Progress Section */
+.status-tracker {
     width: 100%;
+    margin-top: 2rem;
 }
 
-.custom-file-upload:hover {
-    background-color: #e0e7ff;
-}
-
-/* Specific for PdfToImg */
-.pdf-preview {
-    width: 100%;
-    margin-top: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 1rem;
-    background: #f8f8f8;
-    text-align: center;
-}
-
-.page-preview {
-    margin-bottom: 20px;
-    display: inline-block;
-    padding: 10px;
-    border: 1px solid #ddd;
-    background: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 8px;
-}
-
-.page-preview img {
-    max-width: 100%;
-    height: auto;
-    display: block;
-    margin-bottom: 10px;
-}
-
-.download-btn {
-    display: inline-block;
-    margin-top: 10px;
-    padding: 8px 16px;
-    background-color: #10b981;
-    color: white;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
     font-size: 0.9rem;
-    text-decoration: none;
+    font-weight: 600;
+    color: #64748b;
 }
 
-.download-btn:hover {
-    background-color: #059669;
+.progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4f46e5, #10b981);
+    transition: width 0.3s ease;
+}
+
+/* Results Section */
+.results-section {
+    width: 100%;
+}
+
+.results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.header-left h3 {
+    font-size: 1.25rem;
+    color: #1e293b;
+    font-weight: 700;
+    margin: 0;
+}
+
+.select-all-btn {
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.select-all-btn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.download-all-btn {
+    background: var(--secondary);
+    color: white;
+    padding: 0.6rem 1.25rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: all 0.2s ease;
+}
+
+.download-all-btn:disabled {
+    background: #cbd5e1;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.download-all-btn:not(:disabled):hover {
+    background: var(--secondary-hover);
+    transform: translateY(-2px);
+}
+
+.images-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+}
+
+.image-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.image-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.image-card.selected {
+    border-color: var(--primary);
+    background: white;
+}
+
+.selection-overlay {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 10;
+}
+
+.checkbox {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: 2px solid #cbd5e1;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.image-card.selected .checkbox {
+    background: var(--primary);
+    border-color: var(--primary);
+    color: white;
+}
+
+.checkbox svg {
+    width: 16px;
+    height: 16px;
+}
+
+.image-preview-wrapper {
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.image-preview-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 0.5rem;
+}
+
+.card-footer {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.page-number {
+    font-weight: 600;
+    color: #64748b;
+    font-size: 0.85rem;
+}
+
+.card-download-btn {
+    background: #f1f5f9;
+    color: #475569;
+    padding: 0.4rem 0.75rem;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.card-download-btn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+@media (max-width: 640px) {
+    .tool-header h2 {
+        font-size: 1.8rem;
+    }
+
+    .upload-card {
+        padding: 1.5rem;
+    }
+
+    .images-grid {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        gap: 1rem;
+    }
 }

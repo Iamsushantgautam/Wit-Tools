@@ -26,7 +26,7 @@ const Navbar = () => {
 
                 <div className="nav-actions">
                     <div className="avatar-wrapper">
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User Avatar" className="user-avatar" />
+                        <img src="man.png" alt="User Avatar" className="user-avatar" />
                     </div>
                     <button className="hamburger-btn" onClick={toggleMenu} aria-label="Toggle Menu">
                         <div className={`hamburger-icon ${isMenuOpen ? 'open' : ''}`}>
