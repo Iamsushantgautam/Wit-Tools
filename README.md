@@ -14,3 +14,14 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your `.env` file:
+
+`VITE_REMOVE_BG_API_KEY`: Your API key for the background removal functionality.
+
+Example `.env` file:
+```env
+VITE_REMOVE_BG_API_KEY=your_api_key_here
+```
