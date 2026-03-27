@@ -1,0 +1,157 @@
+/* PdfPageNumber.css Update */
+
+.pdf-pagenumber-container .workspace-flex {
+    display: flex;
+    gap: 2.5rem;
+    width: 100%;
+}
+
+.pdf-pagenumber-container .preview-section {
+    flex: 1.2;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--bg-main);
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+}
+
+.pdf-pagenumber-container .canvas-wrapper {
+    position: relative;
+    max-width: 100%;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    background: white;
+    border-radius: var(--radius-sm);
+    overflow: auto;
+    max-height: 550px;
+}
+
+/* Page Scroller Style */
+.pdf-pagenumber-container .page-scroller {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: fit-content;
+    margin: 1.5rem auto 0;
+    padding: 8px 20px;
+    background: white;
+    border-radius: 50px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+}
+
+.pdf-pagenumber-container .btn-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text-main);
+    transition: all 0.2s;
+}
+
+.pdf-pagenumber-container .btn-circle:hover:not(:disabled) {
+    background: var(--bg-main);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.pdf-pagenumber-container .btn-circle:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Improved Color Control Style */
+.pdf-pagenumber-container .color-control-wrapper {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.pdf-pagenumber-container .selected-color-display {
+    width: 60px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border-color);
+    position: relative;
+    cursor: pointer;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.pdf-pagenumber-container .hidden-color-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.pdf-pagenumber-container .controls-grid {
+    width: 380px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+}
+
+.pdf-pagenumber-container .label-with-value {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.pdf-pagenumber-container .value-badge {
+    background: rgba(79, 70, 229, 0.1);
+    color: var(--primary);
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.pdf-pagenumber-container .suggestion-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.pdf-pagenumber-container .chip {
+    padding: 6px 14px;
+    background: white;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.pdf-pagenumber-container .chip:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.pdf-pagenumber-container .chip.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+@media (max-width: 900px) {
+    .pdf-pagenumber-container .workspace-flex {
+        flex-direction: column;
+    }
+    .pdf-pagenumber-container .controls-grid {
+        width: 100%;
+    }
+}

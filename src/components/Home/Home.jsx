@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Home.css';
 
@@ -46,133 +46,180 @@ const SecurityIcon = () => (
     </svg>
 );
 
+const WitcetIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9s-2.015-9-4.5-9m0 18c-2.485 0-4.5-4.03-4.5-9s2.015-9 4.5-9m0 18c-5.922 0-9-7-9-9s3.078-9 9-9 9 7 9 9-3.078 9-9 9z" />
+    </svg>
+);
+
+const ShopifyIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="28" height="28">
+        <path fill="#7cb342" d="M37.216,11.78c-0.023-0.211-0.211-0.305-0.351-0.305s-3.21-0.234-3.21-0.234s-2.132-2.132-2.39-2.343c-0.234-0.234-0.68-0.164-0.867-0.117c-0.023,0-0.469,0.141-1.195,0.375c-0.726-2.086-1.968-3.984-4.194-3.984h-0.211C24.187,4.375,23.391,4,22.735,4c-5.155,0-7.639,6.444-8.412,9.725c-2.015,0.633-3.445,1.054-3.609,1.125c-1.125,0.351-1.148,0.375-1.289,1.429c-0.117,0.797-3.046,23.456-3.046,23.456L29.179,44l12.373-2.671C41.575,41.282,37.24,11.991,37.216,11.78z M27.937,9.483c-0.562,0.164-1.242,0.375-1.921,0.609V9.671c0-1.265-0.164-2.296-0.469-3.117C26.718,6.695,27.445,7.984,27.937,9.483L27.937,9.483z M24.117,6.812c0.305,0.797,0.516,1.922,0.516,3.468v0.234c-1.265,0.398-2.601,0.797-3.984,1.242C21.422,8.804,22.899,7.351,24.117,6.812L24.117,6.812z M22.617,5.359c0.234,0,0.469,0.094,0.656,0.234c-1.664,0.773-3.421,2.718-4.148,6.655	c-1.101,0.351-2.156,0.656-3.163,0.984C16.806,10.233,18.915,5.359,22.617,5.359z"></path>
+        <path fill="#558b2f" d="M36.865,11.428c-0.141,0-3.21-0.234-3.21-0.234s-2.132-2.132-2.39-2.343C31.17,8.757,31.053,8.71,30.96,8.71L29.249,44l12.373-2.671c0,0-4.335-29.338-4.359-29.549C37.169,11.569,37.005,11.475,36.865,11.428z"></path>
+        <path fill="#fff" d="M24.792,18.593l-1.475,4.449c0,0-1.337-0.715-2.927-0.715c-2.374,0-2.489,1.498-2.489,1.867c0,2.028,5.301,2.812,5.301,7.583c0,3.757-2.374,6.177-5.578,6.177c-3.872,0-5.808-2.397-5.808-2.397l1.037-3.411c0,0,2.028,1.752,3.734,1.752c1.129,0,1.59-0.876,1.59-1.521c0-2.651-4.333-2.766-4.333-7.145c0-3.665,2.628-7.214,7.952-7.214C23.777,17.994,24.792,18.593,24.792,18.593z"></path>
+    </svg>
+);
+
+const ChromeIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+        <circle cx="12" cy="12" r="10" />
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 8c2.2 0 4 1.8 4 4" />
+        <path d="M12 2v6" />
+        <path d="M12 16v6" />
+        <path d="M2 12h6" />
+        <path d="M16 12h6" />
+    </svg>
+);
 
 const Home = () => {
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const tools = [
+        { id: 'img-to-pdf', title: 'Image to PDF', desc: 'Convert images to high-quality PDF docs.', icon: <PdfIcon />, category: 'Image Tools', color: 'icon-blue', isVisible: true },
+        { id: 'img-resizer', title: 'Image Resizer', desc: 'Change dimensions with high precision.', icon: <CompressIcon />, category: 'Image Tools', color: 'icon-blue', isVisible: true },
+        { id: 'img-optimizer', title: 'Image Optimizer', desc: 'Resize and compress file size in one go.', icon: <BgIcon />, category: 'Image Tools', color: 'icon-green', isVisible: true },
+        { id: 'img-converter', title: 'Image Converter', desc: 'Change format to JPG, PNG, WebP, etc.', icon: <QrIcon />, category: 'Image Tools', color: 'icon-orange', isVisible: true },
+        { id: 'img-compressor', title: 'Image Compressor', desc: 'Reduce file size while keeping quality.', icon: <CompressIcon />, category: 'Image Tools', color: 'icon-green', isVisible: true },
+        { id: 'bg-remover', title: 'Remove BG', desc: 'AI-powered automatic background removal.', icon: <BgIcon />, category: 'Image Tools', color: 'icon-purple', isVisible: true },
+        { id: 'profile-maker', title: 'Profile Maker', desc: 'Create professional avatars with AI.', icon: <UserIcon />, category: 'Utility Tools', color: 'icon-orange', isVisible: true },
+        { id: 'pdf-compressor', title: 'Compress PDF', desc: 'Reduce PDF file size significantly.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-red', isVisible: true },
+        { id: 'pdf-merge', title: 'Merge PDF', desc: 'Combine multiple PDFs into one.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-blue', isVisible: true },
+        { id: 'pdf-split', title: 'Split PDF', desc: 'Extract pages or split into parts.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-red', isVisible: true },
+        { id: 'pdf-page-number', title: 'Page Number', desc: 'Add visible page numbers to PDFs.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-blue', isVisible: true },
+        { id: 'pdf-security', title: 'PDF Password', desc: 'Lock or Unlock your PDF documents.', icon: <SecurityIcon />, category: 'PDF Tools', color: 'icon-purple', isVisible: true },
+        { id: 'pdf-to-img', title: 'PDF to Image', desc: 'Convert PDF pages to individual images.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-red', isVisible: true },
+        { id: 'watermark', title: 'Watermark', desc: 'Add stamps to your Photos & PDFs.', icon: <WatermarkIcon />, category: 'Utility Tools', color: 'icon-blue', isVisible: true },
+        { id: 'qr-generator', title: 'QR Generator', desc: 'Generate custom QR codes instantly.', icon: <QrIcon />, category: 'Utility Tools', color: 'icon-orange', isVisible: true },
+        { id: 'qr-generator', title: 'QR Generator', desc: 'Generate custom QR codes instantly.', icon: <QrIcon />, category: 'Utility Tools', color: 'icon-orange', isVisible: true },
+        { id: 'shopify-dev', title: 'Shopify Dev Hub', desc: 'Expert AI prompts for Shopify section developers.', icon: <ShopifyIcon />, category: 'Shopify Tools', color: 'icon-green', isVisible: true },
+        { id: 'shopify-scraper', title: 'Shopify Product Scraper', desc: 'Powerful Chrome extension for bulk extracting Shopify product data.', icon: <ShopifyIcon />, category: 'Chrome Extension', color: 'icon-green', isExternal: true, url: 'https://github.com/Iamsushantgautam/Chrome-extension/tree/main/shopify%20product%20scraper', useFavicon: false, isVisible: true },
+        { id: 'icons8', title: 'Icons8', desc: 'Premium library for professional icons, photos, and creative assets.', icon: <QrIcon />, category: 'Useful Websites', color: 'icon-green', isExternal: true, url: 'https://icons8.com/', isVisible: true },
+        { id: 'witcet', title: 'Witcet.online', desc: 'Visit our partner site for advanced AI resources, creative assets, and more digital utilities.', icon: <WitcetIcon />, category: 'Useful Websites', color: 'icon-purple', isExternal: true, url: 'https://witcet.online', isVisible: false },
+        { id: 'portfolio', title: 'Sushant\'s Portfolio', desc: 'Explore the full creative development portfolio of the developer.', icon: <UserIcon />, category: 'Useful Websites', color: 'icon-blue', isExternal: true, url: 'https://sushant.online', isVisible: false },
+
+    ];
+
+    const filteredTools = tools.filter(tool =>
+        tool.isVisible !== false && (
+            tool.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            tool.desc.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+    );
+
+    const categories = ['Image Tools', 'Utility Tools', 'PDF Tools', 'Shopify Tools', 'Chrome Extension', 'Useful Websites'];
+
     return (
         <div className="home-container">
-            <h1 className="home-title">Every tool you need to work with Images & PDFs</h1>
-            <p className="home-subtitle">
-                Every tool you need to manage your files, at your fingertips. All are 100% FREE and easy to use!
-                Convert, Generate, and Edit your files with just a few clicks.
-            </p>
+            <header className="hero-section">
+                <h1 className="home-title">The Master Hub for <span style={{ color: 'var(--primary)' }}>Images & PDFs</span></h1>
+                <p className="home-subtitle">
+                    Effortless processing. Instant results. 100% Secure.
+                </p>
 
-            <div className="tool-grid">
-
-                {/* Img to PDF */}
-                <Link to="/img-to-pdf" className="tool-card">
-                    <div className="tool-icon-wrapper icon-blue">
-                        <PdfIcon />
-                    </div>
-                    <div className="tool-content">
-                        <h3>Image to PDF</h3>
-                        <p>Quickly convert images to PDFs for easy sharing.</p>
-                    </div>
-                </Link>
-
-                {/* Profile Photo Maker (New) */}
-                <Link to="/profile-maker" className="tool-card">
-                    <div className="tool-icon-wrapper icon-orange">
-                        <UserIcon />
-                    </div>
-                    <div className="tool-content">
-                        <h3>Profile Pic Maker</h3>
-                        <p>Create pro profile photos with custom backgrounds.</p>
-                    </div>
-                </Link>
-
-                {/* PDF Compressor */}
-                <Link to="/pdf-compressor" className="tool-card">
-                    <div className="tool-icon-wrapper icon-red">
-                        <PdfIcon />
-                    </div>
-                    <div className="tool-content">
-                        <h3>Compress PDF</h3>
-                        <p>Reduce PDF size significantly by optimizing pages.</p>
-                    </div>
-                </Link>
-
-                {/* Image Compressor */}
-                <Link to="/img-compressor" className="tool-card">
-                    <div className="tool-icon-wrapper icon-green">
-                        <CompressIcon />
-                    </div>
-                    <div className="tool-content">
-                        <h3>Resize & Compress</h3>
-                        <p>Resize dimensions and reduce image file size.</p>
-                    </div>
-                </Link>
-
-                {/* Watermark Tool */}
-                <Link to="/watermark" className="tool-card">
-                    <div className="tool-icon-wrapper icon-blue">
-                        <WatermarkIcon />
-                    </div>
-                    <div className="tool-content">
-                        <h3>Watermark</h3>
-                        <p>Add text or image watermarks to Photos & PDFs.</p>
-                    </div>
-                </Link>
-
-                {/* PDF Security Tool */}
-                <Link to="/pdf-security" className="tool-card">
-                    <div className="tool-icon-wrapper icon-purple">
-                        <SecurityIcon />
-                    </div>
-                    <div className="tool-content">
-                        <h3>PDF Password</h3>
-                        <p>Add or remove passwords from your PDF files.</p>
-                    </div>
-                </Link>
-
-                {/* QR Generator */}
-                <Link to="/qr-generator" className="tool-card">
-                    <div className="tool-icon-wrapper icon-orange">
-                        <QrIcon />
-                    </div>
-                    <div className="tool-content">
-                        <h3>QR Generator</h3>
-                        <p>Create Custom QR codes instantly.</p>
-                    </div>
-                </Link>
-
-                {/* Image Resizer (New) */}
-                <Link to="/img-resizer" className="tool-card">
-                    <div className="tool-icon-wrapper icon-blue">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5A2.25 2.25 0 006 10.5h4.5a2.25 2.25 0 002.25-2.25v-4.5A2.25 2.25 0 0010.5 1.5H6a2.25 2.25 0 00-2.25 2.25zM13.5 13.5h.75m0 0H15m-1.5 0h-.75m.75 0v.75m0-1.5V13.5m.75 6H15m3 0h.75m-1.5 0h-.75m.75 0v.75m0-1.5V19.5" />
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 7.5l-2.25-2.25M21 7.5v4.5m0-4.5h-4.5" />
+                <div className="search-container">
+                    <div className="search-bar">
+                        <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
+                        <input
+                            type="text"
+                            placeholder="Search for tools (e.g., 'merge', 'compress')..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value)}
+                        />
                     </div>
-                    <div className="tool-content">
-                        <h3>Lossless Resizer</h3>
-                        <p>Resize images without losing any quality.</p>
-                    </div>
-                </Link>
+                </div>
+            </header>
 
-                {/* Background Remover */}
-                <Link to="/bg-remover" className="tool-card">
-                    <div className="tool-icon-wrapper icon-purple">
-                        <BgIcon />
-                    </div>
-                    <div className="tool-content">
-                        <h3>Remove Background</h3>
-                        <p>Automatically remove image backgrounds with AI.</p>
-                    </div>
-                </Link>
+            <div className="tools-sections-wrapper">
+                {categories.map(cat => {
+                    const sectionTools = filteredTools.filter(t => t.category === cat);
+                    if (sectionTools.length === 0) return null;
 
-                {/* PDF to Image */}
-                <Link to="/pdf-to-img" className="tool-card">
-                    <div className="tool-icon-wrapper icon-red">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V6.75zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
-                        </svg>
+                    return (
+                        <section key={cat} className="tool-category-section">
+                            <div className="section-header">
+                                <h2 className="section-title">{cat}</h2>
+                                <div className="section-line"></div>
+                            </div>
+                            <div className="tool-grid">
+                                {sectionTools.map(tool => {
+                                    const cardProps = {
+                                        key: tool.id,
+                                        className: "tool-card"
+                                    };
+
+                                    const cardContent = (
+                                        <>
+                                            <div className={`tool-icon-wrapper ${tool.color}`}>
+                                                {tool.isExternal && tool.url && tool.useFavicon !== false ? (
+                                                    <img
+                                                        src={`https://www.google.com/s2/favicons?domain=${new URL(tool.url).hostname}&sz=64`}
+                                                        alt={tool.title}
+                                                        className="tool-favicon"
+                                                        onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }}
+                                                    />
+                                                ) : null}
+                                                <div style={{ display: (tool.isExternal && tool.url && tool.useFavicon !== false) ? 'none' : 'block' }}>
+                                                    {tool.icon}
+                                                </div>
+                                            </div>
+                                            <div className="tool-content">
+                                                <h3>{tool.title}</h3>
+                                                <p>{tool.desc}</p>
+                                            </div>
+                                        </>
+                                    );
+
+                                    if (tool.isExternal) {
+                                        return (
+                                            <a {...cardProps} href={tool.url} target="_blank" rel="noopener noreferrer">
+                                                {cardContent}
+                                            </a>
+                                        );
+                                    }
+
+                                    return (
+                                        <Link {...cardProps} to={`/${tool.id}`}>
+                                            {cardContent}
+                                        </Link>
+                                    );
+                                })}
+                            </div>
+                        </section>
+                    );
+                })}
+
+                {filteredTools.length === 0 && (
+                    <div className="no-results">
+                        <div className="no-results-icon">🔍</div>
+                        <h3>No tools found matching "{searchTerm}"</h3>
+                        <p>Try searching for broader terms like "Image" or "PDF".</p>
+                        <button className="btn-secondary" onClick={() => setSearchTerm('')}>Clear Search</button>
                     </div>
-                    <div className="tool-content">
-                        <h3>PDF to Image</h3>
-                        <p>Convert each PDF page into a high-quality image.</p>
-                    </div>
-                </Link>
+                )}
             </div>
+
+
+
+            {/* <section className="featured-partner-section">
+                <div className="section-header">
+                    <h2 className="section-title">Explore More</h2>
+                    <div className="section-line"></div>
+                </div>
+                <a href="https://witcet.online" target="_blank" rel="noopener noreferrer" className="partner-banner-card">
+                    <div className="partner-content">
+                        <div className="partner-badge">Partner Platform</div>
+                        <h3>Witcet.online</h3>
+                        <p>Visit our partner site for advanced AI resources, creative assets, and more digital utilities.</p>
+                    </div>
+                    <div className="partner-action">
+                        <span>Visit Website</span>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14m-7-7l7 7-7 7"/></svg>
+                    </div>
+                </a>
+            </section> */}
         </div>
     );
 };

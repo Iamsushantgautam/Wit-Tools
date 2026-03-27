@@ -1,0 +1,111 @@
+.legal-container {
+    max-width: 1000px;
+    margin: 6rem auto 10rem;
+    padding: 0 5%;
+    color: var(--text-main);
+    line-height: 1.8;
+    position: relative;
+}
+
+/* Atmospheric Background Glows */
+.legal-container::before,
+.legal-container::after {
+    content: '';
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(140px);
+    z-index: -1;
+    opacity: 0.12;
+    pointer-events: none;
+}
+
+.legal-container::before {
+    background: radial-gradient(circle, var(--primary), transparent);
+    top: -100px;
+    left: -200px;
+}
+
+.legal-container::after {
+    background: radial-gradient(circle, #a855f7, transparent);
+    bottom: -100px;
+    right: -200px;
+}
+
+.legal-header {
+    margin-bottom: 5rem;
+    text-align: center;
+}
+
+.legal-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.04em;
+    color: var(--text-main);
+    line-height: 1.1;
+}
+
+.legal-update {
+    color: var(--text-muted);
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.legal-content {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    padding: 4rem;
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 40px 100px rgba(0,0,0,0.05);
+}
+
+.legal-content section {
+    margin-bottom: 4rem;
+}
+
+.legal-content section:last-child {
+    margin-bottom: 0;
+}
+
+.legal-content h2 {
+    font-size: 1.75rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: var(--text-main);
+    letter-spacing: -0.02em;
+}
+
+.legal-content p {
+    margin-bottom: 1.25rem;
+    font-size: 1.15rem;
+    color: #475569;
+}
+
+.legal-content ul {
+    margin: 1.5rem 0;
+    padding-left: 1.5rem;
+}
+
+.legal-content li {
+    margin-bottom: 0.75rem;
+    font-size: 1.1rem;
+    color: #475569;
+}
+
+@media (max-width: 768px) {
+    .legal-title {
+        font-size: 2.5rem;
+    }
+    .legal-container {
+        margin: 4rem auto 6rem;
+    }
+    .legal-content {
+        padding: 2.5rem 1.5rem;
+        border-radius: 20px;
+    }
+}

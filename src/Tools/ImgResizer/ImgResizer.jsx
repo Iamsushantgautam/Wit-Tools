@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './ImgResizer.css';
 
 const ImgResizer = () => {
@@ -8,173 +8,125 @@ const ImgResizer = () => {
     const [resizedBlob, setResizedBlob] = useState(null);
     const [loading, setLoading] = useState(false);
 
-    const [originalWidth, setOriginalWidth] = useState(0);
-    const [originalHeight, setOriginalHeight] = useState(0);
-    const [targetWidth, setTargetWidth] = useState(0);
-    const [targetHeight, setTargetHeight] = useState(0);
-    const [maintainAspectRatio, setMaintainAspectRatio] = useState(true);
+    const [originalDim, setOriginalDim] = useState({ w: 0, h: 0 });
+    const [targetDim, setTargetDim] = useState({ w: 0, h: 0 });
+    const [maintainRatio, setMaintainRatio] = useState(true);
 
-    const handleImageUpload = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            setOriginalFile(file);
-            const url = URL.createObjectURL(file);
-            setOriginalImage(url);
-            setResizedImage(null);
-            setResizedBlob(null);
+    const handleUpload = (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
 
-            const img = new Image();
-            img.onload = () => {
-                setOriginalWidth(img.width);
-                setOriginalHeight(img.height);
-                setTargetWidth(img.width);
-                setTargetHeight(img.height);
-            };
-            img.src = url;
-        }
+        setOriginalFile(file);
+        const url = URL.createObjectURL(file);
+        setOriginalImage(url);
+        setResizedImage(null);
+
+        const img = new Image();
+        img.onload = () => {
+            setOriginalDim({ w: img.width, h: img.height });
+            setTargetDim({ w: img.width, h: img.height });
+        };
+        img.src = url;
     };
 
-    const handleWidthChange = (e) => {
-        const value = parseInt(e.target.value) || 0;
-        setTargetWidth(value);
-        if (maintainAspectRatio && originalWidth > 0) {
-            setTargetHeight(Math.round((value / originalWidth) * originalHeight));
-        }
+    const changeWidth = (val) => {
+        const w = parseInt(val) || 0;
+        setTargetDim(prev => ({
+            w,
+            h: maintainRatio ? Math.round((w / originalDim.w) * originalDim.h) : prev.h
+        }));
     };
 
-    const handleHeightChange = (e) => {
-        const value = parseInt(e.target.value) || 0;
-        setTargetHeight(value);
-        if (maintainAspectRatio && originalHeight > 0) {
-            setTargetWidth(Math.round((value / originalHeight) * originalWidth));
-        }
+    const changeHeight = (val) => {
+        const h = parseInt(val) || 0;
+        setTargetDim(prev => ({
+            h,
+            w: maintainRatio ? Math.round((h / originalDim.h) * originalDim.w) : prev.w
+        }));
     };
 
-    const handleResize = async () => {
-        if (!originalFile || !targetWidth || !targetHeight) return;
+    const processResize = async () => {
+        if (!originalFile || !targetDim.w || !targetDim.h) return;
         setLoading(true);
 
-        try {
-            const canvas = document.createElement('canvas');
-            canvas.width = targetWidth;
-            canvas.height = targetHeight;
-            const ctx = canvas.getContext('2d');
+        const canvas = document.createElement('canvas');
+        canvas.width = targetDim.w;
+        canvas.height = targetDim.h;
+        const ctx = canvas.getContext('2d');
 
-            const img = new Image();
-            img.src = originalImage;
-            await new Promise((resolve) => {
-                img.onload = resolve;
-            });
+        const img = new Image();
+        img.src = originalImage;
+        await new Promise(r => img.onload = r);
 
-            ctx.imageSmoothingEnabled = true;
-            ctx.imageSmoothingQuality = 'high';
-            ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(img, 0, 0, targetDim.w, targetDim.h);
 
-            const blob = await new Promise((resolve) => {
-                canvas.toBlob(resolve, originalFile.type, 1.0);
-            });
-
+        canvas.toBlob((blob) => {
             setResizedBlob(blob);
             setResizedImage(URL.createObjectURL(blob));
-        } catch (error) {
-            console.error("Resize failed:", error);
-            alert("Resizing failed. Please try again.");
-        } finally {
             setLoading(false);
-        }
-    };
-
-    const formatSize = (sizeInBytes) => {
-        if (!sizeInBytes) return '0 KB';
-        return (sizeInBytes / 1024).toFixed(2) + ' KB';
+        }, originalFile.type, 1.0);
     };
 
     return (
-        <div className="tool-container img-resizer-container">
+        <div className="tool-container">
             <div className="tool-header-card">
-                <h2>High-Quality Image Resizer</h2>
-                <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Change image dimensions without losing quality</p>
+                <h2>Image Resizer</h2>
+                <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Change dimensions with high precision</p>
             </div>
 
             <div className="tool-card">
                 {!originalImage ? (
-                    <label htmlFor="resizer-upload" className="drop-zone">
-                        <span>Click to Resize Image</span>
-                        <input
-                            type="file"
-                            id="resizer-upload"
-                            accept="image/*"
-                            onChange={handleImageUpload}
-                            style={{ display: 'none' }}
-                        />
+                    <label htmlFor="resizer-input" className="drop-zone">
+                        <span>Click to Upload Image</span>
+                        <input id="resizer-input" type="file" accept="image/*" onChange={handleUpload} style={{ display: 'none' }} />
                     </label>
                 ) : (
-                    <div className="workspace">
-                        <div className="file-info-header">
+                    <div className="workspace" style={{ width: '100%' }}>
+                        <div className="file-info-header" style={{ marginBottom: '1.5rem' }}>
                             <h3 className="file-name">{originalFile.name}</h3>
-                            <span className="file-meta">{originalWidth} x {originalHeight} px • {formatSize(originalFile.size)}</span>
+                            <span className="file-meta">{originalDim.w} x {originalDim.h} px</span>
                         </div>
 
                         {!resizedImage ? (
-                            <div className="resizer-controls">
-                                <div className="control-group">
-                                    <label className="control-label">Target Dimensions (px)</label>
-                                    <div className="dim-inputs">
-                                        <div className="input-box">
-                                            <input type="number" className="input-field" value={targetWidth} onChange={handleWidthChange} />
-                                            <span className="small-label">Width</span>
-                                        </div>
-                                        <div className="sep">×</div>
-                                        <div className="input-box">
-                                            <input type="number" className="input-field" value={targetHeight} onChange={handleHeightChange} />
-                                            <span className="small-label">Height</span>
-                                        </div>
+                            <div className="controls-box" style={{ maxWidth: '400px', margin: '0 auto' }}>
+                                <div className="input-row" style={{ display: 'flex', gap: '1rem', alignItems: 'center', marginBottom: '1rem' }}>
+                                    <div style={{ flex: 1 }}>
+                                        <label className="control-label">Width (px)</label>
+                                        <input type="number" className="input-field" value={targetDim.w} onChange={(e) => changeWidth(e.target.value)} />
                                     </div>
-                                    <label className="checkbox-label" style={{ marginTop: '0.5rem' }}>
-                                        <input
-                                            type="checkbox"
-                                            checked={maintainAspectRatio}
-                                            onChange={(e) => setMaintainAspectRatio(e.target.checked)}
-                                        />
-                                        Maintain Aspect Ratio
-                                    </label>
+                                    <div style={{ paddingTop: '1rem', fontWeight: 'bold' }}>×</div>
+                                    <div style={{ flex: 1 }}>
+                                        <label className="control-label">Height (px)</label>
+                                        <input type="number" className="input-field" value={targetDim.h} onChange={(e) => changeHeight(e.target.value)} />
+                                    </div>
                                 </div>
 
-                                <div className="action-row" style={{ marginTop: '1.5rem' }}>
-                                    <button className="btn-primary" onClick={handleResize} disabled={loading} style={{ width: '100%' }}>
-                                        {loading ? 'Processing...' : 'Resize Now'}
-                                    </button>
-                                    <button className="btn-secondary" onClick={() => {
-                                        setOriginalImage(null);
-                                        setOriginalFile(null);
-                                    }} style={{ width: '100%', marginTop: '0.8rem' }}>Change Image</button>
-                                </div>
+                                <label className="checkbox-label" style={{ display: 'flex', gap: '0.5rem', alignItems: 'center', cursor: 'pointer', marginBottom: '2rem' }}>
+                                    <input type="checkbox" checked={maintainRatio} onChange={(e) => setMaintainRatio(e.target.checked)} />
+                                    <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>Maintain Aspect Ratio</span>
+                                </label>
+
+                                <button className="btn-primary" onClick={processResize} disabled={loading} style={{ width: '100%' }}>
+                                    {loading ? 'Processing...' : 'Resize Image'}
+                                </button>
+                                <button className="btn-secondary" onClick={() => setOriginalImage(null)} style={{ width: '100%', marginTop: '0.5rem' }}>Change Image</button>
                             </div>
                         ) : (
-                            <div className="result-section">
-                                <div className="result-stats">
-                                    <div className="stat-item">
-                                        <span className="stat-label">New Dimensions</span>
-                                        <span className="stat-value">{targetWidth} × {targetHeight} px</span>
-                                    </div>
-                                    <div className="stat-item">
-                                        <span className="stat-label">New Size</span>
-                                        <span className="stat-value green">{formatSize(resizedBlob.size)}</span>
+                            <div className="result-view" style={{ textAlign: 'center' }}>
+                                <div className="result-stats" style={{ display: 'flex', justifyContent: 'center', gap: '2rem', marginBottom: '2rem' }}>
+                                    <div>
+                                        <span className="control-label" style={{ display: 'block' }}>New Dimensions</span>
+                                        <span style={{ fontWeight: '700', fontSize: '1.2rem' }}>{targetDim.w} × {targetDim.h}</span>
                                     </div>
                                 </div>
-
-                                <div className="result-preview-container">
-                                    <img src={resizedImage} alt="Resized Result" className="final-preview" />
+                                <div style={{ background: 'var(--bg-main)', padding: '1rem', borderRadius: 'var(--radius-md)', marginBottom: '2rem' }}>
+                                    <img src={resizedImage} alt="Preview" style={{ maxWidth: '100%', maxHeight: '300px', borderRadius: 'var(--radius-sm)' }} />
                                 </div>
-
-                                <div className="action-buttons-group">
-                                    <a href={resizedImage} download={`resized_${originalFile.name}`} className="btn-primary" style={{ textDecoration: 'none' }}>
-                                        Download Image
-                                    </a>
-                                    <button className="btn-secondary" onClick={() => {
-                                        setOriginalImage(null);
-                                        setResizedImage(null);
-                                    }}>Resize Another</button>
+                                <div className="action-buttons-group" style={{ display: 'flex', gap: '1rem' }}>
+                                    <a href={resizedImage} download={`resized_${originalFile.name}`} className="btn-primary" style={{ flex: 1, textDecoration: 'none' }}>Download</a>
+                                    <button className="btn-secondary" onClick={() => setResizedImage(null)} style={{ flex: 1 }}>Reset</button>
                                 </div>
                             </div>
                         )}

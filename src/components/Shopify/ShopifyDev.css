@@ -1,0 +1,163 @@
+/* ShopifyDev.css */
+.shopify-container {
+    max-width: 1200px;
+    margin: 6rem auto 10rem;
+    padding: 0 5%;
+    position: relative;
+}
+
+.shopify-header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.shopify-badge {
+    background: #95bf47; /* Shopify Green */
+    color: white;
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+}
+
+.shopify-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
+    color: var(--text-main);
+    margin-bottom: 1.5rem;
+}
+
+.shopify-subtitle {
+    color: var(--text-muted);
+    font-size: 1.25rem;
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Prompt Grid */
+.prompt-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 2rem;
+}
+
+.prompt-card {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 24px;
+    border: 1px solid rgba(226, 232, 240, 0.6);
+    box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.prompt-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.06);
+    border-color: #95bf47;
+}
+
+.prompt-icon {
+    width: 48px;
+    height: 48px;
+    background: #f1f8e6;
+    color: #95bf47;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.prompt-content h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    color: var(--text-main);
+}
+
+.prompt-desc {
+    font-size: 0.95rem;
+    color: #475569;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.prompt-box {
+    background: #f8fafc;
+    padding: 1.25rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    font-family: 'Inter', monospace;
+    font-size: 0.9rem;
+    color: #334155;
+    position: relative;
+    user-select: all;
+    cursor: copy;
+}
+
+.prompt-box::after {
+    content: 'Click to copy';
+    position: absolute;
+    bottom: -20px;
+    right: 0;
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.prompt-box:hover::after {
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    .shopify-title { font-size: 2.5rem; }
+    .prompt-grid { grid-template-columns: 1fr; }
+}
+
+/* Custom Toast Styling */
+.custom-toast {
+    position: fixed;
+    top: 100px;
+    right: 40px;
+    z-index: 2000;
+    transform: translateX(120%);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+}
+
+.custom-toast.show {
+    transform: translateX(0);
+}
+
+.toast-content {
+    background: #0f172a;
+    color: white;
+    padding: 1rem 1.5rem;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.toast-content svg {
+    color: #95bf47;
+}
+
+.toast-content span {
+    font-size: 0.95rem;
+    font-weight: 600;
+}

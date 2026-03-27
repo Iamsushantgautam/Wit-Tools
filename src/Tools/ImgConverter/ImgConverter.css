@@ -1,0 +1,11 @@
+/* ImgConverter.css */
+
+.result-badge {
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+}
+
+@media (max-width: 640px) {
+    /* Responsive tweaks handled globally by .tool-card */
+}

@@ -16,8 +16,14 @@ const ProfilePhotoMaker = () => {
     const [bgColor, setBgColor] = useState('#FFFFFF'); // Default white
     const imgRef = useRef(null);
 
+    // Standard Passport Backgrounds
     const colors = [
-        '#ffffff', '#f5f5f5', '#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#9E9E9E', '#607D8B', '#000000',
+        '#FFFFFF', // Pure White (Standard)
+        '#E3F2FD', // Light Blue (Standard)
+        '#F1F5F9', // Off White
+        '#607D8B', // Grayish
+        '#3B82F6', // Royal Blue
+        '#1E293B', // Dark Slate
     ];
 
     const onSelectFile = (e) => {
@@ -36,9 +42,9 @@ const ProfilePhotoMaker = () => {
             makeAspectCrop(
                 {
                     unit: '%',
-                    width: 90,
+                    width: 70,
                 },
-                1, // Aspect Ratio
+                3.5 / 4.5, // Passport Aspect Ratio
                 width,
                 height,
             ),
@@ -52,8 +58,11 @@ const ProfilePhotoMaker = () => {
         const canvas = document.createElement('canvas');
         const scaleX = image.naturalWidth / image.width;
         const scaleY = image.naturalHeight / image.height;
-        canvas.width = crop.width;
-        canvas.height = crop.height;
+        
+        // Output dimensions for a high quality passport photo
+        canvas.width = 600;
+        canvas.height = 771; // Maintains 3.5:4.5 ratio roughly
+        
         const ctx = canvas.getContext('2d');
 
         ctx.drawImage(
@@ -64,8 +73,8 @@ const ProfilePhotoMaker = () => {
             crop.height * scaleY,
             0,
             0,
-            crop.width,
-            crop.height,
+            canvas.width,
+            canvas.height,
         );
 
         return new Promise((resolve, reject) => {
@@ -89,7 +98,6 @@ const ProfilePhotoMaker = () => {
                 await removeBackground(blob);
             } catch (e) {
                 console.error(e);
-                alert("Failed to crop image.");
                 setLoading(false);
             }
         }
@@ -121,9 +129,8 @@ const ProfilePhotoMaker = () => {
             const url = URL.createObjectURL(response.data);
             setResultImage(url);
             setStep(3);
-
         } catch (error) {
-            console.error("Error removing background:", error);
+            console.error("BG Removal failed, using cropped only:", error);
             const url = URL.createObjectURL(imageBlob);
             setResultImage(url);
             setStep(3);
@@ -151,18 +158,16 @@ const ProfilePhotoMaker = () => {
             const url = canvas.toDataURL('image/png');
             const link = document.createElement('a');
             link.href = url;
-            link.download = 'profile_pic.png';
-            document.body.appendChild(link);
+            link.download = 'passport_photo.png';
             link.click();
-            document.body.removeChild(link);
         };
     };
 
     return (
         <div className="tool-container profile-maker-container">
             <div className="tool-header-card">
-                <h2>Profile Photo Maker</h2>
-                <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Create professional profile pictures instantly</p>
+                <h2>Passport Photo Maker</h2>
+                <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Create official size photos with uniform backgrounds</p>
             </div>
 
             <div className="tool-card">
@@ -175,22 +180,24 @@ const ProfilePhotoMaker = () => {
 
                 {step === 2 && (
                     <div className="crop-section" style={{ width: '100%', textAlign: 'center' }}>
-                        <p className="step-label">Step 1: Crop your photo</p>
-                        <div className="crop-canvas-wrapper" style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'center' }}>
+                        <div className="section-header-compact">
+                            <span className="badge">1</span>
+                            <h3>Crop to Passport Size</h3>
+                        </div>
+                        <div className="crop-canvas-wrapper">
                             <ReactCrop
                                 crop={crop}
                                 onChange={(_, percentCrop) => setCrop(percentCrop)}
                                 onComplete={(c) => setCompletedCrop(c)}
-                                aspect={1}
-                                circularCrop
+                                aspect={3.5 / 4.5}
                             >
-                                <img ref={imgRef} alt="Crop" src={imgSrc} onLoad={onImageLoad} style={{ maxHeight: '50vh', maxWidth: '100%' }} />
+                                <img ref={imgRef} alt="Crop" src={imgSrc} onLoad={onImageLoad} className="crop-img-source" />
                             </ReactCrop>
                         </div>
                         <div className="action-buttons-group">
                             <button className="btn-secondary" onClick={() => { setStep(1); setImgSrc(null); }}>Cancel</button>
                             <button className="btn-primary" onClick={handleCropConfirm} disabled={loading}>
-                                {loading ? 'Processing...' : 'Next: Edit Background'}
+                                {loading ? 'Removing Background...' : 'Next: Set Background'}
                             </button>
                         </div>
                     </div>
@@ -198,32 +205,35 @@ const ProfilePhotoMaker = () => {
 
                 {step === 3 && resultImage && (
                     <div className="edit-section" style={{ width: '100%', textAlign: 'center' }}>
-                        <p className="step-label">Step 2: Choose background color</p>
-                        <div className="result-preview-area" style={{ marginBottom: '2rem' }}>
-                            <div
-                                className="final-preview-circle"
-                                style={{
-                                    backgroundImage: `url(${resultImage})`,
-                                    backgroundColor: bgColor,
-                                }}
-                            ></div>
-
-                            <div className="color-picker-grid">
-                                <input type="color" className="custom-color-input" value={bgColor} onChange={(e) => setBgColor(e.target.value)} title="Custom Color" />
-                                {colors.map(c => (
-                                    <div
-                                        key={c}
-                                        className={`color-swatch ${bgColor === c ? 'active' : ''}`}
-                                        style={{ backgroundColor: c }}
-                                        onClick={() => setBgColor(c)}
-                                    />
-                                ))}
+                        <div className="section-header-compact">
+                            <span className="badge">2</span>
+                            <h3>Pick Photo Background</h3>
+                        </div>
+                        
+                        <div className="passport-preview-container">
+                            <div className="passport-frame" style={{ backgroundColor: bgColor }}>
+                                <img src={resultImage} alt="Result" className="passport-img" />
                             </div>
 
-                            <div className="action-buttons-group" style={{ marginTop: '2rem' }}>
-                                <button className="btn-secondary" onClick={() => setStep(1)}>Start Over</button>
-                                <button className="btn-primary" onClick={downloadFinalImage}>Download Profile Photo</button>
+                            <div className="color-control-box">
+                                <label className="control-label">Official Colors</label>
+                                <div className="color-picker-grid">
+                                    {colors.map(c => (
+                                        <div
+                                            key={c}
+                                            className={`color-swatch ring ${bgColor === c ? 'active' : ''}`}
+                                            style={{ backgroundColor: c }}
+                                            onClick={() => setBgColor(c)}
+                                        />
+                                    ))}
+                                    <input type="color" className="custom-color-swatch" value={bgColor} onChange={(e) => setBgColor(e.target.value)} />
+                                </div>
                             </div>
+                        </div>
+
+                        <div className="action-buttons-group" style={{ marginTop: '3rem' }}>
+                            <button className="btn-secondary" onClick={() => setStep(1)}>Start Over</button>
+                            <button className="btn-primary" onClick={downloadFinalImage}>Download Passport Photo</button>
                         </div>
                     </div>
                 )}

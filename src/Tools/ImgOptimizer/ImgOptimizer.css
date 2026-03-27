@@ -1,0 +1,23 @@
+/* ImgOptimizer.css */
+
+.optimizer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 2rem;
+    width: 100%;
+}
+
+.settings-section {
+    padding: 1.5rem;
+    background-color: var(--bg-main);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 768px) {
+    .optimizer-grid {
+        grid-template-columns: 1fr;
+    }
+}

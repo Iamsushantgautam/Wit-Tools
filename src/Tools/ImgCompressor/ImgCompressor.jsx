@@ -1,255 +1,117 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import imageCompression from 'browser-image-compression';
 import './ImgCompressor.css';
 
 const ImgCompressor = () => {
     const [originalImage, setOriginalImage] = useState(null);
-    const [compressedImage, setCompressedImage] = useState(null);
     const [originalFile, setOriginalFile] = useState(null);
+    const [compressedImage, setCompressedImage] = useState(null);
     const [compressedFile, setCompressedFile] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [targetSizeKB, setTargetSizeKB] = useState(500); // Default 500KB
+    const [targetKB, setTargetKB] = useState(500);
 
-    const [originalWidth, setOriginalWidth] = useState(0);
-    const [originalHeight, setOriginalHeight] = useState(0);
-    const [targetWidth, setTargetWidth] = useState(0);
-    const [targetHeight, setTargetHeight] = useState(0);
-    const [maintainAspectRatio, setMaintainAspectRatio] = useState(true);
-
-    const handleImageUpload = (event) => {
-        const file = event.target.files[0];
+    const handleUpload = (e) => {
+        const file = e.target.files[0];
         if (file) {
             setOriginalFile(file);
-            const url = URL.createObjectURL(file);
-            setOriginalImage(url);
+            setOriginalImage(URL.createObjectURL(file));
             setCompressedImage(null);
-            setCompressedFile(null);
-
-            // Get dimensions
-            const img = new Image();
-            img.onload = () => {
-                setOriginalWidth(img.width);
-                setOriginalHeight(img.height);
-                setTargetWidth(img.width);
-                setTargetHeight(img.height);
-            };
-            img.src = url;
         }
     };
 
-    const handleWidthChange = (e) => {
-        const value = parseInt(e.target.value) || 0;
-        setTargetWidth(value);
-        if (maintainAspectRatio && originalWidth > 0) {
-            setTargetHeight(Math.round((value / originalWidth) * originalHeight));
-        }
-    };
-
-    const handleHeightChange = (e) => {
-        const value = parseInt(e.target.value) || 0;
-        setTargetHeight(value);
-        if (maintainAspectRatio && originalHeight > 0) {
-            setTargetWidth(Math.round((value / originalHeight) * originalWidth));
-        }
-    };
-
-    const handleCompress = async () => {
+    const processCompression = async () => {
         if (!originalFile) return;
-
         setLoading(true);
 
+        const options = {
+            maxSizeMB: targetKB / 1024,
+            maxWidthOrHeight: 4096, // Keep original resolution as much as possible
+            useWebWorker: true,
+            initialQuality: 0.9,
+        };
+
         try {
-            // First, resize the image to a canvas if dimensions changed
-            let fileToCompress = originalFile;
-
-            if (targetWidth !== originalWidth || targetHeight !== originalHeight) {
-                const canvas = document.createElement('canvas');
-                canvas.width = targetWidth;
-                canvas.height = targetHeight;
-                const ctx = canvas.getContext('2d');
-
-                const img = new Image();
-                img.src = originalImage;
-                await new Promise((resolve) => {
-                    img.onload = resolve;
-                });
-
-                ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
-
-                const blob = await new Promise((resolve) => {
-                    canvas.toBlob(resolve, originalFile.type);
-                });
-                fileToCompress = new File([blob], originalFile.name, { type: originalFile.type });
-            }
-
-            // Options for browser-image-compression
-            const maxSizeMB = targetSizeKB / 1024;
-
-            const options = {
-                maxSizeMB: maxSizeMB,
-                maxWidthOrHeight: Math.max(targetWidth, targetHeight),
-                useWebWorker: true,
-                initialQuality: 0.9,
-            };
-
-            const compressedBlob = await imageCompression(fileToCompress, options);
-
-            setCompressedFile(compressedBlob);
-            setCompressedImage(URL.createObjectURL(compressedBlob));
-
+            const blob = await imageCompression(originalFile, options);
+            setCompressedFile(blob);
+            setCompressedImage(URL.createObjectURL(blob));
         } catch (error) {
-            console.error("Operation failed:", error);
-            alert("Processing failed. Please try another image.");
+            console.error("Compression failed:", error);
+            alert("Compression failed. Try another format or image.");
         } finally {
             setLoading(false);
         }
     };
 
-    const formatSize = (sizeInBytes) => {
-        if (!sizeInBytes) return '0 KB';
-        return (sizeInBytes / 1024).toFixed(2) + ' KB';
+    const formatSize = (bytes) => {
+        if (!bytes) return '0 KB';
+        return (bytes / 1024).toFixed(2) + ' KB';
     };
 
-    const calculateReduction = () => {
+    const getReduction = () => {
         if (!originalFile || !compressedFile) return 0;
         const diff = originalFile.size - compressedFile.size;
-        const percentage = (diff / originalFile.size) * 100;
-        return percentage.toFixed(1);
+        return ((diff / originalFile.size) * 100).toFixed(1);
     };
 
     return (
-        <div className="tool-container img-compressor-container">
+        <div className="tool-container">
             <div className="tool-header-card">
                 <h2>Image Compressor</h2>
-                <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Resize and optimize images without losing quality</p>
+                <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Reduce image file size without losing much quality</p>
             </div>
 
             <div className="tool-card">
                 {!originalImage ? (
-                    <label htmlFor="img-upload" className="drop-zone">
+                    <label htmlFor="compressor-input" className="drop-zone">
                         <span>Click to Upload Image</span>
-                        <input
-                            type="file"
-                            id="img-upload"
-                            accept="image/*"
-                            onChange={handleImageUpload}
-                            style={{ display: 'none' }}
-                        />
+                        <input id="compressor-input" type="file" accept="image/*" onChange={handleUpload} style={{ display: 'none' }} />
                     </label>
                 ) : (
-                    <div className="workspace">
-                        <div className="file-info-header">
+                    <div className="workspace" style={{ width: '100%' }}>
+                        <div className="file-info-header" style={{ marginBottom: '1.5rem' }}>
                             <h3 className="file-name">{originalFile.name}</h3>
-                            <span className="file-meta">{originalWidth} x {originalHeight} px • {formatSize(originalFile.size)}</span>
+                            <span className="file-meta">Original Size: {formatSize(originalFile.size)}</span>
                         </div>
 
                         {!compressedImage ? (
-                            <div className="settings-grid">
-                                <div className="settings-group">
-                                    <label className="control-label">Target Dimensions (px)</label>
-                                    <div className="dimensions-input">
-                                        <div className="input-with-label">
-                                            <input
-                                                type="number"
-                                                className="input-field"
-                                                value={targetWidth}
-                                                onChange={handleWidthChange}
-                                                placeholder="Width"
-                                            />
-                                            <span className="small-label">Width</span>
-                                        </div>
-                                        <div className="dimension-separator">×</div>
-                                        <div className="input-with-label">
-                                            <input
-                                                type="number"
-                                                className="input-field"
-                                                value={targetHeight}
-                                                onChange={handleHeightChange}
-                                                placeholder="Height"
-                                            />
-                                            <span className="small-label">Height</span>
-                                        </div>
-                                    </div>
-                                    <label className="checkbox-label" style={{ marginTop: '0.5rem' }}>
-                                        <input
-                                            type="checkbox"
-                                            checked={maintainAspectRatio}
-                                            onChange={(e) => setMaintainAspectRatio(e.target.checked)}
-                                        />
-                                        Maintain Aspect Ratio
-                                    </label>
-                                </div>
-
-                                <div className="settings-group">
+                            <div className="controls-box" style={{ maxWidth: '400px', margin: '0 auto' }}>
+                                <div className="input-row" style={{ marginBottom: '2rem' }}>
                                     <label className="control-label">Target File Size (KB)</label>
                                     <input
                                         type="number"
                                         className="input-field"
-                                        value={targetSizeKB}
-                                        onChange={(e) => setTargetSizeKB(Number(e.target.value))}
+                                        value={targetKB}
+                                        onChange={(e) => setTargetKB(Number(e.target.value))}
                                         min="1"
                                     />
-                                    <p className="hint">Desired maximum file size</p>
+                                    <p style={{ fontSize: '0.8rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>Desired maximum file size</p>
                                 </div>
 
-                                <div className="actions" style={{ gridColumn: '1 / -1', marginTop: '1rem' }}>
-                                    <button
-                                        className="btn-primary"
-                                        onClick={handleCompress}
-                                        disabled={loading}
-                                        style={{ width: '100%' }}
-                                    >
-                                        {loading ? 'Processing...' : 'Resize & Compress Now'}
-                                    </button>
-                                    
-                                    <button
-                                        className="btn-secondary"
-                                        onClick={() => {
-                                            setOriginalImage(null);
-                                            setOriginalFile(null);
-                                        }}
-                                        style={{ width: '100%', marginTop: '0.8rem' }}
-                                    >
-                                        Change Image
-                                    </button>
-                                </div>
+                                <button className="btn-primary" onClick={processCompression} disabled={loading} style={{ width: '100%' }}>
+                                    {loading ? 'Processing...' : 'Compress Image'}
+                                </button>
+                                <button className="btn-secondary" onClick={() => setOriginalImage(null)} style={{ width: '100%', marginTop: '0.5rem' }}>Change Image</button>
                             </div>
                         ) : (
-                            <div className="result-section">
-                                <div className="result-stats">
-                                    <div className="stat-item">
-                                        <span className="stat-label">New Dimensions</span>
-                                        <span className="stat-value">{targetWidth} × {targetHeight} px</span>
+                            <div className="result-view" style={{ textAlign: 'center' }}>
+                                <div className="result-stats" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem', marginBottom: '2rem' }}>
+                                    <div style={{ padding: '1rem', background: 'var(--bg-main)', borderRadius: 'var(--radius-md)' }}>
+                                        <span className="control-label" style={{ display: 'block' }}>New Size</span>
+                                        <span style={{ fontWeight: '700', fontSize: '1.2rem', color: 'var(--secondary)' }}>{formatSize(compressedFile.size)}</span>
                                     </div>
-                                    <div className="stat-item">
-                                        <span className="stat-label">New Size</span>
-                                        <span className="stat-value green">{formatSize(compressedFile.size)}</span>
-                                    </div>
-                                    <div className="stat-item">
-                                        <span className="stat-label">Reduction</span>
-                                        <span className="stat-value red">-{calculateReduction()}%</span>
+                                    <div style={{ padding: '1rem', background: 'var(--bg-main)', borderRadius: 'var(--radius-md)' }}>
+                                        <span className="control-label" style={{ display: 'block' }}>Reduction</span>
+                                        <span style={{ fontWeight: '700', fontSize: '1.2rem', color: '#ef4444' }}>-{getReduction()}%</span>
                                     </div>
                                 </div>
 
-                                <div className="action-buttons-group">
-                                    <a
-                                        href={compressedImage}
-                                        download={`processed_${originalFile.name}`}
-                                        className="btn-primary"
-                                        style={{ textDecoration: 'none' }}
-                                    >
-                                        Download Image
-                                    </a>
+                                <div style={{ background: 'var(--bg-main)', padding: '1rem', borderRadius: 'var(--radius-md)', marginBottom: '2rem' }}>
+                                    <img src={compressedImage} alt="Preview" style={{ maxWidth: '100%', maxHeight: '300px', borderRadius: 'var(--radius-sm)' }} />
+                                </div>
 
-                                    <button
-                                        className="btn-secondary"
-                                        onClick={() => {
-                                            setOriginalImage(null);
-                                            setCompressedImage(null);
-                                        }}
-                                    >
-                                        Compress Another
-                                    </button>
+                                <div className="action-buttons-group" style={{ display: 'flex', gap: '1rem' }}>
+                                    <a href={compressedImage} download={`compressed_${originalFile.name}`} className="btn-primary" style={{ flex: 1, textDecoration: 'none' }}>Download</a>
+                                    <button className="btn-secondary" onClick={() => setCompressedImage(null)} style={{ flex: 1 }}>Reset</button>
                                 </div>
                             </div>
                         )}
