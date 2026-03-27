@@ -54,7 +54,10 @@ const Navbar = () => {
                                 <Link to="/shopify-dev">Shopify Dev Hub</Link>
                                 <a href="https://github.com/Iamsushantgautam/Chrome-extension/tree/main/shopify%20product%20scraper" target="_blank" rel="noopener noreferrer">Shopify Scraper (Ext)</a>
                                 <a href="https://icons8.com" target="_blank" rel="noopener noreferrer">Icons8 (Assets)</a>
+                                <a href="https://colorhunt.co" target="_blank" rel="noopener noreferrer">Color Hunt (Colors)</a>
                             </div>
+
+
                         </div>
                     </div>
 
@@ -117,15 +120,16 @@ const Navbar = () => {
                         <span>Utility Tools</span>
                         <svg className="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M19 9l-7 7-7-7" /></svg>
                     </div>
-                     <div className="accordion-content">
-                         <Link to="/bg-remover" onClick={closeAll}>Remove Background</Link>
-                         <Link to="/profile-maker" onClick={closeAll}>Passport Photo Maker</Link>
-                         <Link to="/watermark" onClick={closeAll}>Add Watermark</Link>
-                         <Link to="/qr-generator" onClick={closeAll}>QR Generator</Link>
-                         <Link to="/shopify-dev" onClick={closeAll}>Shopify Dev Hub</Link>
-                         <a href="https://github.com/Iamsushantgautam/Chrome-extension/tree/main/shopify%20product%20scraper" target="_blank" rel="noopener noreferrer" onClick={closeAll}>Shopify Scraper (Ext)</a>
-                         <a href="https://icons8.com" target="_blank" rel="noopener noreferrer" onClick={closeAll}>Icons8 Creative Hub</a>
-                     </div>
+                    <div className="accordion-content">
+                        <Link to="/bg-remover" onClick={closeAll}>Remove Background</Link>
+                        <Link to="/profile-maker" onClick={closeAll}>Passport Photo Maker</Link>
+                        <Link to="/watermark" onClick={closeAll}>Add Watermark</Link>
+                        <Link to="/qr-generator" onClick={closeAll}>QR Generator</Link>
+                        <Link to="/shopify-dev" onClick={closeAll}>Shopify Dev Hub</Link>
+                        <a href="https://github.com/Iamsushantgautam/Chrome-extension/tree/main/shopify%20product%20scraper" target="_blank" rel="noopener noreferrer" onClick={closeAll}>Shopify Scraper (Ext)</a>
+                        <a href="https://icons8.com" target="_blank" rel="noopener noreferrer" onClick={closeAll}>Icons8 Creative Hub</a>
+                        <a href="https://colorhunt.co" target="_blank" rel="noopener noreferrer" onClick={closeAll}>Color Hunt (Colors)</a>
+                    </div>
                 </div>
 
                 <div className="mobile-footer-links">

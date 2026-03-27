@@ -1,7 +1,7 @@
 /* ShopifyDev.css */
 .shopify-container {
     max-width: 1200px;
-    margin: 6rem auto 10rem;
+    margin: 3rem auto 5rem;
     padding: 0 5%;
     position: relative;
 }
@@ -12,7 +12,8 @@
 }
 
 .shopify-badge {
-    background: #95bf47; /* Shopify Green */
+    background: #95bf47;
+    /* Shopify Green */
     color: white;
     padding: 6px 16px;
     border-radius: 50px;
@@ -50,21 +51,41 @@
 
 .prompt-card {
     background: white;
-    padding: 2.5rem;
     border-radius: 24px;
     border: 1px solid rgba(226, 232, 240, 0.6);
-    box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
     position: relative;
     overflow: hidden;
 }
 
+.prompt-preview-img {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+}
+
+.prompt-preview-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+
+}
+
+
+
+.prompt-card-body {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
 .prompt-card:hover {
     transform: translateY(-8px);
-    box-shadow: 0 30px 60px rgba(0,0,0,0.06);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.06);
     border-color: #95bf47;
 }
 
@@ -95,15 +116,27 @@
 
 .prompt-box {
     background: #f8fafc;
-    padding: 1.25rem;
+    padding: 1.75rem;
     border-radius: 12px;
     border: 1px solid #e2e8f0;
     font-family: 'Inter', monospace;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: #334155;
     position: relative;
     user-select: all;
     cursor: copy;
+    line-height: 1.7;
+    min-height: 140px;
+    display: flex;
+    align-items: center;
+    white-space: pre-wrap;
+    transition: all 0.3s ease;
+}
+
+.prompt-box:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+    transform: scale(1.02);
 }
 
 .prompt-box::after {
@@ -122,8 +155,13 @@
 }
 
 @media (max-width: 768px) {
-    .shopify-title { font-size: 2.5rem; }
-    .prompt-grid { grid-template-columns: 1fr; }
+    .shopify-title {
+        font-size: 2.5rem;
+    }
+
+    .prompt-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* Custom Toast Styling */
@@ -149,8 +187,8 @@
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    border: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .toast-content svg {

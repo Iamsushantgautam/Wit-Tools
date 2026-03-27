@@ -72,6 +72,16 @@ const ChromeIcon = () => (
     </svg>
 );
 
+// --- Global Home Configuration (Change Category Order Here) ---
+const HOME_CATEGORY_ORDER = [
+    'Image Tools',
+    'PDF Tools',
+    'Utility Tools',
+    'Shopify Tools',
+    'Chrome Extension',
+    'Useful Websites'
+];
+
 const Home = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -92,11 +102,14 @@ const Home = () => {
         { id: 'watermark', title: 'Watermark', desc: 'Add stamps to your Photos & PDFs.', icon: <WatermarkIcon />, category: 'Utility Tools', color: 'icon-blue', isVisible: true },
         { id: 'qr-generator', title: 'QR Generator', desc: 'Generate custom QR codes instantly.', icon: <QrIcon />, category: 'Utility Tools', color: 'icon-orange', isVisible: true },
         { id: 'qr-generator', title: 'QR Generator', desc: 'Generate custom QR codes instantly.', icon: <QrIcon />, category: 'Utility Tools', color: 'icon-orange', isVisible: true },
-        { id: 'shopify-dev', title: 'Shopify Dev Hub', desc: 'Expert AI prompts for Shopify section developers.', icon: <ShopifyIcon />, category: 'Shopify Tools', color: 'icon-green', isVisible: true },
+        { id: 'shopify-dev', title: 'Shopify Ai Prompts for sections', desc: 'Expert AI prompts for Shopify section developers.', icon: <ShopifyIcon />, category: 'Shopify Tools', color: 'icon-green', isVisible: true },
         { id: 'shopify-scraper', title: 'Shopify Product Scraper', desc: 'Powerful Chrome extension for bulk extracting Shopify product data.', icon: <ShopifyIcon />, category: 'Chrome Extension', color: 'icon-green', isExternal: true, url: 'https://github.com/Iamsushantgautam/Chrome-extension/tree/main/shopify%20product%20scraper', useFavicon: false, isVisible: true },
         { id: 'icons8', title: 'Icons8', desc: 'Premium library for professional icons, photos, and creative assets.', icon: <QrIcon />, category: 'Useful Websites', color: 'icon-green', isExternal: true, url: 'https://icons8.com/', isVisible: true },
+        { id: 'colorhunt', title: 'Color Hunt', desc: 'Curated color palettes for designers and artists. Find the perfect scheme.', icon: <QrIcon />, category: 'Useful Websites', color: 'icon-purple', isExternal: true, url: 'https://colorhunt.co/', isVisible: true },
         { id: 'witcet', title: 'Witcet.online', desc: 'Visit our partner site for advanced AI resources, creative assets, and more digital utilities.', icon: <WitcetIcon />, category: 'Useful Websites', color: 'icon-purple', isExternal: true, url: 'https://witcet.online', isVisible: false },
         { id: 'portfolio', title: 'Sushant\'s Portfolio', desc: 'Explore the full creative development portfolio of the developer.', icon: <UserIcon />, category: 'Useful Websites', color: 'icon-blue', isExternal: true, url: 'https://sushant.online', isVisible: false },
+        { id: 'stitch', title: 'Stitch', desc: 'Professional UI and screen creation platform designed for creative developers.', icon: <QrIcon />, category: 'Useful Websites', color: 'icon-blue', isExternal: true, url: 'https://stitch.withgoogle.com/', isVisible: true },
+        { id: 'notebooklm', title: 'NotebookLM', desc: 'Next-generation AI research and writing environment powered by Google Gemini.', icon: <QrIcon />, category: 'Useful Websites', color: 'icon-purple', isExternal: true, url: 'https://notebooklm.google/', isVisible: true },
 
     ];
 
@@ -112,7 +125,7 @@ const Home = () => {
     return (
         <div className="home-container">
             <header className="hero-section">
-                <h1 className="home-title">The Master Hub for <span style={{ color: 'var(--primary)' }}>Images & PDFs</span></h1>
+                <h1 className="home-title">The Master Hub for <span style={{ color: 'var(--primary)' }}>Tools</span></h1>
                 <p className="home-subtitle">
                     Effortless processing. Instant results. 100% Secure.
                 </p>
@@ -133,7 +146,7 @@ const Home = () => {
             </header>
 
             <div className="tools-sections-wrapper">
-                {categories.map(cat => {
+                {HOME_CATEGORY_ORDER.map(cat => {
                     const sectionTools = filteredTools.filter(t => t.category === cat);
                     if (sectionTools.length === 0) return null;
 

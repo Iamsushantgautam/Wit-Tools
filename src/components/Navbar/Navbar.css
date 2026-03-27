@@ -51,7 +51,7 @@
 /* Dropdown Styles Desktop */
 .nav-dropdown-wrapper {
     position: relative;
-    padding: 1.5rem 0;
+    padding: 2.5rem 1rem;
 }
 
 .dropdown-trigger {
@@ -66,7 +66,7 @@
     left: 50%;
     transform: translateX(-50%);
     background-color: white;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
     border-radius: var(--radius-md);
     padding: 1.5rem;
     min-width: 500px;
@@ -210,8 +210,9 @@
         transform: translateX(-100%);
         transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         padding: 0;
-        box-shadow: 10px 0 30px rgba(0,0,0,0.05);
+        box-shadow: 10px 0 30px rgba(0, 0, 0, 0.05);
     }
+
     .mobile-dropdown.show {
         transform: translateX(0);
     }
@@ -311,6 +312,11 @@
 }
 
 @media (max-width: 480px) {
-    .main-nav { padding: 0 4%; }
-    .nav-logo { font-size: 1.25rem; }
+    .main-nav {
+        padding: 0 4%;
+    }
+
+    .nav-logo {
+        font-size: 1.25rem;
+    }
 }

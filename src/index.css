@@ -9,7 +9,7 @@
   --text-main: #1e293b;
   --text-muted: #64748b;
   --border-color: #e2e8f0;
-  
+
   /* Shared values */
   --radius-lg: 16px;
   --radius-md: 12px;
@@ -41,6 +41,12 @@ body {
 
 * {
   box-sizing: border-box;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+*::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
 }
 
 /* Common Tool Classes for Unified Design */
@@ -181,9 +187,11 @@ body {
   .tool-container {
     padding: 1rem;
   }
+
   .tool-card {
     padding: 1.5rem;
   }
+
   .tool-header-card h2 {
     font-size: 1.5rem;
   }
