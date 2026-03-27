@@ -41,8 +41,6 @@ const PdfSecurity = () => {
 
         try {
             const arrayBuffer = await file.arrayBuffer();
-            // Load document - it might already be encrypted, in which case we might fail without pass
-            // However, assuming user uploads unencrypted doc for protection
             let pdfDoc;
             try {
                 pdfDoc = await PDFDocument.load(arrayBuffer);
@@ -52,20 +50,9 @@ const PdfSecurity = () => {
                 return;
             }
 
-            // Encrypt with user and owner password (same for simplicity)
-            // Permissions: allow nothing by default or everything? Let's restrict printing/editing?
-            // Default behavior of most tools is read access with password.
-
-            /* 
-               pdf-lib encrypt options:
-               userPassword: required to open
-               ownerPassword: required to change permissions
-               permissions: { printing: 'highResolution', modifying: false, etc. }
-             */
-
             pdfDoc.encrypt({
                 userPassword: password,
-                ownerPassword: password, // Same owner password for simplicity in this tool
+                ownerPassword: password,
                 permissions: {
                     printing: 'highResolution',
                     modifying: false,
@@ -91,8 +78,6 @@ const PdfSecurity = () => {
 
     const handleUnlock = async () => {
         if (!file) return;
-        // Note: If PDF is encrypted, we often need password just to load it. 
-        // But if user wants to REMOVE password, they must know it.
 
         if (!currentPassword) {
             setStatusMessage('Enter the current password to unlock.');
@@ -107,22 +92,12 @@ const PdfSecurity = () => {
 
             let pdfDoc;
             try {
-                // Attempt to load with password
                 pdfDoc = await PDFDocument.load(arrayBuffer, { password: currentPassword });
             } catch (e) {
-                // Likely invalid password
                 setStatusMessage('Invalid password. Could not open PDF.');
                 setIsProcessing(false);
                 return;
             }
-
-            // Saving without passing 'encrypt' options effectively removes security
-            // Wait - pdf-lib might preserve encryption if modifying?
-            // No, usually save() creates a new file. If we don't call encrypt() on it, it's plain.
-            // BUT - loaded encrypted doc might retain encryption metadata.
-            // Actually, pdf-lib removes encryption upon save if not re-encrypted explicitly?
-            // Let's test. If save() defaults to no encryption, we are good.
-            // Correct implementation: Just save it. A loaded document is decrypted in memory.
 
             const pdfBytes = await pdfDoc.save();
             downloadPdf(pdfBytes, `unlocked_${fileName}`);
@@ -156,105 +131,108 @@ const PdfSecurity = () => {
     };
 
     return (
-        <div className="pdf-security-container">
-            <div className="tool-header">
-                <h2>PDF Password Tool</h2>
-                <p>Add password protection or remove it from your PDF files.</p>
+        <div className="tool-container pdf-security-container">
+            <div className="tool-header-card">
+                <h2>PDF Security</h2>
+                <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Protect with password or unlock encrypted PDFs</p>
             </div>
 
-            <div className="security-card">
+            <div className="tool-card">
                 <div className="tabs">
                     <button
-                        className={`tab-btn ${activeTab === 'protect' ? 'active' : ''}`}
+                        className={`tab-link ${activeTab === 'protect' ? 'active' : ''}`}
                         onClick={() => { setActiveTab('protect'); reset(); }}
                     >
                         Protect PDF
                     </button>
                     <button
-                        className={`tab-btn ${activeTab === 'unlock' ? 'active' : ''}`}
+                        className={`tab-link ${activeTab === 'unlock' ? 'active' : ''}`}
                         onClick={() => { setActiveTab('unlock'); reset(); }}
                     >
                         Unlock PDF
                     </button>
                 </div>
 
-                <div className="workspace">
-                    {/* Upload Section */}
+                <div className="workspace" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
                     {!file ? (
-                        <div className="upload-area" onClick={() => document.getElementById('pdf-sec-upload').click()}>
+                        <label htmlFor="pdf-sec-upload" className="drop-zone">
+                            <span>Click to Upload PDF</span>
                             <input
                                 type="file"
                                 id="pdf-sec-upload"
                                 accept="application/pdf"
                                 onChange={handleFileChange}
-                                hidden
+                                style={{ display: 'none' }}
                             />
-                            <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>📄</div>
-                            <div>Click to Upload PDF</div>
-                        </div>
+                        </label>
                     ) : (
-                        <div className="file-info-box">
-                            <div className="file-info">{fileName}</div>
-                            <button className="secondary-btn" onClick={reset} style={{ fontSize: '0.8rem', marginLeft: '10px' }}>Change File</button>
+                        <div className="file-info-header">
+                            <h3 className="file-name">{fileName}</h3>
+                            <button className="btn-secondary" onClick={reset} style={{ marginTop: '0.5rem' }}>Change File</button>
                         </div>
                     )}
 
-                    {/* Forms */}
                     {file && activeTab === 'protect' && (
-                        <div className="form-container" style={{ width: '100%' }}>
+                        <div className="form-container" style={{ width: '100%', maxWidth: '400px', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <div className="form-group">
-                                <label>New Password</label>
+                                <label className="control-label">New Password</label>
                                 <input
                                     type="password"
-                                    className="form-input"
+                                    className="input-field"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
                                     placeholder="Enter strong password"
                                 />
                             </div>
                             <div className="form-group">
-                                <label>Confirm Password</label>
+                                <label className="control-label">Confirm Password</label>
                                 <input
                                     type="password"
-                                    className="form-input"
+                                    className="input-field"
                                     value={confirmPassword}
                                     onChange={(e) => setConfirmPassword(e.target.value)}
                                     placeholder="Re-enter password"
                                 />
                             </div>
                             <button
-                                className="action-btn"
+                                className="btn-primary"
                                 onClick={handleProtect}
                                 disabled={isProcessing || !password || !confirmPassword}
+                                style={{ marginTop: '0.5rem' }}
                             >
-                                {isProcessing ? 'Encrypting...' : 'Protect PDF'}
+                                {isProcessing ? 'Encrypting...' : 'Protect PDF Now'}
                             </button>
                         </div>
                     )}
 
                     {file && activeTab === 'unlock' && (
-                        <div className="form-container" style={{ width: '100%' }}>
+                        <div className="form-container" style={{ width: '100%', maxWidth: '400px', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                             <div className="form-group">
-                                <label>Current Password</label>
+                                <label className="control-label">Current Password</label>
                                 <input
                                     type="password"
-                                    className="form-input"
+                                    className="input-field"
                                     value={currentPassword}
                                     onChange={(e) => setCurrentPassword(e.target.value)}
                                     placeholder="Enter password to unlock"
                                 />
                             </div>
                             <button
-                                className="action-btn"
+                                className="btn-primary"
                                 onClick={handleUnlock}
                                 disabled={isProcessing || !currentPassword}
+                                style={{ marginTop: '0.5rem' }}
                             >
-                                {isProcessing ? 'Decrypting...' : 'Unlock PDF'}
+                                {isProcessing ? 'Decrypting...' : 'Unlock PDF Now'}
                             </button>
                         </div>
                     )}
 
-                    {statusMessage && <div className="status-message">{statusMessage}</div>}
+                    {statusMessage && (
+                        <div className={`status-message ${statusMessage.includes('Successfully') ? 'success' : 'error'}`}>
+                            {statusMessage}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

@@ -48,10 +48,6 @@ const ImgToPdf = () => {
         const pdfWidth = width;
         const pdfHeight = (imgProps.height * width) / imgProps.width;
         
-        // Center image vertically if it's smaller, or just fit width
-        // For standard "img to pdf" usually fit width is best, or fit within margins
-        // Let's just fit to width for simplicity
-        
         pdf.addImage(imgData, 'JPEG', 0, 0, pdfWidth, pdfHeight);
       }
       
@@ -76,40 +72,45 @@ const ImgToPdf = () => {
   };
 
   return (
-    <div className="img-to-pdf-container">
-      <div className="tool-header">
+    <div className="tool-container img-to-pdf-container">
+      <div className="tool-header-card">
         <h2>Image to PDF Converter</h2>
+        <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Fast and reliable conversion</p>
       </div>
       
-      <div className="upload-section">
-        <label htmlFor="file-upload" className="custom-file-upload">
-          Click to Upload Images (JPG, PNG)
+      <div className="tool-card">
+        <label htmlFor="file-upload" className="drop-zone">
+          <span>Click to Upload Images (JPG, PNG)</span>
+          <input 
+            id="file-upload" 
+            type="file" 
+            accept="image/*" 
+            multiple 
+            onChange={handleImageUpload}
+            style={{ display: 'none' }}
+          />
         </label>
-        <input 
-          id="file-upload" 
-          type="file" 
-          accept="image/*" 
-          multiple 
-          onChange={handleImageUpload}
-        />
         
-        <div className="preview-grid">
-          {images.map((img, index) => (
-            <div key={index} className="img-preview-card">
-              <img src={img.preview} alt={`preview ${index}`} />
-              <button className="remove-btn" onClick={() => removeImage(index)}>&times;</button>
-            </div>
-          ))}
-        </div>
+        {images.length > 0 && (
+          <div className="preview-grid">
+            {images.map((img, index) => (
+              <div key={index} className="img-preview-card">
+                <img src={img.preview} alt={`preview ${index}`} />
+                <button className="remove-btn" onClick={() => removeImage(index)}>&times;</button>
+              </div>
+            ))}
+          </div>
+        )}
         
         {images.length > 0 && (
           <div className="action-buttons">
             <button 
-              className="convert-btn" 
+              className="btn-primary" 
               onClick={convertToPdf}
               disabled={loading}
+              style={{ padding: '14px 40px' }}
             >
-              {loading ? 'Converting...' : 'Convert to PDF'}
+              {loading ? 'Converting...' : 'Convert to PDF Now'}
             </button>
           </div>
         )}

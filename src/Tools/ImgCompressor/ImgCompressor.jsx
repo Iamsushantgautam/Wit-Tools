@@ -118,150 +118,141 @@ const ImgCompressor = () => {
     };
 
     return (
-        <div className="img-compressor-container">
-            <div className="tool-header">
-                <h2>Image Resizer & Compressor</h2>
-                <p>Resize dimensions and reduce file size easily.</p>
+        <div className="tool-container img-compressor-container">
+            <div className="tool-header-card">
+                <h2>Image Compressor</h2>
+                <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Resize and optimize images without losing quality</p>
             </div>
 
-            <div className="compressor-card">
+            <div className="tool-card">
                 {!originalImage ? (
-                    <div className="drop-zone" onClick={() => document.getElementById('img-upload').click()}>
+                    <label htmlFor="img-upload" className="drop-zone">
+                        <span>Click to Upload Image</span>
                         <input
                             type="file"
                             id="img-upload"
                             accept="image/*"
                             onChange={handleImageUpload}
-                            hidden
+                            style={{ display: 'none' }}
                         />
-                        <div className="drop-content">
-                            <svg className="upload-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                            </svg>
-                            <span>Click to Upload Image</span>
-                            <p>Supports JPG, PNG, WEBP</p>
-                        </div>
-                    </div>
+                    </label>
                 ) : (
-                    <div className="settings-section">
-                        <div className="item-preview-header">
-                            <img src={originalImage} alt="Original" className="mini-preview" />
-                            <div className="file-meta">
-                                <strong>{originalFile.name}</strong>
-                                <span>{originalWidth} x {originalHeight} px • {formatSize(originalFile.size)}</span>
-                            </div>
+                    <div className="workspace">
+                        <div className="file-info-header">
+                            <h3 className="file-name">{originalFile.name}</h3>
+                            <span className="file-meta">{originalWidth} x {originalHeight} px • {formatSize(originalFile.size)}</span>
                         </div>
 
-                        <div className="settings-grid">
-                            <div className="settings-group">
-                                <label>Target Dimensions (px)</label>
-                                <div className="dimensions-input">
-                                    <div className="input-with-label">
-                                        <input
-                                            type="number"
-                                            value={targetWidth}
-                                            onChange={handleWidthChange}
-                                            placeholder="Width"
-                                        />
-                                        <span>Width</span>
+                        {!compressedImage ? (
+                            <div className="settings-grid">
+                                <div className="settings-group">
+                                    <label className="control-label">Target Dimensions (px)</label>
+                                    <div className="dimensions-input">
+                                        <div className="input-with-label">
+                                            <input
+                                                type="number"
+                                                className="input-field"
+                                                value={targetWidth}
+                                                onChange={handleWidthChange}
+                                                placeholder="Width"
+                                            />
+                                            <span className="small-label">Width</span>
+                                        </div>
+                                        <div className="dimension-separator">×</div>
+                                        <div className="input-with-label">
+                                            <input
+                                                type="number"
+                                                className="input-field"
+                                                value={targetHeight}
+                                                onChange={handleHeightChange}
+                                                placeholder="Height"
+                                            />
+                                            <span className="small-label">Height</span>
+                                        </div>
                                     </div>
-                                    <div className="dimension-separator">×</div>
-                                    <div className="input-with-label">
+                                    <label className="checkbox-label" style={{ marginTop: '0.5rem' }}>
                                         <input
-                                            type="number"
-                                            value={targetHeight}
-                                            onChange={handleHeightChange}
-                                            placeholder="Height"
+                                            type="checkbox"
+                                            checked={maintainAspectRatio}
+                                            onChange={(e) => setMaintainAspectRatio(e.target.checked)}
                                         />
-                                        <span>Height</span>
-                                    </div>
+                                        Maintain Aspect Ratio
+                                    </label>
                                 </div>
-                                <label className="checkbox-label">
-                                    <input
-                                        type="checkbox"
-                                        checked={maintainAspectRatio}
-                                        onChange={(e) => setMaintainAspectRatio(e.target.checked)}
-                                    />
-                                    Maintain Aspect Ratio
-                                </label>
-                            </div>
 
-                            <div className="settings-group">
-                                <label>Target File Size</label>
-                                <div className="target-size-input">
+                                <div className="settings-group">
+                                    <label className="control-label">Target File Size (KB)</label>
                                     <input
                                         type="number"
+                                        className="input-field"
                                         value={targetSizeKB}
                                         onChange={(e) => setTargetSizeKB(Number(e.target.value))}
                                         min="1"
                                     />
-                                    <span className="unit">KB</span>
+                                    <p className="hint">Desired maximum file size</p>
                                 </div>
-                                <p className="hint">Maximum desired file size</p>
+
+                                <div className="actions" style={{ gridColumn: '1 / -1', marginTop: '1rem' }}>
+                                    <button
+                                        className="btn-primary"
+                                        onClick={handleCompress}
+                                        disabled={loading}
+                                        style={{ width: '100%' }}
+                                    >
+                                        {loading ? 'Processing...' : 'Resize & Compress Now'}
+                                    </button>
+                                    
+                                    <button
+                                        className="btn-secondary"
+                                        onClick={() => {
+                                            setOriginalImage(null);
+                                            setOriginalFile(null);
+                                        }}
+                                        style={{ width: '100%', marginTop: '0.8rem' }}
+                                    >
+                                        Change Image
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-
-                        <div className="actions">
-                            <button
-                                className="compress-btn"
-                                onClick={handleCompress}
-                                disabled={loading}
-                            >
-                                {loading ? 'Processing...' : 'Resize & Compress'}
-                            </button>
-
-                            <button
-                                className="reset-btn"
-                                onClick={() => {
-                                    setOriginalImage(null);
-                                    setOriginalFile(null);
-                                    setCompressedImage(null);
-                                    setCompressedFile(null);
-                                }}
-                            >
-                                Start Over
-                            </button>
-                        </div>
-                    </div>
-                )}
-
-                {compressedImage && (
-                    <div className="comparison-section">
-                        <div className="comparison-card result-card">
-                            <div className="result-header">
-                                <div className="result-title">
-                                    <h3>Processed Image</h3>
-                                    <span className="reduction-badge">-{calculateReduction()}%</span>
-                                </div>
+                        ) : (
+                            <div className="result-section">
                                 <div className="result-stats">
                                     <div className="stat-item">
-                                        <span>Dimensions:</span>
-                                        <strong>{targetWidth} × {targetHeight} px</strong>
+                                        <span className="stat-label">New Dimensions</span>
+                                        <span className="stat-value">{targetWidth} × {targetHeight} px</span>
                                     </div>
                                     <div className="stat-item">
-                                        <span>New Size:</span>
-                                        <strong className="success-text">{formatSize(compressedFile.size)}</strong>
+                                        <span className="stat-label">New Size</span>
+                                        <span className="stat-value green">{formatSize(compressedFile.size)}</span>
+                                    </div>
+                                    <div className="stat-item">
+                                        <span className="stat-label">Reduction</span>
+                                        <span className="stat-value red">-{calculateReduction()}%</span>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div className="result-preview">
-                                <img src={compressedImage} alt="Compressed" className="preview-img" />
-                            </div>
+                                <div className="action-buttons-group">
+                                    <a
+                                        href={compressedImage}
+                                        download={`processed_${originalFile.name}`}
+                                        className="btn-primary"
+                                        style={{ textDecoration: 'none' }}
+                                    >
+                                        Download Image
+                                    </a>
 
-                            <div className="download-action">
-                                <a
-                                    href={compressedImage}
-                                    download={`processed_${originalFile.name}`}
-                                    className="download-btn"
-                                >
-                                    <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                    </svg>
-                                    Download Image
-                                </a>
+                                    <button
+                                        className="btn-secondary"
+                                        onClick={() => {
+                                            setOriginalImage(null);
+                                            setCompressedImage(null);
+                                        }}
+                                    >
+                                        Compress Another
+                                    </button>
+                                </div>
                             </div>
-                        </div>
+                        )}
                     </div>
                 )}
             </div>
@@ -270,4 +261,3 @@ const ImgCompressor = () => {
 };
 
 export default ImgCompressor;
-

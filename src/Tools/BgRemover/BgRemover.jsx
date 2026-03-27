@@ -16,7 +16,7 @@ const BgRemover = () => {
             setFile(selectedFile);
             setOriginalImage(URL.createObjectURL(selectedFile));
             setResultImage(null); // Reset previous result
-            // Auto remove bg when file selected, similar to the reference site behavior
+            // Auto remove bg when file selected
             removeBackground(selectedFile);
         }
     };
@@ -70,88 +70,76 @@ const BgRemover = () => {
     };
 
     return (
-        <div className="bg-remover-container">
-            <div className="bg-hero-section">
+        <div className="tool-container bg-remover-container">
+            <div className="tool-header-card">
+                <h2>Background Remover</h2>
+                <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>100% Automatically and Free</p>
+            </div>
 
-                {/* Left Side: Hero Text and Placeholder */}
-                <div className="left-content">
-                    {/* Placeholder for the hero image */}
-                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80" alt="Example" className="hero-image-placeholder" />
+            <div className="tool-card">
+                {!loading && !resultImage ? (
+                    <div className="upload-wrapper">
+                        <label htmlFor="bg-remover-upload" className="btn-primary">
+                            Upload Image
+                        </label>
+                        <input
+                            id="bg-remover-upload"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                        />
 
-                    <h1 className="hero-title">Remove Image <br /> Background</h1>
-                    <div className="hero-subtitle">
-                        <span>100% Automatically and</span>
-                        <span className="free-badge">Free</span>
+                        <p className="drop-text">or drop a file, paste image or URL</p>
+
+                        <div className="sample-section">
+                            <p>No image? Try one of these:</p>
+                            <div className="sample-thumbnails">
+                                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=50&h=50&q=80" className="sample-thumb" alt="Sample 1" onClick={() => {/* Mock selection would go here */}} />
+                                <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=50&h=50&q=80" className="sample-thumb" alt="Sample 2" />
+                                <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&w=50&h=50&q=80" className="sample-thumb" alt="Sample 3" />
+                            </div>
+                        </div>
                     </div>
-                </div>
-
-                {/* Right Side: Upload Card */}
-                <div className="right-content">
-                    <div className="upload-card">
-
-                        {!loading && !resultImage ? (
-                            <>
-                                <label htmlFor="bg-remover-upload" className="upload-btn-label">
-                                    Upload Image
-                                </label>
-                                <input
-                                    id="bg-remover-upload"
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={handleFileChange}
-                                />
-
-                                <p className="drop-text">or drop a file,</p>
-                                <span className="paste-text">paste image or URL</span>
-
-                                <p className="sample-section">No image? Try one of these:</p>
-                                <div className="sample-thumbnails">
-                                    <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=50&h=50&q=80" className="sample-thumb" alt="Sample 1" />
-                                    <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=50&h=50&q=80" className="sample-thumb" alt="Sample 2" />
-                                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=50&h=50&q=80" className="sample-thumb" alt="Sample 3" />
-                                    <img src="https://images.unsplash.com/photo-1552058544-f2b08422138a?auto=format&fit=crop&w=50&h=50&q=80" className="sample-thumb" alt="Sample 4" />
-                                </div>
-                            </>
-                        ) : (
-                            <div className="result-container">
-                                {loading && <p>Removing Background...</p>}
-                                {resultImage && (
-                                    <>
-                                        {/* Comparison View */}
-                                        <div className="comparison-view">
-                                            <div className="comparison-item">
-                                                <span className="comparison-label">Original</span>
-                                                <div className="result-image-wrapper">
-                                                    <img src={originalImage} alt="Original" />
-                                                </div>
-                                            </div>
-                                            <div className="comparison-item">
-                                                <span className="comparison-label">Removed Background</span>
-                                                <div className="result-image-wrapper">
-                                                    <img src={resultImage} alt="Result" />
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div className="action-buttons-group">
-                                            <button className="download-btn" onClick={downloadResult}>
-                                                Download HD
-                                            </button>
-                                            <button
-                                                className="reset-btn"
-                                                onClick={() => { setResultImage(null); setFile(null); setOriginalImage(null); }}
-                                            >
-                                                Upload Another
-                                            </button>
-                                        </div>
-                                    </>
-                                )}
+                ) : (
+                    <div className="result-container">
+                        {loading && (
+                            <div className="loading-state">
+                                <div className="spinner"></div>
+                                <p>Removing Background...</p>
                             </div>
                         )}
+                        {resultImage && (
+                            <>
+                                <div className="comparison-view">
+                                    <div className="comparison-item">
+                                        <span className="comparison-label">Original</span>
+                                        <div className="result-image-wrapper">
+                                            <img src={originalImage} alt="Original" />
+                                        </div>
+                                    </div>
+                                    <div className="comparison-item">
+                                        <span className="comparison-label">Removed BG</span>
+                                        <div className="result-image-wrapper">
+                                            <img src={resultImage} alt="Result" />
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <div className="action-buttons-group">
+                                    <button className="btn-primary" onClick={downloadResult}>
+                                        Download HD
+                                    </button>
+                                    <button
+                                        className="btn-secondary"
+                                        onClick={() => { setResultImage(null); setFile(null); setOriginalImage(null); }}
+                                    >
+                                        Upload Another
+                                    </button>
+                                </div>
+                            </>
+                        )}
                     </div>
-                </div>
-
+                )}
             </div>
         </div>
     );

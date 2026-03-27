@@ -47,23 +47,19 @@ const PdfCompressor = () => {
             const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
             const numPages = pdf.numPages;
 
-            // Create a new PDF with jsPDF
-            // Initialize with the first page format, will adjust per page
             const newPdf = new jsPDF({
                 orientation: 'p',
                 unit: 'px',
                 format: 'a4',
-                compress: true // Enable internal compression
+                compress: true 
             });
 
-            // Iterate through each page
             for (let i = 1; i <= numPages; i++) {
                 setProgress(Math.round(((i - 1) / numPages) * 100));
 
                 const page = await pdf.getPage(i);
-                const viewport = page.getViewport({ scale: 1.5 }); // Scale 1.5 is a good balance for readability vs size
+                const viewport = page.getViewport({ scale: 1.5 }); 
 
-                // Create a canvas to render the page
                 const canvas = document.createElement('canvas');
                 const context = canvas.getContext('2d');
                 canvas.height = viewport.height;
@@ -74,21 +70,15 @@ const PdfCompressor = () => {
                     viewport: viewport
                 }).promise;
 
-                // Convert canvas to compressed JPEG
-                // The magic happens here: rendering the page as an image with reduced quality
                 const imgData = canvas.toDataURL('image/jpeg', compressionLevel);
 
-                // Add image to new PDF
                 if (i > 1) {
                     newPdf.addPage([viewport.width, viewport.height]);
                 } else {
-                    // Resize first page if needed, or just set page size
-                    // Actually setPage is better or creating doc with correct size
-                    newPdf.deletePage(1); // Remove default page
+                    newPdf.deletePage(1); 
                     newPdf.addPage([viewport.width, viewport.height]);
                 }
 
-                // Add the image to the current page (which is the last added page)
                 const width = newPdf.internal.pageSize.getWidth();
                 const height = newPdf.internal.pageSize.getHeight();
 
@@ -97,7 +87,6 @@ const PdfCompressor = () => {
 
             setProgress(100);
 
-            // Generate the Blob
             const compressedBlob = newPdf.output('blob');
             const compressedUrl = URL.createObjectURL(compressedBlob);
 
@@ -113,38 +102,35 @@ const PdfCompressor = () => {
     };
 
     return (
-        <div className="pdf-compressor-container">
-            <div className="tool-header">
+        <div className="tool-container pdf-compressor-container">
+            <div className="tool-header-card">
                 <h2>PDF Compressor</h2>
-                <p>Reduce PDF file size by optimizing pages (Rasterize & Compress)</p>
+                <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Reduce PDF size with smart compression</p>
             </div>
 
-            <div className="compressor-card">
+            <div className="tool-card">
                 {!file ? (
-                    <div className="drop-zone" onClick={() => document.getElementById('pdf-upload').click()}>
+                    <label htmlFor="pdf-upload" className="drop-zone">
+                        <span>Click to Upload PDF</span>
                         <input
                             type="file"
                             id="pdf-upload"
                             accept="application/pdf"
                             onChange={handleFileChange}
-                            hidden
+                            style={{ display: 'none' }}
                         />
-                        <div className="drop-content">
-                            <span>Click to Upload PDF</span>
-                            <p>Supports .PDF files</p>
-                        </div>
-                    </div>
+                    </label>
                 ) : (
-                    <>
+                    <div className="workspace">
                         <div className="file-info-header">
-                            <h3>{file.name}</h3>
+                            <h3 className="file-name">{file.name}</h3>
                             <span className="file-size-tag">Original: {formatSize(originalSize)}</span>
                         </div>
 
                         {!compressedPdf ? (
                             <div className="pdf-controls">
                                 <div className="control-group">
-                                    <label className="control-label">Compression Level (Image Quality)</label>
+                                    <label className="control-label">Compression Level: {Math.round(compressionLevel * 100)}%</label>
                                     <input
                                         type="range"
                                         min="0.1"
@@ -154,18 +140,13 @@ const PdfCompressor = () => {
                                         onChange={(e) => setCompressionLevel(parseFloat(e.target.value))}
                                         className="quality-range"
                                     />
-                                    <div className="quality-value-display">
-                                        <span>Current: {Math.round(compressionLevel * 100)}% Quality</span>
-                                        <span style={{ fontSize: '0.8rem', color: '#666' }}>
-                                            (Lower = Smaller Size, Higher = Better Quality)
-                                        </span>
-                                    </div>
                                 </div>
 
                                 <button
-                                    className="compress-btn"
+                                    className="btn-primary"
                                     onClick={compressPdf}
                                     disabled={isCompressing}
+                                    style={{ width: '100%' }}
                                 >
                                     {isCompressing ? `Processing... ${progress}%` : 'Compress PDF'}
                                 </button>
@@ -178,8 +159,6 @@ const PdfCompressor = () => {
                             </div>
                         ) : (
                             <div className="result-section">
-                                <h3>Compression Complete!</h3>
-
                                 <div className="result-stats">
                                     <div className="stat-item">
                                         <span className="stat-label">Original</span>
@@ -187,37 +166,40 @@ const PdfCompressor = () => {
                                     </div>
                                     <div className="stat-item">
                                         <span className="stat-label">Compressed</span>
-                                        <span className="stat-value" style={{ color: '#10b981' }}>{formatSize(compressedSize)}</span>
+                                        <span className="stat-value green">{formatSize(compressedSize)}</span>
                                     </div>
                                     <div className="stat-item">
                                         <span className="stat-label">Reduction</span>
-                                        <span className="stat-value" style={{ color: '#dc2626' }}>
+                                        <span className="stat-value red">
                                             {Math.round(((originalSize - compressedSize) / originalSize) * 100)}%
                                         </span>
                                     </div>
                                 </div>
 
-                                <a
-                                    href={compressedPdf}
-                                    download={`compressed_${file.name}`}
-                                    className="download-btn"
-                                >
-                                    Download Compressed PDF
-                                </a>
+                                <div className="action-buttons-group">
+                                    <a
+                                        href={compressedPdf}
+                                        download={`compressed_${file.name}`}
+                                        className="btn-primary"
+                                        style={{ textDecoration: 'none' }}
+                                    >
+                                        Download PDF
+                                    </a>
 
-                                <button
-                                    className="reset-btn"
-                                    onClick={() => {
-                                        setFile(null);
-                                        setCompressedPdf(null);
-                                        setCompressedSize(0);
-                                    }}
-                                >
-                                    Compress Another PDF
-                                </button>
+                                    <button
+                                        className="btn-secondary"
+                                        onClick={() => {
+                                            setFile(null);
+                                            setCompressedPdf(null);
+                                            setCompressedSize(0);
+                                        }}
+                                    >
+                                        Compress Another
+                                    </button>
+                                </div>
                             </div>
                         )}
-                    </>
+                    </div>
                 )}
             </div>
         </div>

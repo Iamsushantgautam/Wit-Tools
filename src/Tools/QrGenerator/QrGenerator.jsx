@@ -29,12 +29,12 @@ const QrGenerator = () => {
     };
 
     return (
-        <div className="qr-generator-container">
-            <div className="tool-header">
+        <div className="tool-container qr-generator-container">
+            <div className="tool-header-card">
                 <h2>QR Code Generator</h2>
             </div>
 
-            <div className="input-section">
+            <div className="tool-card">
                 <input
                     type="text"
                     placeholder="Enter text or URL..."
@@ -42,25 +42,26 @@ const QrGenerator = () => {
                     value={text}
                     onChange={(e) => setText(e.target.value)}
                 />
-                <button className="generate-btn" onClick={handleGenerate}>
+                <button className="btn-primary" onClick={handleGenerate}>
                     Generate QR Code
                 </button>
-            </div>
 
-            {qrCodeData && (
-                <div className="qr-code-display" ref={canvasRef}>
-                    <QRCodeCanvas
-                        value={qrCodeData}
-                        size={256}
-                        level={"H"} // High error correction level
-                        includeMargin={true}
-                    />
-                    <br />
-                    <button className="download-link" onClick={handleDownload} style={{ marginTop: '20px', border: 'none', cursor: 'pointer' }}>
-                        Download QR Code
-                    </button>
-                </div>
-            )}
+                {qrCodeData && (
+                    <div className="qr-code-display" ref={canvasRef}>
+                        <QRCodeCanvas
+                            value={qrCodeData}
+                            size={256}
+                            level={"H"} // High error correction level
+                            includeMargin={true}
+                        />
+                        <div style={{ marginTop: '20px' }}>
+                            <button className="btn-primary" onClick={handleDownload}>
+                                Download QR Code
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

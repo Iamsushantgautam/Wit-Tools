@@ -13,7 +13,6 @@ const PdfToImg = () => {
     const [selectedPages, setSelectedPages] = useState([]);
     const [loading, setLoading] = useState(false);
     const [progress, setProgress] = useState(0);
-    const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef(null);
 
     const handleFile = (selectedFile) => {
@@ -25,25 +24,6 @@ const PdfToImg = () => {
         } else {
             alert('Please upload a valid PDF file.');
         }
-    };
-
-    const onFileChange = (e) => {
-        handleFile(e.target.files[0]);
-    };
-
-    const onDragOver = (e) => {
-        e.preventDefault();
-        setIsDragging(true);
-    };
-
-    const onDragLeave = () => {
-        setIsDragging(false);
-    };
-
-    const onDrop = (e) => {
-        e.preventDefault();
-        setIsDragging(false);
-        handleFile(e.dataTransfer.files[0]);
     };
 
     const convertPdfToImages = async () => {
@@ -62,8 +42,6 @@ const PdfToImg = () => {
 
             for (let i = 1; i <= numPages; i++) {
                 const page = await pdf.getPage(i);
-
-                // Scale 2.0 provides good quality without too much memory overhead
                 const viewport = page.getViewport({ scale: 2.0 });
                 const canvas = document.createElement('canvas');
                 const context = canvas.getContext('2d');
@@ -86,11 +64,10 @@ const PdfToImg = () => {
             }
 
             setImages(convertedImages);
-            // Default select all after conversion
             setSelectedPages(convertedImages.map(img => img.pageNumber));
         } catch (error) {
             console.error('Error converting PDF:', error);
-            alert('Failed to convert PDF. Please try a different file.');
+            alert('Failed to convert PDF.');
         } finally {
             setLoading(false);
         }
@@ -98,13 +75,10 @@ const PdfToImg = () => {
 
     const downloadZip = async () => {
         if (images.length === 0) return;
-
-        const imagesToDownload = selectedPages.length > 0
-            ? images.filter(img => selectedPages.includes(img.pageNumber))
-            : images;
-
+        const imagesToDownload = images.filter(img => selectedPages.includes(img.pageNumber));
+        
         if (imagesToDownload.length === 0) {
-            alert('Please select at least one page to download.');
+            alert('Please select at least one page.');
             return;
         }
 
@@ -115,7 +89,7 @@ const PdfToImg = () => {
         });
 
         const content = await zip.generateAsync({ type: 'blob' });
-        saveAs(content, `${file.name.replace('.pdf', '')}_selected_pages.zip`);
+        saveAs(content, `${file.name.replace('.pdf', '')}_images.zip`);
     };
 
     const togglePageSelection = (pageNumber) => {
@@ -134,141 +108,83 @@ const PdfToImg = () => {
         }
     };
 
-    const downloadSingleImage = (url, pageNum) => {
-        saveAs(url, `page-${pageNum}.png`);
-    };
-
     const clearFile = () => {
         setFile(null);
         setImages([]);
         setSelectedPages([]);
-        setProgress(0);
         if (fileInputRef.current) fileInputRef.current.value = '';
     };
 
     return (
-        <div className="pdf-to-img-container">
-            <div className="tool-header">
-                <h2>PDF to Image Converter</h2>
-                <p>Convert your PDF pages into high-quality PNG images instantly. Perfect for presentations, social media, or extracting specific pages.</p>
+        <div className="tool-container pdf-to-img-container">
+            <div className="tool-header-card">
+                <h2>PDF to Image</h2>
+                <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Convert PDF pages to high-quality images</p>
             </div>
 
-            <div className="main-content">
-                <div className={`upload-card ${isDragging ? 'dragging' : ''}`}
-                    onDragOver={onDragOver}
-                    onDragLeave={onDragLeave}
-                    onDrop={onDrop}>
-
-                    {!file ? (
-                        <div className="drop-zone" onClick={() => fileInputRef.current.click()}>
-                            <svg className="upload-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                            </svg>
-                            <h3>Select PDF File</h3>
-                            <p>or drag and drop your file here</p>
-                            <button className="browse-btn">Browse File</button>
-                            <input
-                                type="file"
-                                ref={fileInputRef}
-                                onChange={onFileChange}
-                                accept="application/pdf"
-                                style={{ display: 'none' }}
-                            />
-                        </div>
-                    ) : (
-                        <>
-                            <div className="file-info">
-                                <div className="file-details">
-                                    <svg className="pdf-icon-mini" fill="currentColor" viewBox="0 0 20 20">
-                                        <path d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" />
-                                    </svg>
-                                    <span className="file-name">{file.name}</span>
-                                </div>
-                                <button className="clear-btn" onClick={clearFile} disabled={loading}>Change</button>
-                            </div>
-
-                            <div className="action-buttons">
-                                <button
-                                    className="convert-btn"
-                                    onClick={convertPdfToImages}
-                                    disabled={loading || images.length > 0}
-                                >
-                                    {loading ? (
-                                        <>
-                                            <span className="loader-dots"></span>
-                                            Converting...
-                                        </>
-                                    ) : images.length > 0 ? 'Conversion Complete' : 'Convert to Images'}
+            <div className="tool-card">
+                {!file ? (
+                    <label htmlFor="pdf-upload-img" className="drop-zone" onClick={() => fileInputRef.current.click()}>
+                        <span>Click to Upload PDF</span>
+                        <input
+                            type="file"
+                            ref={fileInputRef}
+                            onChange={(e) => handleFile(e.target.files[0])}
+                            accept="application/pdf"
+                            style={{ display: 'none' }}
+                            id="pdf-upload-img"
+                        />
+                    </label>
+                ) : (
+                    <div className="workspace" style={{ width: '100%' }}>
+                        <div className="file-info-header">
+                            <h3 className="file-name">{file.name}</h3>
+                            <div className="action-buttons-group" style={{ marginTop: '1rem' }}>
+                                <button className="btn-primary" onClick={convertPdfToImages} disabled={loading || images.length > 0}>
+                                    {loading ? `Converting ${progress}%` : images.length > 0 ? 'Converted' : 'Convert to Images'}
                                 </button>
+                                <button className="btn-secondary" onClick={clearFile} disabled={loading}>Change File</button>
                             </div>
-
-                            {loading && (
-                                <div className="status-tracker">
-                                    <div className="progress-header">
-                                        <span>Processing pages...</span>
-                                        <span>{progress}%</span>
-                                    </div>
-                                    <div className="progress-bar-container">
-                                        <div className="progress-bar-fill" style={{ width: `${progress}%` }}></div>
-                                    </div>
-                                </div>
-                            )}
-                        </>
-                    )}
-                </div>
-
-                {images.length > 0 && (
-                    <div className="results-section">
-                        <div className="results-header">
-                            <div className="header-left">
-                                <h3>Converted Pages ({images.length})</h3>
-                                <button className="select-all-btn" onClick={toggleSelectAll}>
-                                    {selectedPages.length === images.length ? 'Deselect All' : 'Select All'}
-                                </button>
-                            </div>
-                            <button className="download-all-btn" onClick={downloadZip} disabled={selectedPages.length === 0}>
-                                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1M12 4v12m0 0l-4-4m4 4l4-4" />
-                                </svg>
-                                Download {selectedPages.length === images.length ? 'All' : `Selected (${selectedPages.length})`} (ZIP)
-                            </button>
                         </div>
 
-                        <div className="images-grid">
-                            {images.map((img) => (
-                                <div
-                                    key={img.id}
-                                    className={`image-card ${selectedPages.includes(img.pageNumber) ? 'selected' : ''}`}
-                                    onClick={() => togglePageSelection(img.pageNumber)}
-                                >
-                                    <div className="selection-overlay">
-                                        <div className="checkbox">
-                                            {selectedPages.includes(img.pageNumber) && (
-                                                <svg viewBox="0 0 20 20" fill="currentColor">
-                                                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                                                </svg>
-                                            )}
-                                        </div>
-                                    </div>
-                                    <div className="image-preview-wrapper">
-                                        <img src={img.url} alt={`Page ${img.pageNumber}`} />
-                                    </div>
-                                    <div className="card-footer" onClick={(e) => e.stopPropagation()}>
-                                        <span className="page-number">Page {img.pageNumber}</span>
-                                        <button
-                                            className="card-download-btn"
-                                            onClick={() => downloadSingleImage(img.url, img.pageNumber)}
-                                            title="Download Page"
+                        {loading && (
+                            <div className="progress-bar-container" style={{ marginTop: '1.5rem' }}>
+                                <div className="progress-bar-fill" style={{ width: `${progress}%` }}></div>
+                            </div>
+                        )}
+
+                        {images.length > 0 && (
+                            <div className="results-wrapper" style={{ marginTop: '2rem' }}>
+                                <div className="results-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+                                    <button className="btn-secondary" onClick={toggleSelectAll}>
+                                        {selectedPages.length === images.length ? 'Deselect All' : 'Select All'}
+                                    </button>
+                                    <button className="btn-primary" onClick={downloadZip} disabled={selectedPages.length === 0}>
+                                        Download ZIP ({selectedPages.length})
+                                    </button>
+                                </div>
+
+                                <div className="images-grid">
+                                    {images.map((img) => (
+                                        <div
+                                            key={img.id}
+                                            className={`img-card ${selectedPages.includes(img.pageNumber) ? 'selected' : ''}`}
+                                            onClick={() => togglePageSelection(img.pageNumber)}
                                         >
-                                            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12 12 16.5m0 0L7.5 12m4.5 4.5V3" />
-                                            </svg>
-                                            <span>Download</span>
-                                        </button>
-                                    </div>
+                                            <div className="selection-badge">
+                                                {selectedPages.includes(img.pageNumber) && <span>✓</span>}
+                                            </div>
+                                            <div className="img-preview">
+                                                <img src={img.url} alt={`Page ${img.pageNumber}`} />
+                                            </div>
+                                            <div className="img-footer">
+                                                <span>Page {img.pageNumber}</span>
+                                            </div>
+                                        </div>
+                                    ))}
                                 </div>
-                            ))}
-                        </div>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>

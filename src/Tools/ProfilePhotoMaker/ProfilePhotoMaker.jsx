@@ -15,31 +15,9 @@ const ProfilePhotoMaker = () => {
     const [resultImage, setResultImage] = useState(null);
     const [bgColor, setBgColor] = useState('#FFFFFF'); // Default white
     const imgRef = useRef(null);
-    const previewCanvasRef = useRef(null);
 
     const colors = [
-        '#ffffff', // White
-        '#f5f5f5', // Light Grey
-        '#F44336', // Red
-        '#E91E63', // Pink
-        '#9C27B0', // Purple
-        '#673AB7', // Deep Purple
-        '#3F51B5', // Indigo
-        '#2196F3', // Blue
-        '#03A9F4', // Light Blue
-        '#00BCD4', // Cyan
-        '#009688', // Teal
-        '#4CAF50', // Green
-        '#8BC34A', // Light Green
-        '#CDDC39', // Lime
-        '#FFEB3B', // Yellow
-        '#FFC107', // Amber
-        '#FF9800', // Orange
-        '#FF5722', // Deep Orange
-        '#795548', // Brown
-        '#9E9E9E', // Grey
-        '#607D8B', // Blue Grey
-        '#000000', // Black
+        '#ffffff', '#f5f5f5', '#F44336', '#E91E63', '#9C27B0', '#673AB7', '#3F51B5', '#2196F3', '#03A9F4', '#00BCD4', '#009688', '#4CAF50', '#8BC34A', '#CDDC39', '#FFEB3B', '#FFC107', '#FF9800', '#FF5722', '#795548', '#9E9E9E', '#607D8B', '#000000',
     ];
 
     const onSelectFile = (e) => {
@@ -60,7 +38,7 @@ const ProfilePhotoMaker = () => {
                     unit: '%',
                     width: 90,
                 },
-                1, // Aspect Ratio - Square for profiles
+                1, // Aspect Ratio
                 width,
                 height,
             ),
@@ -108,7 +86,6 @@ const ProfilePhotoMaker = () => {
             try {
                 const blob = await getCroppedImg(imgRef.current, completedCrop, 'cropped.png');
                 setCroppedImageBlob(blob);
-                // After cropping, proceed to remove BG
                 await removeBackground(blob);
             } catch (e) {
                 console.error(e);
@@ -121,9 +98,7 @@ const ProfilePhotoMaker = () => {
     const removeBackground = async (imageBlob) => {
         const apiKey = import.meta.env.VITE_REMOVE_BG_API_KEY;
 
-        // If no API key, just proceed with the cropped image
         if (!apiKey) {
-            console.warn("No API Key found. Skipping BG removal.");
             const url = URL.createObjectURL(imageBlob);
             setResultImage(url);
             setStep(3);
@@ -149,19 +124,9 @@ const ProfilePhotoMaker = () => {
 
         } catch (error) {
             console.error("Error removing background:", error);
-
-            // Fallback: Use original cropped image if API fails
             const url = URL.createObjectURL(imageBlob);
             setResultImage(url);
             setStep(3);
-
-            if (error.response?.status === 402) {
-                alert("API Limit Reached. Using original image.");
-            } else if (error.response?.status === 401 || error.response?.status === 403) {
-                alert("Invalid or Missing API Key. Using original image. Please restart server.");
-            } else {
-                console.log("Using original cropped image as fallback.");
-            }
         } finally {
             setLoading(false);
         }
@@ -170,7 +135,6 @@ const ProfilePhotoMaker = () => {
     const downloadFinalImage = () => {
         if (!resultImage) return;
 
-        // We need to composite the BG color and the transparent image
         const canvas = document.createElement('canvas');
         const ctx = canvas.getContext('2d');
         const img = new Image();
@@ -180,12 +144,8 @@ const ProfilePhotoMaker = () => {
         img.onload = () => {
             canvas.width = img.width;
             canvas.height = img.height;
-
-            // Draw BG Color
             ctx.fillStyle = bgColor;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-            // Draw Image
             ctx.drawImage(img, 0, 0);
 
             const url = canvas.toDataURL('image/png');
@@ -199,25 +159,24 @@ const ProfilePhotoMaker = () => {
     };
 
     return (
-        <div className="profile-maker-container">
-            <div className="tool-header">
-                <h2>Profile Picture Maker</h2>
-                <p>Create professional profile photos in seconds.</p>
+        <div className="tool-container profile-maker-container">
+            <div className="tool-header-card">
+                <h2>Profile Photo Maker</h2>
+                <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Create professional profile pictures instantly</p>
             </div>
 
-            <div className="profile-maker-card">
+            <div className="tool-card">
                 {step === 1 && (
-                    <div className="upload-section" style={{ textAlign: 'center', padding: '3rem', border: '2px dashed #ddd', borderRadius: '12px', cursor: 'pointer' }} onClick={() => document.getElementById('pm-upload').click()}>
-                        <input type="file" id="pm-upload" accept="image/*" onChange={onSelectFile} hidden />
-                        <div style={{ fontSize: '3rem' }}>📷</div>
-                        <p style={{ marginTop: '1rem', fontWeight: 600 }}>Click to Upload Photo</p>
-                    </div>
+                    <label htmlFor="pm-upload" className="drop-zone">
+                        <span>Click to Upload Photo</span>
+                        <input type="file" id="pm-upload" accept="image/*" onChange={onSelectFile} style={{ display: 'none' }} />
+                    </label>
                 )}
 
                 {step === 2 && (
-                    <div className="crop-section">
-                        <p className="step-indicator">Step 1: Crop Your Photo</p>
-                        <div className="crop-canvas-wrapper">
+                    <div className="crop-section" style={{ width: '100%', textAlign: 'center' }}>
+                        <p className="step-label">Step 1: Crop your photo</p>
+                        <div className="crop-canvas-wrapper" style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'center' }}>
                             <ReactCrop
                                 crop={crop}
                                 onChange={(_, percentCrop) => setCrop(percentCrop)}
@@ -225,38 +184,31 @@ const ProfilePhotoMaker = () => {
                                 aspect={1}
                                 circularCrop
                             >
-                                <img ref={imgRef} alt="Crop me" src={imgSrc} onLoad={onImageLoad} style={{ maxHeight: '60vh' }} />
+                                <img ref={imgRef} alt="Crop" src={imgSrc} onLoad={onImageLoad} style={{ maxHeight: '50vh', maxWidth: '100%' }} />
                             </ReactCrop>
                         </div>
-                        <div className="tool-actions">
-                            <button className="secondary-btn" onClick={() => { setStep(1); setImgSrc(null); }}>Cancel</button>
-                            <button className="primary-btn" onClick={handleCropConfirm} disabled={loading}>
-                                {loading ? 'Processing...' : 'Remove Background & Edit'}
+                        <div className="action-buttons-group">
+                            <button className="btn-secondary" onClick={() => { setStep(1); setImgSrc(null); }}>Cancel</button>
+                            <button className="btn-primary" onClick={handleCropConfirm} disabled={loading}>
+                                {loading ? 'Processing...' : 'Next: Edit Background'}
                             </button>
                         </div>
                     </div>
                 )}
 
                 {step === 3 && resultImage && (
-                    <div className="edit-section">
-                        <p className="step-indicator">Step 2: Customize Background</p>
-                        <div className="result-preview-area">
-                            {/* Preview Profile Pic */}
+                    <div className="edit-section" style={{ width: '100%', textAlign: 'center' }}>
+                        <p className="step-label">Step 2: Choose background color</p>
+                        <div className="result-preview-area" style={{ marginBottom: '2rem' }}>
                             <div
-                                className="final-preview"
+                                className="final-preview-circle"
                                 style={{
                                     backgroundImage: `url(${resultImage})`,
                                     backgroundColor: bgColor,
-                                    backgroundSize: 'cover',
-                                    backgroundPosition: 'center',
-                                    borderRadius: '50%'
                                 }}
-                            >
-                                {/* Just using background image logic for preview divs */}
-                            </div>
+                            ></div>
 
-                            {/* Color Picker */}
-                            <div className="color-picker-row">
+                            <div className="color-picker-grid">
                                 <input type="color" className="custom-color-input" value={bgColor} onChange={(e) => setBgColor(e.target.value)} title="Custom Color" />
                                 {colors.map(c => (
                                     <div
@@ -268,9 +220,9 @@ const ProfilePhotoMaker = () => {
                                 ))}
                             </div>
 
-                            <div className="tool-actions">
-                                <button className="secondary-btn" onClick={() => document.getElementById('pm-upload').click()}>Start Over</button>
-                                <button className="primary-btn" onClick={downloadFinalImage}>Download Profile Pic</button>
+                            <div className="action-buttons-group" style={{ marginTop: '2rem' }}>
+                                <button className="btn-secondary" onClick={() => setStep(1)}>Start Over</button>
+                                <button className="btn-primary" onClick={downloadFinalImage}>Download Profile Photo</button>
                             </div>
                         </div>
                     </div>

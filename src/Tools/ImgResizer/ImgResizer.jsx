@@ -66,13 +66,11 @@ const ImgResizer = () => {
                 img.onload = resolve;
             });
 
-            // Use better scaling if possible
             ctx.imageSmoothingEnabled = true;
             ctx.imageSmoothingQuality = 'high';
             ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
 
             const blob = await new Promise((resolve) => {
-                // Quality 1.0 = No compression loss (for supported formats)
                 canvas.toBlob(resolve, originalFile.type, 1.0);
             });
 
@@ -92,104 +90,94 @@ const ImgResizer = () => {
     };
 
     return (
-        <div className="img-resizer-container">
-            <div className="tool-header">
+        <div className="tool-container img-resizer-container">
+            <div className="tool-header-card">
                 <h2>High-Quality Image Resizer</h2>
-                <p>Change image dimensions without losing quality.</p>
+                <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Change image dimensions without losing quality</p>
             </div>
 
-            <div className="resizer-card">
+            <div className="tool-card">
                 {!originalImage ? (
-                    <div className="drop-zone" onClick={() => document.getElementById('resizer-upload').click()}>
+                    <label htmlFor="resizer-upload" className="drop-zone">
+                        <span>Click to Resize Image</span>
                         <input
                             type="file"
                             id="resizer-upload"
                             accept="image/*"
                             onChange={handleImageUpload}
-                            hidden
+                            style={{ display: 'none' }}
                         />
-                        <div className="drop-content">
-                            <svg className="upload-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                            <span>Click to High-Quality Resize</span>
-                            <p>Lossless Resize for JPG, PNG, WEBP</p>
-                        </div>
-                    </div>
+                    </label>
                 ) : (
-                    <div className="settings-section">
-                        <div className="preview-mini-header">
-                            <img src={originalImage} alt="Original" />
-                            <div className="meta-info">
-                                <strong>{originalFile.name}</strong>
-                                <span>{originalWidth} x {originalHeight} px • {formatSize(originalFile.size)}</span>
-                            </div>
+                    <div className="workspace">
+                        <div className="file-info-header">
+                            <h3 className="file-name">{originalFile.name}</h3>
+                            <span className="file-meta">{originalWidth} x {originalHeight} px • {formatSize(originalFile.size)}</span>
                         </div>
 
-                        <div className="resizer-controls">
-                            <div className="control-group">
-                                <label>Target Dimensions</label>
-                                <div className="dim-inputs">
-                                    <div className="input-box">
-                                        <input type="number" value={targetWidth} onChange={handleWidthChange} />
-                                        <span>Width (px)</span>
+                        {!resizedImage ? (
+                            <div className="resizer-controls">
+                                <div className="control-group">
+                                    <label className="control-label">Target Dimensions (px)</label>
+                                    <div className="dim-inputs">
+                                        <div className="input-box">
+                                            <input type="number" className="input-field" value={targetWidth} onChange={handleWidthChange} />
+                                            <span className="small-label">Width</span>
+                                        </div>
+                                        <div className="sep">×</div>
+                                        <div className="input-box">
+                                            <input type="number" className="input-field" value={targetHeight} onChange={handleHeightChange} />
+                                            <span className="small-label">Height</span>
+                                        </div>
                                     </div>
-                                    <div className="sep">×</div>
-                                    <div className="input-box">
-                                        <input type="number" value={targetHeight} onChange={handleHeightChange} />
-                                        <span>Height (px)</span>
-                                    </div>
+                                    <label className="checkbox-label" style={{ marginTop: '0.5rem' }}>
+                                        <input
+                                            type="checkbox"
+                                            checked={maintainAspectRatio}
+                                            onChange={(e) => setMaintainAspectRatio(e.target.checked)}
+                                        />
+                                        Maintain Aspect Ratio
+                                    </label>
+                                </div>
+
+                                <div className="action-row" style={{ marginTop: '1.5rem' }}>
+                                    <button className="btn-primary" onClick={handleResize} disabled={loading} style={{ width: '100%' }}>
+                                        {loading ? 'Processing...' : 'Resize Now'}
+                                    </button>
+                                    <button className="btn-secondary" onClick={() => {
+                                        setOriginalImage(null);
+                                        setOriginalFile(null);
+                                    }} style={{ width: '100%', marginTop: '0.8rem' }}>Change Image</button>
                                 </div>
                             </div>
+                        ) : (
+                            <div className="result-section">
+                                <div className="result-stats">
+                                    <div className="stat-item">
+                                        <span className="stat-label">New Dimensions</span>
+                                        <span className="stat-value">{targetWidth} × {targetHeight} px</span>
+                                    </div>
+                                    <div className="stat-item">
+                                        <span className="stat-label">New Size</span>
+                                        <span className="stat-value green">{formatSize(resizedBlob.size)}</span>
+                                    </div>
+                                </div>
 
-                            <label className="toggle-label">
-                                <input
-                                    type="checkbox"
-                                    checked={maintainAspectRatio}
-                                    onChange={(e) => setMaintainAspectRatio(e.target.checked)}
-                                />
-                                <span>Maintain Aspect Ratio</span>
-                            </label>
-                        </div>
+                                <div className="result-preview-container">
+                                    <img src={resizedImage} alt="Resized Result" className="final-preview" />
+                                </div>
 
-                        <div className="action-row">
-                            <button className="resize-btn" onClick={handleResize} disabled={loading}>
-                                {loading ? 'Processing...' : 'Resize Now'}
-                            </button>
-                            <button className="reset-btn" onClick={() => {
-                                setOriginalImage(null);
-                                setResizedImage(null);
-                            }}>Start Over</button>
-                        </div>
-                    </div>
-                )}
-
-                {resizedImage && (
-                    <div className="result-section">
-                        <div className="result-banner">
-                            <div className="success-icon">✓</div>
-                            <div className="banner-text">
-                                <h3>Image Resized Successfully!</h3>
-                                <p>New Dimensions: {targetWidth} × {targetHeight} px</p>
+                                <div className="action-buttons-group">
+                                    <a href={resizedImage} download={`resized_${originalFile.name}`} className="btn-primary" style={{ textDecoration: 'none' }}>
+                                        Download Image
+                                    </a>
+                                    <button className="btn-secondary" onClick={() => {
+                                        setOriginalImage(null);
+                                        setResizedImage(null);
+                                    }}>Resize Another</button>
+                                </div>
                             </div>
-                        </div>
-
-                        <div className="result-preview-container">
-                            <img src={resizedImage} alt="Resized Result" className="final-preview" />
-                        </div>
-
-                        <div className="download-footer">
-                            <div className="file-stats">
-                                <span>New File Size:</span>
-                                <strong>{formatSize(resizedBlob.size)}</strong>
-                            </div>
-                            <a href={resizedImage} download={`resized_${originalFile.name}`} className="download-btn">
-                                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 16v1a2 2 0 002 2h12a2 2 0 002-2v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                                </svg>
-                                Download High Quality
-                            </a>
-                        </div>
+                        )}
                     </div>
                 )}
             </div>
