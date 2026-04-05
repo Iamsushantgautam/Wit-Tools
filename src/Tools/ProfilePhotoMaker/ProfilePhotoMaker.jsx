@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
 import 'react-image-crop/dist/ReactCrop.css';
 import axios from 'axios';
+import Upload from '../../components/Common/Upload/Upload';
 import './ProfilePhotoMaker.css';
 
 const ProfilePhotoMaker = () => {
@@ -26,12 +27,12 @@ const ProfilePhotoMaker = () => {
         '#1E293B', // Dark Slate
     ];
 
-    const onSelectFile = (e) => {
-        if (e.target.files && e.target.files.length > 0) {
-            setFile(e.target.files[0]);
+    const onSelectFile = (selectedFile) => {
+        if (selectedFile) {
+            setFile(selectedFile);
             const reader = new FileReader();
             reader.addEventListener('load', () => setImgSrc(reader.result.toString() || ''));
-            reader.readAsDataURL(e.target.files[0]);
+            reader.readAsDataURL(selectedFile);
             setStep(2);
         }
     };
@@ -170,12 +171,16 @@ const ProfilePhotoMaker = () => {
                 <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Create official size photos with uniform backgrounds</p>
             </div>
 
-            <div className="tool-card">
+            <div className={`tool-card ${step === 1 ? 'no-hover-arrow' : ''}`}>
                 {step === 1 && (
-                    <label htmlFor="pm-upload" className="drop-zone">
-                        <span>Click to Upload Photo</span>
-                        <input type="file" id="pm-upload" accept="image/*" onChange={onSelectFile} style={{ display: 'none' }} />
-                    </label>
+                    <Upload
+                        id="pm-upload"
+                        accept="image/*"
+                        onUpload={onSelectFile}
+                        title="Click to Upload Photo"
+                        subtitle="Create official size photos with uniform backgrounds"
+                        limitText="Standard passport ratios supported"
+                    />
                 )}
 
                 {step === 2 && (

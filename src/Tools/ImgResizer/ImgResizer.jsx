@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Upload from '../../components/Common/Upload/Upload';
 import './ImgResizer.css';
 
 const ImgResizer = () => {
@@ -12,8 +13,7 @@ const ImgResizer = () => {
     const [targetDim, setTargetDim] = useState({ w: 0, h: 0 });
     const [maintainRatio, setMaintainRatio] = useState(true);
 
-    const handleUpload = (e) => {
-        const file = e.target.files[0];
+    const handleUpload = (file) => {
         if (!file) return;
 
         setOriginalFile(file);
@@ -76,12 +76,16 @@ const ImgResizer = () => {
                 <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Change dimensions with high precision</p>
             </div>
 
-            <div className="tool-card">
+            <div className={`tool-card ${!originalImage ? 'no-hover-arrow' : ''}`}>
                 {!originalImage ? (
-                    <label htmlFor="resizer-input" className="drop-zone">
-                        <span>Click to Upload Image</span>
-                        <input id="resizer-input" type="file" accept="image/*" onChange={handleUpload} style={{ display: 'none' }} />
-                    </label>
+                    <Upload
+                        id="resizer-input"
+                        accept="image/*"
+                        onUpload={handleUpload}
+                        title="Click to Upload Image"
+                        subtitle="Resize images with high precision"
+                        limitText="Supports JPG, PNG, and more"
+                    />
                 ) : (
                     <div className="workspace" style={{ width: '100%' }}>
                         <div className="file-info-header" style={{ marginBottom: '1.5rem' }}>

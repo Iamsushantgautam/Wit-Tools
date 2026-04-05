@@ -3,6 +3,7 @@ import { PDFDocument } from 'pdf-lib';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import * as pdfjs from 'pdfjs-dist';
+import Upload from '../../components/Common/Upload/Upload';
 import './PdfSplit.css';
 
 // Configure PDF.js worker
@@ -16,8 +17,7 @@ const PdfSplit = () => {
     const [range, setRange] = useState({ start: 1, end: 1 });
     const [thumbnails, setThumbnails] = useState([]);
 
-    const handleFileChange = async (e) => {
-        const selectedFile = e.target.files[0];
+    const handleFileChange = async (selectedFile) => {
         if (selectedFile && selectedFile.type === 'application/pdf') {
             setFile(selectedFile);
             setLoading(true);
@@ -106,12 +106,16 @@ const PdfSplit = () => {
                 <p style={{ color: 'var(--text-muted)' }}>Visual page extraction and splitting</p>
             </div>
 
-            <div className="tool-card split-main-card">
+            <div className={`tool-card split-main-card ${!file ? 'no-hover-arrow' : ''}`}>
                 {!file ? (
-                    <label htmlFor="split-upload" className="drop-zone">
-                        <span>Click to Upload PDF</span>
-                        <input id="split-upload" type="file" accept=".pdf" onChange={handleFileChange} style={{ display: 'none' }} />
-                    </label>
+                    <Upload
+                        id="split-upload"
+                        accept=".pdf"
+                        onUpload={handleFileChange}
+                        title="Click to Upload PDF"
+                        subtitle="Extract pages or split documents visually"
+                        limitText="Safe and secure document handling"
+                    />
                 ) : (
                     <div className="split-workspace">
                         <header className="file-summary">

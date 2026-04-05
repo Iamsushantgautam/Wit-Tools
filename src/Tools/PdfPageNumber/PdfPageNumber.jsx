@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import * as pdfjsLib from 'pdfjs-dist';
+import Upload from '../../components/Common/Upload/Upload';
 import './PdfPageNumber.css';
 
 // Set up pdf.js worker - matching Watermark.jsx approach
@@ -58,8 +59,7 @@ const PdfPageNumber = () => {
     ];
 
     // --- File Handling ---
-    const handleFileChange = async (e) => {
-        const selected = e.target.files[0];
+    const handleFileChange = async (selected) => {
         if (!selected || selected.type !== 'application/pdf') {
             alert("Please select a valid PDF file.");
             return;
@@ -304,19 +304,16 @@ const PdfPageNumber = () => {
                 <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Personalize and organize your PDF with precision numbering.</p>
             </div>
 
-            <div className="tool-card">
+            <div className={`tool-card ${!file ? 'no-hover-arrow' : ''}`}>
                 {!file ? (
-                    <label htmlFor="pdf-upload" className="drop-zone">
-                        <span className="tool-icon">📄</span>
-                        <span>Click to Upload PDF</span>
-                        <input
-                            type="file"
-                            id="pdf-upload"
-                            accept="application/pdf"
-                            onChange={handleFileChange}
-                            style={{ display: 'none' }}
-                        />
-                    </label>
+                    <Upload
+                        id="pdf-upload"
+                        accept="application/pdf"
+                        onUpload={handleFileChange}
+                        title="Click to Upload PDF"
+                        subtitle="Add custom page numbers with precision"
+                        limitText="Safe and secure documents"
+                    />
                 ) : (
                     <div className="workspace-flex">
                         <div className="preview-section">

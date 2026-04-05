@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 
 // Components
 import Navbar from './components/Navbar/Navbar';
@@ -36,6 +37,7 @@ import './App.css';
 function App() {
   return (
     <div className="app-container">
+      <Analytics />
       <ScrollToTop />
       <Navbar />
       <div className="content">

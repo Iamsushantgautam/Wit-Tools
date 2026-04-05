@@ -4,6 +4,7 @@ import * as pdfjsLib from 'pdfjs-dist';
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
 import jsPDF from 'jspdf';
+import Upload from '../../components/Common/Upload/Upload';
 import './PdfCompressor.css';
 
 const PdfCompressor = () => {
@@ -15,8 +16,7 @@ const PdfCompressor = () => {
     const [compressionLevel, setCompressionLevel] = useState(0.7); // 0.1 to 1.0 (Quality)
     const [progress, setProgress] = useState(0);
 
-    const handleFileChange = (e) => {
-        const selectedFile = e.target.files[0];
+    const handleFileChange = (selectedFile) => {
         if (selectedFile && selectedFile.type === 'application/pdf') {
             setFile(selectedFile);
             setOriginalSize(selectedFile.size);
@@ -108,18 +108,16 @@ const PdfCompressor = () => {
                 <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Reduce PDF size with smart compression</p>
             </div>
 
-            <div className="tool-card">
+            <div className={`tool-card ${!file ? 'no-hover-arrow' : ''}`}>
                 {!file ? (
-                    <label htmlFor="pdf-upload" className="drop-zone">
-                        <span>Click to Upload PDF</span>
-                        <input
-                            type="file"
-                            id="pdf-upload"
-                            accept="application/pdf"
-                            onChange={handleFileChange}
-                            style={{ display: 'none' }}
-                        />
-                    </label>
+                    <Upload
+                        id="pdf-upload"
+                        accept="application/pdf"
+                        onUpload={handleFileChange}
+                        title="Click to Upload PDF"
+                        subtitle="Reduce PDF size with smart compression"
+                        limitText="Safe and secure documents"
+                    />
                 ) : (
                     <div className="workspace">
                         <div className="file-info-header">

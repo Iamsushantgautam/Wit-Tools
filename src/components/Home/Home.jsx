@@ -84,6 +84,13 @@ const HOME_CATEGORY_ORDER = [
 
 const Home = () => {
     const [searchTerm, setSearchTerm] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
+
+    // Simulate initial loading
+    React.useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 900);
+        return () => clearTimeout(timer);
+    }, []);
 
     const tools = [
         { id: 'img-to-pdf', title: 'Image to PDF', desc: 'Convert images to high-quality PDF docs.', icon: <PdfIcon />, category: 'Image Tools', color: 'icon-blue', isVisible: true },
@@ -97,11 +104,11 @@ const Home = () => {
         { id: 'pdf-merge', title: 'Merge PDF', desc: 'Combine multiple PDFs into one.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-blue', isVisible: true },
         { id: 'pdf-split', title: 'Split PDF', desc: 'Extract pages or split into parts.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-red', isVisible: true },
         { id: 'pdf-page-number', title: 'Page Number', desc: 'Add visible page numbers to PDFs.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-blue', isVisible: true },
-        { id: 'pdf-security', title: 'PDF Password', desc: 'Lock or Unlock your PDF documents.', icon: <SecurityIcon />, category: 'PDF Tools', color: 'icon-purple', isVisible: true },
+        { id: 'pdf-security', title: 'PDF Password', desc: 'Lock or Unlock your PDF documents.', icon: <SecurityIcon />, category: 'PDF Tools', color: 'icon-purple', isVisible: false },
         { id: 'pdf-to-img', title: 'PDF to Image', desc: 'Convert PDF pages to individual images.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-red', isVisible: true },
         { id: 'watermark', title: 'Watermark', desc: 'Add stamps to your Photos & PDFs.', icon: <WatermarkIcon />, category: 'Utility Tools', color: 'icon-blue', isVisible: true },
         { id: 'qr-generator', title: 'QR Generator', desc: 'Generate custom QR codes instantly.', icon: <QrIcon />, category: 'Utility Tools', color: 'icon-orange', isVisible: true },
-        { id: 'qr-generator', title: 'QR Generator', desc: 'Generate custom QR codes instantly.', icon: <QrIcon />, category: 'Utility Tools', color: 'icon-orange', isVisible: true },
+
         { id: 'shopify-dev', title: 'Shopify Ai Prompts for sections', desc: 'Expert AI prompts for Shopify section developers.', icon: <ShopifyIcon />, category: 'Shopify Tools', color: 'icon-green', isVisible: true },
         { id: 'shopify-scraper', title: 'Shopify Product Scraper', desc: 'Powerful Chrome extension for bulk extracting Shopify product data.', icon: <ShopifyIcon />, category: 'Chrome Extension', color: 'icon-green', isExternal: true, url: 'https://github.com/Iamsushantgautam/Chrome-extension/tree/main/shopify%20product%20scraper', useFavicon: false, isVisible: true },
         { id: 'icons8', title: 'Icons8', desc: 'Premium library for professional icons, photos, and creative assets.', icon: <QrIcon />, category: 'Useful Websites', color: 'icon-green', isExternal: true, url: 'https://icons8.com/', isVisible: true },
@@ -118,6 +125,25 @@ const Home = () => {
             tool.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
             tool.desc.toLowerCase().includes(searchTerm.toLowerCase())
         )
+    );
+
+    const ToolCardSkeleton = () => (
+        <div className="tool-card skeleton">
+            <div className="tool-card-top">
+                <div className="tool-icon-wrapper skeleton-box" style={{ width: '60px', height: '60px' }}></div>
+                <div className="tool-title-wrapper">
+                    <div className="skeleton-box" style={{ width: '120px', height: '20px', marginBottom: '8px' }}></div>
+                    <div className="skeleton-box" style={{ width: '60px', height: '14px' }}></div>
+                </div>
+            </div>
+            <div className="tool-card-body">
+                <div className="skeleton-box" style={{ width: '100%', height: '16px', marginBottom: '8px' }}></div>
+                <div className="skeleton-box" style={{ width: '80%', height: '16px' }}></div>
+            </div>
+            <div className="tool-card-footer">
+                <div className="skeleton-box" style={{ width: '100%', height: '48px', borderRadius: '14px' }}></div>
+            </div>
+        </div>
     );
 
     const categories = ['Image Tools', 'Utility Tools', 'PDF Tools', 'Shopify Tools', 'Chrome Extension', 'Useful Websites'];
@@ -157,48 +183,65 @@ const Home = () => {
                                 <div className="section-line"></div>
                             </div>
                             <div className="tool-grid">
-                                {sectionTools.map(tool => {
-                                    const cardProps = {
-                                        key: tool.id,
-                                        className: "tool-card"
-                                    };
+                                {isLoading ? (
+                                    Array(3).fill(0).map((_, i) => <ToolCardSkeleton key={i} />)
+                                ) : (
+                                    sectionTools.map(tool => {
+                                        const cardProps = {
+                                            key: tool.id,
+                                            className: "tool-card"
+                                        };
 
-                                    const cardContent = (
-                                        <>
-                                            <div className={`tool-icon-wrapper ${tool.color}`}>
-                                                {tool.isExternal && tool.url && tool.useFavicon !== false ? (
-                                                    <img
-                                                        src={`https://www.google.com/s2/favicons?domain=${new URL(tool.url).hostname}&sz=64`}
-                                                        alt={tool.title}
-                                                        className="tool-favicon"
-                                                        onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }}
-                                                    />
-                                                ) : null}
-                                                <div style={{ display: (tool.isExternal && tool.url && tool.useFavicon !== false) ? 'none' : 'block' }}>
-                                                    {tool.icon}
+                                        const cardContent = (
+                                            <>
+                                                <div className="tool-card-top">
+                                                    <div className={`tool-icon-wrapper ${tool.color}`}>
+                                                        {tool.isExternal && tool.url && tool.useFavicon !== false ? (
+                                                            <img
+                                                                src={`https://www.google.com/s2/favicons?domain=${new URL(tool.url).hostname}&sz=64`}
+                                                                alt={tool.title}
+                                                                className="tool-favicon"
+                                                                onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }}
+                                                            />
+                                                        ) : null}
+                                                        <div style={{ display: (tool.isExternal && tool.url && tool.useFavicon !== false) ? 'none' : 'block' }}>
+                                                            {tool.icon}
+                                                        </div>
+                                                    </div>
+                                                    <div className="tool-title-wrapper">
+                                                        <h3>{tool.title}</h3>
+                                                        <span className="tool-badge">{tool.category.replace(' Tools', '')}</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div className="tool-content">
-                                                <h3>{tool.title}</h3>
-                                                <p>{tool.desc}</p>
-                                            </div>
-                                        </>
-                                    );
 
-                                    if (tool.isExternal) {
-                                        return (
-                                            <a {...cardProps} href={tool.url} target="_blank" rel="noopener noreferrer">
-                                                {cardContent}
-                                            </a>
+                                                <div className="tool-card-body">
+                                                    <p>{tool.desc}</p>
+                                                </div>
+
+                                                {/* <div className="tool-card-footer">
+                                                <div className="tool-action-btn">
+                                                    <span>{tool.isExternal ? 'Visit Website' : 'Open Tool'}</span>
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/></svg>
+                                                </div>
+                                            </div> */}
+                                            </>
                                         );
-                                    }
 
-                                    return (
-                                        <Link {...cardProps} to={`/${tool.id}`}>
-                                            {cardContent}
-                                        </Link>
-                                    );
-                                })}
+                                        if (tool.isExternal) {
+                                            return (
+                                                <a {...cardProps} href={tool.url} target="_blank" rel="noopener noreferrer">
+                                                    {cardContent}
+                                                </a>
+                                            );
+                                        }
+
+                                        return (
+                                            <Link {...cardProps} to={`/${tool.id}`}>
+                                                {cardContent}
+                                            </Link>
+                                        );
+                                    })
+                                )}
                             </div>
                         </section>
                     );

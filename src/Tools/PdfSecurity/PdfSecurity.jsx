@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
-import { PDFDocument } from 'pdf-lib';
+import * as pdfjsLib from 'pdfjs-dist';
+import { jsPDF } from 'jspdf/dist/jspdf.umd.min.js';
+import Upload from '../../components/Common/Upload/Upload';
 import './PdfSecurity.css';
+
+// Initialize PDF.js worker
+pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
 
 const PdfSecurity = () => {
     const [activeTab, setActiveTab] = useState('protect'); // 'protect' or 'unlock'
@@ -19,8 +24,7 @@ const PdfSecurity = () => {
     const [isProcessing, setIsProcessing] = useState(false);
     const [statusMessage, setStatusMessage] = useState('');
 
-    const handleFileChange = (e) => {
-        const selected = e.target.files[0];
+    const handleFileChange = (selected) => {
         if (selected && selected.type === 'application/pdf') {
             setFile(selected);
             setFileName(selected.name);
@@ -41,45 +45,82 @@ const PdfSecurity = () => {
 
         try {
             const arrayBuffer = await file.arrayBuffer();
-            let pdfDoc;
-            try {
-                pdfDoc = await PDFDocument.load(arrayBuffer);
-            } catch (e) {
-                setStatusMessage('Failed to load PDF. It might be corrupted or already password protected.');
-                setIsProcessing(false);
-                return;
-            }
-
-            pdfDoc.encrypt({
-                userPassword: password,
-                ownerPassword: password,
-                permissions: {
-                    printing: 'highResolution',
-                    modifying: false,
-                    copying: false,
-                    annotating: false,
-                    fillingForms: false,
-                    contentAccessibility: false,
-                    documentAssembly: false,
-                }
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            const numPages = pdf.numPages;
+            
+            // Get first page viewport to determine document size
+            const firstPage = await pdf.getPage(1);
+            const originalViewport = firstPage.getViewport({ scale: 1 });
+            const { width, height } = originalViewport;
+            const orientation = width > height ? 'l' : 'p';
+            
+            // Create a new jsPDF document
+            const pdfOutput = new jsPDF({
+                orientation: orientation,
+                unit: 'px',
+                format: [width, height],
+                hotfixes: ['px_runtime_resolution']
             });
 
-            const pdfBytes = await pdfDoc.save();
-            downloadPdf(pdfBytes, `protected_${fileName}`);
-            setStatusMessage('PDF Protected Successfully!');
+            // CRITICAL CHECK: Ensure encryption module is loaded
+            if (typeof pdfOutput.setEncryption !== 'function') {
+                throw new Error("ENCRYPTION_MODULE_MISSING");
+            }
 
+            for (let i = 1; i <= numPages; i++) {
+                const page = await pdf.getPage(i);
+                const viewport = page.getViewport({ scale: 2.0 }); // High quality render
+                
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                await page.render({
+                    canvasContext: context,
+                    viewport: viewport,
+                }).promise;
+
+                if (i > 1) {
+                    const pageViewport = page.getViewport({ scale: 1 });
+                    pdfOutput.addPage([pageViewport.width, pageViewport.height], pageViewport.width > pageViewport.height ? 'l' : 'p');
+                }
+                
+                const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                pdfOutput.addImage(imgData, 'JPEG', 0, 0, pdfOutput.internal.pageSize.getWidth(), pdfOutput.internal.pageSize.getHeight());
+            }
+
+            // Set encryption
+            pdfOutput.setEncryption({
+                userPassword: password,
+                ownerPassword: password,
+                userPermissions: ['print', 'modify', 'copy', 'annot-fill']
+            });
+
+            const pdfBlob = pdfOutput.output('blob');
+            const blobUrl = URL.createObjectURL(pdfBlob);
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            link.download = `protected_${fileName}`;
+            link.click();
+            
+            setStatusMessage('PDF Protected Successfully!');
         } catch (error) {
-            console.error('Protection failed:', error);
-            setStatusMessage('An error occurred while protecting the PDF.');
+            console.error('Detailed Protection Error:', error);
+            if (error.message === "ENCRYPTION_MODULE_MISSING") {
+                setStatusMessage('System Error: Encryption plugin not found in this environment. Please contact support or use a different browser.');
+            } else if (error.name === 'PasswordException') {
+                setStatusMessage('The PDF is already password protected.');
+            } else {
+                setStatusMessage(`Error: ${error.message || 'The file could not be processed'}. If it's a large PDF, it might be exceeding memory limits.`);
+            }
         } finally {
             setIsProcessing(false);
         }
     };
 
     const handleUnlock = async () => {
-        if (!file) return;
-
-        if (!currentPassword) {
+        if (!file || !currentPassword) {
             setStatusMessage('Enter the current password to unlock.');
             return;
         }
@@ -89,20 +130,57 @@ const PdfSecurity = () => {
 
         try {
             const arrayBuffer = await file.arrayBuffer();
-
-            let pdfDoc;
+            
+            // Try to load the protected PDF
+            let pdf;
             try {
-                pdfDoc = await PDFDocument.load(arrayBuffer, { password: currentPassword });
+                pdf = await pdfjsLib.getDocument({ 
+                    data: arrayBuffer, 
+                    password: currentPassword 
+                }).promise;
             } catch (e) {
                 setStatusMessage('Invalid password. Could not open PDF.');
                 setIsProcessing(false);
                 return;
             }
 
-            const pdfBytes = await pdfDoc.save();
-            downloadPdf(pdfBytes, `unlocked_${fileName}`);
-            setStatusMessage('PDF Unlocked Successfully!');
+            const numPages = pdf.numPages;
+            const firstPage = await pdf.getPage(1);
+            const originalViewport = firstPage.getViewport({ scale: 1 });
+            const { width, height } = originalViewport;
+            const orientation = width > height ? 'l' : 'p';
+            
+            const pdfOutput = new jsPDF({
+                orientation: orientation,
+                unit: 'px',
+                format: [width, height],
+                hotfixes: ['px_runtime_resolution']
+            });
 
+            for (let i = 1; i <= numPages; i++) {
+                const page = await pdf.getPage(i);
+                const viewport = page.getViewport({ scale: 2.0 });
+                const canvas = document.createElement('canvas');
+                const context = canvas.getContext('2d');
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                await page.render({
+                    canvasContext: context,
+                    viewport: viewport,
+                }).promise;
+
+                if (i > 1) {
+                    const pageViewport = page.getViewport({ scale: 1 });
+                    pdfOutput.addPage([pageViewport.width, pageViewport.height], pageViewport.width > pageViewport.height ? 'l' : 'p');
+                }
+                
+                const imgData = canvas.toDataURL('image/jpeg', 0.95);
+                pdfOutput.addImage(imgData, 'JPEG', 0, 0, pdfOutput.internal.pageSize.getWidth(), pdfOutput.internal.pageSize.getHeight());
+            }
+
+            pdfOutput.save(`unlocked_${fileName}`);
+            setStatusMessage('PDF Unlocked Successfully!');
         } catch (error) {
             console.error('Unlock failed:', error);
             setStatusMessage('An error occurred. Ensure the password is correct.');
@@ -111,15 +189,6 @@ const PdfSecurity = () => {
         }
     };
 
-    const downloadPdf = (bytes, name) => {
-        const blob = new Blob([bytes], { type: 'application/pdf' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = name;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-    };
 
     const reset = () => {
         setFile(null);
@@ -137,7 +206,7 @@ const PdfSecurity = () => {
                 <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Protect with password or unlock encrypted PDFs</p>
             </div>
 
-            <div className="tool-card">
+            <div className={`tool-card ${!file ? 'no-hover-arrow' : ''}`}>
                 <div className="tabs">
                     <button
                         className={`tab-link ${activeTab === 'protect' ? 'active' : ''}`}
@@ -155,16 +224,14 @@ const PdfSecurity = () => {
 
                 <div className="workspace" style={{ width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem' }}>
                     {!file ? (
-                        <label htmlFor="pdf-sec-upload" className="drop-zone">
-                            <span>Click to Upload PDF</span>
-                            <input
-                                type="file"
-                                id="pdf-sec-upload"
-                                accept="application/pdf"
-                                onChange={handleFileChange}
-                                style={{ display: 'none' }}
-                            />
-                        </label>
+                        <Upload
+                            id="pdf-sec-upload"
+                            accept="application/pdf"
+                            onUpload={handleFileChange}
+                            title="Click to Upload PDF"
+                            subtitle="Secure password protection for your documents"
+                            limitText="Format: PDF only"
+                        />
                     ) : (
                         <div className="file-info-header">
                             <h3 className="file-name">{fileName}</h3>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import Upload from '../../components/Common/Upload/Upload';
 import './BgRemover.css';
 
 const BgRemover = () => {
@@ -10,8 +11,7 @@ const BgRemover = () => {
 
     const apiKey = import.meta.env.VITE_REMOVE_BG_API_KEY;
 
-    const handleFileChange = (e) => {
-        const selectedFile = e.target.files[0];
+    const handleFileChange = (selectedFile) => {
         if (selectedFile) {
             setFile(selectedFile);
             setOriginalImage(URL.createObjectURL(selectedFile));
@@ -76,22 +76,19 @@ const BgRemover = () => {
                 <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>100% Automatically and Free</p>
             </div>
 
-            <div className="tool-card">
+            <div className={`tool-card ${!resultImage ? 'no-hover-arrow' : ''}`}>
                 {!loading && !resultImage ? (
-                    <div className="upload-wrapper">
-                        <label htmlFor="bg-remover-upload" className="btn-primary">
-                            Upload Image
-                        </label>
-                        <input
+                    <div className="upload-wrapper" style={{ width: '100%' }}>
+                        <Upload
                             id="bg-remover-upload"
-                            type="file"
                             accept="image/*"
-                            onChange={handleFileChange}
+                            onUpload={handleFileChange}
+                            title="Click to Upload Image"
+                            subtitle="AI-powered background removal"
+                            limitText="Supported: JPG, PNG, WEBP"
                         />
-
-                        <p className="drop-text">or drop a file, paste image or URL</p>
-
-                        <div className="sample-section">
+                        
+                        <div className="sample-section" style={{ marginTop: '2rem' }}>
                             <p>No image? Try one of these:</p>
                             <div className="sample-thumbnails">
                                 <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=50&h=50&q=80" className="sample-thumb" alt="Sample 1" onClick={() => {/* Mock selection would go here */}} />

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import imageCompression from 'browser-image-compression';
+import Upload from '../../components/Common/Upload/Upload';
 import './ImgCompressor.css';
 
 const ImgCompressor = () => {
@@ -10,8 +11,7 @@ const ImgCompressor = () => {
     const [loading, setLoading] = useState(false);
     const [targetKB, setTargetKB] = useState(500);
 
-    const handleUpload = (e) => {
-        const file = e.target.files[0];
+    const handleUpload = (file) => {
         if (file) {
             setOriginalFile(file);
             setOriginalImage(URL.createObjectURL(file));
@@ -60,12 +60,16 @@ const ImgCompressor = () => {
                 <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Reduce image file size without losing much quality</p>
             </div>
 
-            <div className="tool-card">
+            <div className={`tool-card ${!originalImage ? 'no-hover-arrow' : ''}`}>
                 {!originalImage ? (
-                    <label htmlFor="compressor-input" className="drop-zone">
-                        <span>Click to Upload Image</span>
-                        <input id="compressor-input" type="file" accept="image/*" onChange={handleUpload} style={{ display: 'none' }} />
-                    </label>
+                    <Upload
+                        id="compressor-input"
+                        accept="image/*"
+                        onUpload={handleUpload}
+                        title="Click to Upload Image"
+                        subtitle="Reduce image size instantly"
+                        limitText="Fast compression for JPG, PNG, WEBP"
+                    />
                 ) : (
                     <div className="workspace" style={{ width: '100%' }}>
                         <div className="file-info-header" style={{ marginBottom: '1.5rem' }}>

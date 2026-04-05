@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { jsPDF } from 'jspdf';
+import Upload from '../../components/Common/Upload/Upload';
 import './ImgConverter.css';
 
 const ImgConverter = () => {
@@ -10,8 +11,7 @@ const ImgConverter = () => {
     const [targetFormat, setTargetFormat] = useState('image/jpeg'); // Default to JPG
     const [loading, setLoading] = useState(false);
 
-    const handleUpload = (e) => {
-        const file = e.target.files[0];
+    const handleUpload = (file) => {
         if (file) {
             setOriginalFile(file);
             setOriginalImage(URL.createObjectURL(file));
@@ -89,12 +89,16 @@ const ImgConverter = () => {
                 <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Switch between JPG, PNG, and WebP instantly</p>
             </div>
 
-            <div className="tool-card">
+            <div className={`tool-card ${!originalImage ? 'no-hover-arrow' : ''}`}>
                 {!originalImage ? (
-                    <label htmlFor="converter-input" className="drop-zone">
-                        <span>Click to Upload Image</span>
-                        <input id="converter-input" type="file" accept="image/*" onChange={handleUpload} style={{ display: 'none' }} />
-                    </label>
+                    <Upload
+                        id="converter-input"
+                        accept="image/*"
+                        onUpload={handleUpload}
+                        title="Click to Upload Image"
+                        subtitle="Convert between JPG, PNG, and WebP"
+                        limitText="High speed browser-side conversion"
+                    />
                 ) : (
                     <div className="workspace" style={{ width: '100%' }}>
                         <div className="file-info-header" style={{ marginBottom: '2rem', textAlign: 'center' }}>

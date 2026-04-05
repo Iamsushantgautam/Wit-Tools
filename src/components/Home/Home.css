@@ -202,75 +202,108 @@
 }
 
 .tool-card {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    padding: 2.5rem 2.25rem;
-    border-radius: 12px;
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 24px;
     text-decoration: none;
     color: inherit;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    border: 1px solid rgba(0, 0, 0, 0.04);
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: 1.75rem;
+    justify-content: space-between;
+    align-items: stretch;
+    text-align: left;
+    gap: 1.5rem;
     height: 100%;
     position: relative;
     overflow: hidden;
     animation: fade-in-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.tool-card::before {
+/* Decoration Blob */
+.tool-card::after {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.421) 0%, rgba(255, 255, 255, 0) 100%);
-    pointer-events: none;
+    top: -40px;
+    right: -40px;
+    width: 140px;
+    height: 140px;
+    background: #eef2ff;
+    border-radius: 50%;
     z-index: 0;
+    transition: all 0.4s ease;
+    opacity: 0.8;
 }
 
-/* Arrow indicator on hover */
-.tool-card::after {
+/* Hover Arrow */
+.tool-card::before {
     content: '→';
     position: absolute;
-    bottom: 2.25rem;
-    right: 2.25rem;
-    font-size: 1.5rem;
-    color: var(--primary);
+    bottom: 1.5rem;
+    right: 2rem;
+    font-size: 1.8rem;
+    color: #3b82f6;
     opacity: 0;
-    transform: translateX(-10px);
-    transition: all 0.3s ease;
+    transform: translateX(-15px);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 2;
     font-weight: 300;
 }
 
-.tool-card:hover {
-    transform: translateY(-10px) scale(1.02);
-    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.08);
-    border-color: var(--primary);
-    background: white;
-}
-
-.tool-card:hover::after {
+.tool-card:hover::before {
     opacity: 1;
     transform: translateX(0);
 }
 
+.no-hover-arrow::before {
+    display: none !important;
+}
+
+.tool-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.06);
+    border-color: rgba(79, 70, 229, 0.2);
+}
+
+.tool-card:hover::after {
+    background: #e0e7ff;
+    transform: scale(1.1);
+}
+
+.tool-card-top {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    position: relative;
+    z-index: 1;
+}
+
+.tool-title-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.tool-card h3 {
+    margin: 0;
+    color: #1e293b;
+    font-size: 1.25rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+}
+
 .tool-icon-wrapper {
     flex-shrink: 0;
-    width: 64px;
-    height: 64px;
+    width: 60px;
+    height: 60px;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 20px;
+    border-radius: 16px;
     transition: all 0.4s ease;
-    box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.5);
-    z-index: 1;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
 }
 
 .tool-icon-wrapper svg {
@@ -303,27 +336,100 @@
     color: #f97316;
 }
 
-.tool-content {
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
+.tool-badge {
+    background-color: #dbeafe;
+    color: #1d4ed8;
+    padding: 4px 12px;
+    border-radius: 8px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    width: fit-content;
 }
 
-.tool-card h3 {
-    margin: 0;
-    color: var(--text-main);
-    font-size: 1.3rem;
-    font-weight: 800;
-    letter-spacing: -0.02em;
+.tool-card-body {
+    flex: 1;
+    position: relative;
     z-index: 1;
 }
 
-.tool-card p {
-    color: var(--text-muted);
+.tool-card-body p {
+    color: #64748b;
     margin: 0;
     font-size: 0.95rem;
     line-height: 1.6;
+    font-weight: 500;
+}
+
+.tool-card-footer {
+    position: relative;
     z-index: 1;
+    margin-top: auto;
+    width: 100%;
+}
+
+.tool-action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    width: 100%;
+    padding: 1.1rem;
+    background-color: #f1f5f9;
+    color: #1e293b;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.tool-card:hover .tool-action-btn {
+    background-color: #e2e8f0;
+    color: #0f172a;
+}
+
+/* Skeleton Loading State */
+.skeleton {
+    pointer-events: none;
+    user-select: none;
+}
+
+.skeleton::after,
+.skeleton::before {
+    display: none !important;
+}
+
+.skeleton-box {
+    background: #f1f5f9;
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+}
+
+.skeleton-box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0,
+        rgba(255, 255, 255, 0.4) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: skeleton-pulse 1.5s infinite linear;
+}
+
+@keyframes skeleton-pulse {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 /* No Results Area */
@@ -400,30 +506,45 @@
     }
 
     .tool-card {
-        padding: 1.25rem 0.6rem;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        gap: 0.75rem;
-        border-radius: var(--radius-md);
+        padding: 1.5rem;
+        gap: 1.25rem;
+        border-radius: 20px;
+        align-items: stretch;
+        text-align: left;
+    }
+
+    .tool-card-top {
+        gap: 1rem;
     }
 
     .tool-card h3 {
-        font-size: 0.85rem;
-    }
-
-    .tool-card p {
-        font-size: 0.7rem;
-        display: -webkit-box;
-        line-clamp: 2;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        overflow: hidden;
+        font-size: 1.1rem;
     }
 
     .tool-icon-wrapper {
-        width: 44px;
-        height: 44px;
+        width: 50px;
+        height: 50px;
+        border-radius: 12px;
+    }
+
+    .tool-icon-wrapper svg {
+        width: 22px;
+        height: 22px;
+    }
+
+    .tool-badge {
+        padding: 3px 10px;
+        font-size: 0.65rem;
+    }
+
+    .tool-card p {
+        font-size: 0.85rem;
+    }
+
+    .tool-action-btn {
+        padding: 0.9rem;
+        font-size: 0.85rem;
+        border-radius: 12px;
     }
 }
 

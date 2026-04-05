@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { jsPDF } from 'jspdf';
+import Upload from '../../components/Common/Upload/Upload';
 import './ImgToPdf.css';
 
 const ImgToPdf = () => {
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const handleImageUpload = (e) => {
-    const files = Array.from(e.target.files);
+  const handleImageUpload = (files) => {
+    // files is now an array from Upload component
     
     // Sort files alphabetically to maintain order if selected together
     files.sort((a, b) => a.name.localeCompare(b.name));
@@ -78,18 +79,16 @@ const ImgToPdf = () => {
         <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Fast and reliable conversion</p>
       </div>
       
-      <div className="tool-card">
-        <label htmlFor="file-upload" className="drop-zone">
-          <span>Click to Upload Images (JPG, PNG)</span>
-          <input 
-            id="file-upload" 
-            type="file" 
-            accept="image/*" 
-            multiple 
-            onChange={handleImageUpload}
-            style={{ display: 'none' }}
-          />
-        </label>
+      <div className={`tool-card ${images.length === 0 ? 'no-hover-arrow' : ''}`}>
+        <Upload
+          id="file-upload"
+          accept="image/*"
+          multiple={true}
+          onUpload={handleImageUpload}
+          title="Click to Upload Images (JPG, PNG)"
+          subtitle="Select multiple images to combine into one PDF"
+          limitText="Drag and drop or select multiple files"
+        />
         
         {images.length > 0 && (
           <div className="preview-grid">

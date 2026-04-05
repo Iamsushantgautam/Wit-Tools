@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import imageCompression from 'browser-image-compression';
+import Upload from '../../components/Common/Upload/Upload';
 import './ImgOptimizer.css';
 
 const ImgOptimizer = () => {
@@ -11,12 +12,12 @@ const ImgOptimizer = () => {
 
     // Settings
     const [targetKB, setTargetKB] = useState(500);
+    const [targetFormat, setTargetFormat] = useState('original');
     const [originalDim, setOriginalDim] = useState({ w: 0, h: 0 });
     const [targetDim, setTargetDim] = useState({ w: 0, h: 0 });
     const [maintainRatio, setMaintainRatio] = useState(true);
 
-    const handleUpload = (e) => {
-        const file = e.target.files[0];
+    const handleUpload = (file) => {
         if (!file) return;
 
         setOriginalFile(file);
@@ -58,6 +59,7 @@ const ImgOptimizer = () => {
                 maxWidthOrHeight: Math.max(targetDim.w, targetDim.h),
                 useWebWorker: true,
                 initialQuality: 0.9,
+                fileType: targetFormat !== 'original' ? targetFormat : originalFile.type
             };
 
             const blob = await imageCompression(originalFile, options);
@@ -76,6 +78,23 @@ const ImgOptimizer = () => {
         return (bytes / 1024).toFixed(2) + ' KB';
     };
 
+    const getDownloadName = () => {
+        if (!originalFile) return 'optimized_image';
+        
+        const extensionMap = {
+            'image/jpeg': 'jpg',
+            'image/png': 'png',
+            'image/webp': 'webp'
+        };
+
+        const nameParts = originalFile.name.split('.');
+        const originalExt = nameParts.pop();
+        const base = nameParts.join('.');
+        
+        const newExt = targetFormat === 'original' ? originalExt : extensionMap[targetFormat];
+        return `optimized_${base}.${newExt}`;
+    };
+
     return (
         <div className="tool-container">
             <div className="tool-header-card">
@@ -83,12 +102,16 @@ const ImgOptimizer = () => {
                 <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Resize dimensions AND compress file size in one go</p>
             </div>
 
-            <div className="tool-card">
+            <div className={`tool-card ${!originalImage ? 'no-hover-arrow' : ''}`}>
                 {!originalImage ? (
-                    <label htmlFor="optimize-input" className="drop-zone">
-                        <span>Click to Upload Image</span>
-                        <input id="optimize-input" type="file" accept="image/*" onChange={handleUpload} style={{ display: 'none' }} />
-                    </label>
+                    <Upload
+                        id="optimize-input"
+                        accept="image/*"
+                        onUpload={handleUpload}
+                        title="Click to Upload Image"
+                        subtitle="High-quality optimization (JPG, PNG, WebP)"
+                        limitText="Resize AND compress in one go"
+                    />
                 ) : (
                     <div className="workspace" style={{ width: '100%' }}>
                         <div className="file-info-header" style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -119,17 +142,36 @@ const ImgOptimizer = () => {
                                     </label>
                                 </div>
 
-                                <div className="settings-section">
-                                    <label className="control-label">Step 2: Compress File Size</label>
-                                    <div style={{ marginTop: '0.75rem' }}>
-                                        <input
-                                            type="number"
-                                            className="input-field"
-                                            value={targetKB}
-                                            onChange={(e) => setTargetKB(Number(e.target.value))}
-                                            min="1"
-                                        />
-                                        <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Target Max (KB)</span>
+                                <div className="settings-section" style={{ gap: '1.5rem' }}>
+                                    <div>
+                                        <label className="control-label">Step 2: Compress File Size</label>
+                                        <div style={{ marginTop: '0.75rem' }}>
+                                            <input
+                                                type="number"
+                                                className="input-field"
+                                                value={targetKB}
+                                                onChange={(e) => setTargetKB(Number(e.target.value))}
+                                                min="1"
+                                            />
+                                            <span style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }}>Target Max (KB)</span>
+                                        </div>
+                                    </div>
+
+                                    <div>
+                                        <label className="control-label">Step 3: Convert Extension</label>
+                                        <div style={{ marginTop: '0.75rem' }}>
+                                            <select 
+                                                className="input-field" 
+                                                value={targetFormat} 
+                                                onChange={(e) => setTargetFormat(e.target.value)}
+                                                style={{ width: '100%', padding: '0.62rem' }}
+                                            >
+                                                <option value="original">Keep Original Format</option>
+                                                <option value="image/jpeg">JPEG (.jpg)</option>
+                                                <option value="image/png">PNG (.png)</option>
+                                                <option value="image/webp">WebP (.webp)</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -158,7 +200,7 @@ const ImgOptimizer = () => {
                                 </div>
 
                                 <div className="action-buttons-group" style={{ display: 'flex', gap: '1rem' }}>
-                                    <a href={processedImage} download={`optimized_${originalFile.name}`} className="btn-primary" style={{ flex: 1, textDecoration: 'none' }}>Download Optimized</a>
+                                    <a href={processedImage} download={getDownloadName()} className="btn-primary" style={{ flex: 1, textDecoration: 'none' }}>Download Optimized</a>
                                     <button className="btn-secondary" onClick={() => setProcessedImage(null)} style={{ flex: 1 }}>Reset Settings</button>
                                 </div>
                             </div>

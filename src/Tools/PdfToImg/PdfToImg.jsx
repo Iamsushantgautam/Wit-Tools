@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import * as pdfjsLib from 'pdfjs-dist';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import Upload from '../../components/Common/Upload/Upload';
 import './PdfToImg.css';
 
 // Initialize PDF.js worker
@@ -122,19 +123,16 @@ const PdfToImg = () => {
                 <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Convert PDF pages to high-quality images</p>
             </div>
 
-            <div className="tool-card">
+            <div className={`tool-card ${!file ? 'no-hover-arrow' : ''}`}>
                 {!file ? (
-                    <label htmlFor="pdf-upload-img" className="drop-zone" onClick={() => fileInputRef.current.click()}>
-                        <span>Click to Upload PDF</span>
-                        <input
-                            type="file"
-                            ref={fileInputRef}
-                            onChange={(e) => handleFile(e.target.files[0])}
-                            accept="application/pdf"
-                            style={{ display: 'none' }}
-                            id="pdf-upload-img"
-                        />
-                    </label>
+                    <Upload
+                        id="pdf-upload-img"
+                        accept="application/pdf"
+                        onUpload={handleFile}
+                        title="Click to Upload PDF"
+                        subtitle="Transform PDF pages into high-resolution images"
+                        limitText="Formats: PNG, JPG, WebP output"
+                    />
                 ) : (
                     <div className="workspace" style={{ width: '100%' }}>
                         <div className="file-info-header">

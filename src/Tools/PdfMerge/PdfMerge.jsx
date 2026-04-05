@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PDFDocument } from 'pdf-lib';
+import Upload from '../../components/Common/Upload/Upload';
 import './PdfMerge.css';
 
 const PdfMerge = () => {
@@ -7,8 +8,7 @@ const PdfMerge = () => {
     const [loading, setLoading] = useState(false);
     const [mergedPdfUrl, setMergedPdfUrl] = useState(null);
 
-    const handleFileChange = (e) => {
-        const selectedFiles = Array.from(e.target.files).filter(f => f.type === 'application/pdf');
+    const handleFileChange = (selectedFiles) => {
         if (selectedFiles.length === 0) return;
         setFiles(prev => [...prev, ...selectedFiles]);
         setMergedPdfUrl(null);
@@ -54,16 +54,17 @@ const PdfMerge = () => {
                 <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Combine multiple PDF files into one document</p>
             </div>
 
-            <div className="tool-card merge-content-card">
-                <div className="merge-workspace">
-                    <label htmlFor="merge-upload" className="drop-zone">
-                        <div className="drop-zone-content">
-                            <span className="plus-icon">+</span>
-                            <span>Click to Add PDFs</span>
-                            <span className="hint-text">Supported format: PDF</span>
-                        </div>
-                        <input id="merge-upload" type="file" multiple accept=".pdf" onChange={handleFileChange} style={{ display: 'none' }} />
-                    </label>
+            <div className={`tool-card merge-content-card ${files.length === 0 ? 'no-hover-arrow' : ''}`}>
+                <div className="merge-workspace" style={{ width: '100%', maxWidth: '900px', margin: '0 auto' }}>
+                    <Upload
+                        id="merge-upload"
+                        accept=".pdf"
+                        multiple={true}
+                        onUpload={handleFileChange}
+                        title="Click to Add PDFs"
+                        subtitle="Combine multiple documents instantly"
+                        limitText="Supported format: PDF only"
+                    />
 
                     {files.length > 0 && (
                         <div className="merge-list">

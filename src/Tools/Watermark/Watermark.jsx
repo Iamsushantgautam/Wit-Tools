@@ -4,7 +4,7 @@ import * as pdfjsLib from 'pdfjs-dist';
 
 // Use worker from public folder
 pdfjsLib.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.mjs';
-
+import Upload from '../../components/Common/Upload/Upload';
 import './Watermark.css';
 
 const Watermark = () => {
@@ -296,7 +296,7 @@ const Watermark = () => {
                 <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Protect Images & PDFs with custom watermarks</p>
             </div>
 
-            <div className="tool-card">
+            <div className={`tool-card ${!file ? 'no-hover-arrow' : ''}`}>
                 <div className="tabs">
                     <button
                         className={`tab-link ${activeTab === 'image' ? 'active' : ''}`}
@@ -312,18 +312,16 @@ const Watermark = () => {
                     </button>
                 </div>
 
-                {!file ? (
-                    <label htmlFor="wm-upload" className="drop-zone">
-                        <span>Click to Upload {activeTab === 'image' ? 'Image' : 'PDF'}</span>
-                        <input
-                            type="file"
+                    {!file ? (
+                        <Upload
                             id="wm-upload"
                             accept={activeTab === 'image' ? "image/*" : "application/pdf"}
-                            onChange={handleFileChange}
-                            style={{ display: 'none' }}
+                            onUpload={handleFileChange}
+                            title={`Click to Upload ${activeTab === 'image' ? 'Image' : 'PDF'}`}
+                            subtitle={`Protect your ${activeTab === 'image' ? 'creative work' : 'documents'}`}
+                            limitText="Text or Image watermarks supported"
                         />
-                    </label>
-                ) : (
+                    ) : (
                     <div className="workspace-flex">
                         <div className="preview-section">
                             <div className="canvas-wrapper">

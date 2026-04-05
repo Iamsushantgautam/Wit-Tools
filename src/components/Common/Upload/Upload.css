@@ -1,0 +1,63 @@
+/* Upload.css */
+
+.drop-zone.premium-upload {
+    width: 100%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+    background: #f8fafc;
+    border: 2px dashed #e2e8f0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    border-radius: var(--radius-md);
+}
+
+.drop-zone.premium-upload:hover {
+    background: #f1f5f9;
+    border-color: var(--primary);
+}
+
+.upload-icon-wrapper {
+    color: var(--primary);
+    background: #eff6ff;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    transition: all 0.4s ease;
+}
+
+.drop-zone:hover .upload-icon-wrapper {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.1);
+}
+
+.upload-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: center;
+}
+
+.upload-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.upload-subtitle {
+    color: #64748b;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+.upload-limit {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    font-weight: 500;
+}
