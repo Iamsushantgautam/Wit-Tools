@@ -26,6 +26,7 @@ import ImgResizer from './Tools/ImgResizer/ImgResizer';
 import ImgOptimizer from './Tools/ImgOptimizer/ImgOptimizer';
 import PdfToImg from './Tools/PdfToImg/PdfToImg';
 import PdfPageNumber from './Tools/PdfPageNumber/PdfPageNumber';
+import YTVideoScreenshot from './Tools/YTVideoScreenshot/YTVideoScreenshot';
 import PrivacyPolicy from './components/Legal/PrivacyPolicy';
 import Terms from './components/Legal/Terms';
 import ShopifyDev from './components/Shopify/ShopifyDev';
@@ -61,6 +62,7 @@ function App() {
           <Route path="/bg-remover" element={<BgRemover />} />
           <Route path="/pdf-to-img" element={<PdfToImg />} />
           <Route path="/pdf-page-number" element={<PdfPageNumber />} />
+          <Route path="/yt-screenshot" element={<YTVideoScreenshot />} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/shopify-dev" element={<ShopifyDev />} />
