@@ -6,6 +6,8 @@ import { Analytics } from '@vercel/analytics/react';
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
 import About from './components/About/About';
+import Founder from './components/Founder/Founder';
+import ComingSoon from './components/ComingSoon/ComingSoon';
 import Contact from './components/Contact/Contact';
 import ScrollToTop from './components/ScrollToTop';
 import Home from './components/Home/Home';
@@ -27,6 +29,8 @@ import ImgOptimizer from './Tools/ImgOptimizer/ImgOptimizer';
 import PdfToImg from './Tools/PdfToImg/PdfToImg';
 import PdfPageNumber from './Tools/PdfPageNumber/PdfPageNumber';
 import YTVideoScreenshot from './Tools/YTVideoScreenshot/YTVideoScreenshot';
+import SvgGenerator from './Tools/SvgGenerator/SvgGenerator';
+
 import PrivacyPolicy from './components/Legal/PrivacyPolicy';
 import Terms from './components/Legal/Terms';
 import ShopifyDev from './components/Shopify/ShopifyDev';
@@ -45,6 +49,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
+          <Route path="/founder" element={<Founder />} />
+          <Route path="/coming-soon" element={<ComingSoon />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/feedback" element={<Contact />} />
           <Route path="/img-to-pdf" element={<ImgToPdf />} />
@@ -63,6 +69,8 @@ function App() {
           <Route path="/pdf-to-img" element={<PdfToImg />} />
           <Route path="/pdf-page-number" element={<PdfPageNumber />} />
           <Route path="/yt-screenshot" element={<YTVideoScreenshot />} />
+          <Route path="/svg-generator" element={<SvgGenerator />} />
+
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/shopify-dev" element={<ShopifyDev />} />

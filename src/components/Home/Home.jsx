@@ -27,6 +27,13 @@ const BgIcon = () => (
         <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M5.636 5.636l3.536 3.536m0 5.656l-3.536 3.536M8 4h8M4 8v8m16-8v8M8 20h8" opacity="0.4" />
     </svg>
 );
+const SvgIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18c3.5-6 6.5-6 10 0s6.5 6 9.75 0" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12c3.5-6 6.5-6 10 0s6.5 6 9.75 0" opacity="0.6" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 6c3.5-6 6.5-6 10 0s6.5 6 9.75 0" opacity="0.3" />
+    </svg>
+);
 
 const CompressIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
@@ -55,6 +62,12 @@ const SecurityIcon = () => (
 const WitcetIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9s-2.015-9-4.5-9m0 18c-2.485 0-4.5-4.03-4.5-9s2.015-9 4.5-9m0 18c-5.922 0-9-7-9-9s3.078-9 9-9 9 7 9 9-3.078 9-9 9z" />
+    </svg>
+);
+
+const ScreelyIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M6.827 6.175A2.31 2.31 0 015.186 7.23c-.38.054-.757.112-1.134.175C2.999 7.58 2.25 8.507 2.25 9.574V18a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9.574c0-1.067-.75-1.994-1.802-2.169a47.865 47.865 0 00-1.134-.175 2.31 2.31 0 01-1.64-1.055l-.822-1.316A2.192 2.192 0 0014.502 4h-5c-.75 0-1.42.424-1.785 1.077l-.89 1.098zM12 15.75a3 3 0 100-6 3 3 0 000 6z" />
     </svg>
 );
 
@@ -115,14 +128,18 @@ const Home = () => {
         { id: 'watermark', title: 'Watermark', desc: 'Add stamps to your Photos & PDFs.', icon: <WatermarkIcon />, category: 'Utility Tools', color: 'icon-blue', isVisible: true },
         { id: 'qr-generator', title: 'QR Generator', desc: 'Generate custom QR codes instantly.', icon: <QrIcon />, category: 'Utility Tools', color: 'icon-orange', isVisible: true },
         { id: 'yt-screenshot', title: 'Video Screenshot', desc: 'Capture frames from videos every X seconds.', icon: <VideoIcon />, category: 'Utility Tools', color: 'icon-red', isVisible: true },
+        { id: 'svg-generator', title: 'SVG Wave & Pattern Studio', desc: 'Design layered vector waves and seamless repeating patterns.', icon: <SvgIcon />, category: 'Utility Tools', color: 'icon-purple', isVisible: true },
 
         { id: 'shopify-dev', title: 'Shopify Ai Prompts for sections', desc: 'Expert AI prompts for Shopify section developers.', icon: <ShopifyIcon />, category: 'Shopify Tools', color: 'icon-green', isVisible: true },
         { id: 'shopify-scraper', title: 'Shopify Product Scraper', desc: 'Powerful Chrome extension for bulk extracting Shopify product data.', icon: <ShopifyIcon />, category: 'Chrome Extension', color: 'icon-green', isExternal: true, url: 'https://github.com/Iamsushantgautam/Chrome-extension/tree/main/shopify%20product%20scraper', useFavicon: false, isVisible: true },
+        { id: 'coming-soon', title: 'Media Downloader', desc: 'Download media from various sources.', icon: <VideoIcon />, category: 'Chrome Extension', color: 'icon-blue', isVisible: true },
+        { id: 'coming-soon', title: 'Browser Text Copier', desc: 'Copy text from websites that restrict selection and copy functionality.', icon: <ChromeIcon />, category: 'Chrome Extension', color: 'icon-purple', isVisible: true },
         { id: 'icons8', title: 'Icons8', desc: 'Premium library for professional icons, photos, and creative assets.', icon: <QrIcon />, category: 'Useful Websites', color: 'icon-green', isExternal: true, url: 'https://icons8.com/', isVisible: true },
         { id: 'colorhunt', title: 'Color Hunt', desc: 'Curated color palettes for designers and artists. Find the perfect scheme.', icon: <QrIcon />, category: 'Useful Websites', color: 'icon-purple', isExternal: true, url: 'https://colorhunt.co/', isVisible: true },
         { id: 'witcet', title: 'Witcet.online', desc: 'Visit our partner site for advanced AI resources, creative assets, and more digital utilities.', icon: <WitcetIcon />, category: 'Useful Websites', color: 'icon-purple', isExternal: true, url: 'https://witcet.online', isVisible: false },
         { id: 'portfolio', title: 'Sushant\'s Portfolio', desc: 'Explore the full creative development portfolio of the developer.', icon: <UserIcon />, category: 'Useful Websites', color: 'icon-blue', isExternal: true, url: 'https://sushant.online', isVisible: false },
         { id: 'stitch', title: 'Stitch', desc: 'Professional UI and screen creation platform designed for creative developers.', icon: <QrIcon />, category: 'Useful Websites', color: 'icon-blue', isExternal: true, url: 'https://stitch.withgoogle.com/', isVisible: true },
+        { id: 'mokkify', title: 'Mokkify', desc: 'Mokkify.com is a free Shopify mockups generator for creating realistic product photos and videos.', icon: <QrIcon />, category: 'Useful Websites', color: 'icon-blue', isExternal: true, url: 'https://mokkify.com/', isVisible: true },
         { id: 'notebooklm', title: 'NotebookLM', desc: 'Next-generation AI research and writing environment powered by Google Gemini.', icon: <QrIcon />, category: 'Useful Websites', color: 'icon-purple', isExternal: true, url: 'https://notebooklm.google/', isVisible: true },
 
     ];
@@ -242,8 +259,12 @@ const Home = () => {
                                             );
                                         }
 
+                                        const toPath = tool.id === 'coming-soon'
+                                            ? `/coming-soon?tool=${encodeURIComponent(tool.title)}`
+                                            : `/${tool.id}`;
+
                                         return (
-                                            <Link {...cardProps} to={`/${tool.id}`}>
+                                            <Link {...cardProps} to={toPath}>
                                                 {cardContent}
                                             </Link>
                                         );
