@@ -1,0 +1,854 @@
+/* ShopifyApps.css */
+
+.sapps-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 5% 8rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Floating Background Blur */
+.sapps-container::before,
+.sapps-container::after {
+    content: '';
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(140px);
+    z-index: -1;
+    opacity: 0.12;
+    animation: floating-blur 20s infinite alternate;
+}
+
+.sapps-container::before {
+    background: radial-gradient(circle, #008060, transparent);
+    top: -100px;
+    left: -200px;
+}
+
+.sapps-container::after {
+    background: radial-gradient(circle, #3b82f6, transparent);
+    bottom: 300px;
+    right: -200px;
+    animation-delay: -5s;
+}
+
+/* ── Hero Header ── */
+.sapps-hero {
+    background: linear-gradient(135deg, #f8fafc 0%, #f3fcf9 50%, #effaf5 100%);
+    border-bottom: 1px solid #e2e8f0;
+    position: relative;
+    overflow: visible;
+    padding-bottom: 0;
+    width: 100%;
+    max-width: 100%;
+}
+
+/* subtle dot pattern */
+.sapps-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(rgba(0, 128, 96, 0.05) 1px, transparent 1px);
+    background-size: 28px 28px;
+    pointer-events: none;
+}
+
+/* emerald glow orb */
+.sapps-hero::after {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -60px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0, 128, 96, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.sapps-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 1380px;
+    margin: 0 auto;
+    padding: 2.25rem 5% 1.75rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.sapps-hero-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 1.25rem;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.sapps-hero-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+}
+
+.sapps-hero-badges {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.sapps-badge-green {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(0, 128, 96, 0.08);
+    color: #008060;
+    border: 1px solid rgba(0, 128, 96, 0.2);
+    padding: 3px 10px;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.sapps-badge-count {
+    background: rgba(0, 0, 0, 0.04);
+    color: #475569;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    padding: 3px 10px;
+    border-radius: 50px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.sapps-hero-title {
+    font-size: clamp(1.8rem, 3.2vw, 2.3rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+    color: #0f172a;
+    margin: 0;
+}
+
+.sapps-hero-subtitle {
+    font-size: 0.95rem;
+    color: #64748b;
+    margin: 4px 0 0 0;
+    max-width: 600px;
+    font-weight: 500;
+    text-align: left;
+    line-height: 1.5;
+}
+
+.sapps-title-glow {
+    background: linear-gradient(135deg, #008060 0%, #10b981 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* ── Search ── */
+.sapps-search-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex-wrap: nowrap;
+}
+
+.sapps-search-wrap {
+    position: relative;
+    width: 280px;
+    flex-shrink: 0;
+    transition: width 0.3s ease;
+}
+
+.sapps-search-ico {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    pointer-events: none;
+}
+
+.sapps-search {
+    width: 100%;
+    padding: 11px 40px 11px 44px;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    color: #0f172a;
+    font-size: 0.9rem;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.25s ease;
+    box-sizing: border-box;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.sapps-search::placeholder {
+    color: #94a3b8;
+}
+
+.sapps-search:focus {
+    border-color: #008060;
+    background: #ffffff;
+    box-shadow: 0 4px 14px rgba(0, 128, 96, 0.08);
+}
+
+.sapps-clear {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #f1f5f9;
+    border: none;
+    color: #64748b;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.sapps-clear:hover {
+    background: #e2e8f0;
+}
+
+/* ── Filter Toggle ── */
+.sapps-filter-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 18px;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    color: #475569;
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+    box-sizing: border-box;
+}
+
+.sapps-filter-toggle:hover {
+    background: #f8fafc;
+    border-color: #cbd5e1;
+    color: #0f172a;
+}
+
+.sapps-filter-toggle.active {
+    background: rgba(0, 128, 96, 0.08);
+    border-color: #008060;
+    color: #008060;
+}
+
+.sapps-filter-toggle svg {
+    transition: transform 0.2s ease;
+}
+
+.sapps-filter-toggle:hover svg {
+    transform: rotate(15deg);
+}
+
+/* ── Filters Drawer ── */
+.sapps-filters-drawer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1.5px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.25rem;
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+    animation: sapps-slide-down 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+    position: relative;
+    z-index: 50;
+}
+
+@keyframes sapps-slide-down {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.sapps-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.sapps-filter-label {
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ── Custom Dropdown Menu ── */
+.sapps-dropdown-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    position: relative;
+}
+
+.sapps-dropdown-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 10px;
+    color: #0f172a;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.sapps-dropdown-trigger:hover {
+    border-color: #cbd5e1;
+    background: #f8fafc;
+}
+
+.sapps-dropdown-trigger.active {
+    border-color: #008060;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(0, 128, 96, 0.1);
+}
+
+.sapps-dropdown-arrow {
+    color: #64748b;
+    transition: transform 0.25s ease;
+}
+
+.sapps-dropdown-arrow.open {
+    transform: rotate(180deg);
+    color: #008060;
+}
+
+.sapps-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 6px;
+    padding: 6px 0;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    list-style: none;
+    z-index: 9999;
+    box-sizing: border-box;
+    animation: sapps-slide-down 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.sapps-dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 14px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.sapps-dropdown-item:hover {
+    background-color: #f1f5f9;
+    color: #0f172a;
+}
+
+.sapps-dropdown-item.selected {
+    background-color: rgba(0, 128, 96, 0.06);
+    color: #008060;
+}
+
+.sapps-dropdown-check {
+    color: #008060;
+    flex-shrink: 0;
+}
+
+.sapps-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    padding-bottom: 0.75rem;
+}
+
+.sapps-tag {
+    padding: 6px 16px;
+    border-radius: 50px;
+    border: 1px solid #e2e8f0;
+    background: #ffffff;
+    color: #64748b;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.01);
+}
+
+.sapps-tag:hover {
+    background: #f8fafc;
+    color: #0f172a;
+    border-color: #cbd5e1;
+}
+
+.sapps-tag.active {
+    color: #fff !important;
+}
+
+/* ── Grid Layout ── */
+.sapps-grid-wrapper {
+    width: 100%;
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    animation: fade-in-up 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.sapps-results-count {
+    font-size: 1rem;
+    color: #64748b;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.sapps-results-count strong {
+    color: #1e293b;
+    font-weight: 800;
+}
+
+.sapps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 2rem;
+    width: 100%;
+}
+
+/* ── App Card Design ── */
+.sapps-card {
+    background: #ffffff;
+    border-radius: 24px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sapps-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.06);
+    border-color: rgba(0, 128, 96, 0.15);
+}
+
+/* Card Header */
+.sapps-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.sapps-icon-box {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+}
+
+.sapps-favicon {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border-radius: 6px;
+    background-color: white;
+    padding: 2px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+.sapps-title-area {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    flex: 1;
+}
+
+.sapps-meta-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.sapps-category-badge {
+    background-color: #f1f5f9;
+    color: #475569;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+}
+
+.sapps-rating-badge {
+    background-color: #fffbeb;
+    color: #d97706;
+    border: 1px solid #fde68a;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.sapps-rating-badge small {
+    color: #78350f;
+    font-weight: 600;
+    font-size: 0.65rem;
+}
+
+.sapps-app-name {
+    margin: 0;
+    color: #1e293b;
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    cursor: pointer;
+    line-height: 1.3;
+    transition: color 0.2s;
+}
+
+.sapps-app-name:hover {
+    color: #008060;
+}
+
+/* Card Body */
+.sapps-card-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+}
+
+.sapps-app-desc {
+    color: #64748b;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    font-weight: 500;
+}
+
+.sapps-highlight-box {
+    background-color: #f8fafc;
+    border-left: 3px solid #008060;
+    border-radius: 0 12px 12px 0;
+    padding: 0.85rem 1rem;
+    font-size: 0.88rem;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sapps-highlight-box strong {
+    color: #0f172a;
+    font-weight: 700;
+}
+
+.sapps-highlight-box p {
+    margin: 0;
+    color: #475569;
+    line-height: 1.4;
+    font-weight: 500;
+}
+
+.sapps-badges-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.sapps-badge-benefit,
+.sapps-badge-price {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 5px 10px;
+    border-radius: 8px;
+}
+
+.sapps-badge-benefit {
+    background-color: #f3fcf9;
+    color: #008060;
+}
+
+.sapps-badge-price {
+    background-color: #f1f5f9;
+    color: #475569;
+}
+
+/* Card Footer */
+.sapps-card-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    border-top: 1px solid #f1f5f9;
+    padding-top: 1.25rem;
+    width: 100%;
+}
+
+.sapps-copy-name-btn,
+.sapps-visit-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 10px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.sapps-copy-name-btn {
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+}
+
+.sapps-copy-name-btn:hover {
+    background-color: #f1f5f9;
+    color: #1e293b;
+    border-color: #cbd5e1;
+}
+
+.sapps-visit-btn {
+    background-color: #008060;
+    border: 1px solid #008060;
+    color: white;
+    text-decoration: none;
+}
+
+.sapps-visit-btn:hover {
+    background-color: #00664d;
+    border-color: #00664d;
+    box-shadow: 0 4px 12px rgba(0, 128, 96, 0.2);
+}
+
+/* ── Empty State ── */
+.sapps-empty-state {
+    text-align: center;
+    padding: 5rem 1rem;
+    background-color: white;
+    border-radius: 24px;
+    border: 2px dashed #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 500px;
+    margin: 3rem auto;
+}
+
+.sapps-empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+}
+
+.sapps-empty-state h3 {
+    font-size: 1.4rem;
+    color: #1e293b;
+    margin-bottom: 0.5rem;
+    font-weight: 800;
+}
+
+.sapps-empty-state p {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+/* ── Toast Notifications ── */
+.sapps-toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translate(-50%, 50px);
+    background-color: #0f172a;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.sapps-toast.show {
+    transform: translate(-50%, 0);
+    opacity: 1;
+}
+
+.sapps-toast svg {
+    color: #10b981;
+}
+
+/* ── Animations ── */
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ── Media Queries ── */
+@media (max-width: 900px) {
+    .sapps-hero-title {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .sapps-hero-inner {
+        padding: 1.5rem 5% 1rem;
+    }
+
+    .sapps-hero-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .sapps-hero-title {
+        font-size: 1.7rem;
+    }
+
+    .sapps-hero-subtitle {
+        font-size: 0.88rem;
+        max-width: 100%;
+    }
+
+    .sapps-search-row {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .sapps-search-wrap {
+        width: 100%;
+    }
+
+    .sapps-search {
+        padding: 9px 36px 9px 38px;
+        font-size: 0.85rem;
+    }
+
+    .sapps-filters-drawer {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .sapps-tags {
+        margin-top: 0.5rem;
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 8px;
+        flex-wrap: nowrap;
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
+    }
+
+    .sapps-tag {
+        flex-shrink: 0;
+        padding: 5px 12px;
+        font-size: 0.75rem;
+    }
+
+    .sapps-grid {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1.25rem;
+    }
+
+    .sapps-card {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .sapps-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sapps-card-footer {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .sapps-copy-name-btn,
+    .sapps-visit-btn {
+        width: 100%;
+    }
+}

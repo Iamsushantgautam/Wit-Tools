@@ -30,10 +30,12 @@ import PdfToImg from './Tools/PdfToImg/PdfToImg';
 import PdfPageNumber from './Tools/PdfPageNumber/PdfPageNumber';
 import YTVideoScreenshot from './Tools/YTVideoScreenshot/YTVideoScreenshot';
 import SvgGenerator from './Tools/SvgGenerator/SvgGenerator';
+import PngToWebp from './Tools/PngToWebp/PngToWebp';
 
 import PrivacyPolicy from './components/Legal/PrivacyPolicy';
 import Terms from './components/Legal/Terms';
 import ShopifyDev from './components/Shopify/ShopifyDev';
+import ShopifyApps from './components/Shopify/ShopifyApps';
 import NotFound from './components/NotFound/NotFound';
 
 import './App.css';
@@ -70,10 +72,12 @@ function App() {
           <Route path="/pdf-page-number" element={<PdfPageNumber />} />
           <Route path="/yt-screenshot" element={<YTVideoScreenshot />} />
           <Route path="/svg-generator" element={<SvgGenerator />} />
+          <Route path="/png-to-webp" element={<PngToWebp />} />
 
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<Terms />} />
-          <Route path="/shopify-dev" element={<ShopifyDev />} />
+           <Route path="/shopify-dev" element={<ShopifyDev />} />
+          <Route path="/shopify-apps" element={<ShopifyApps />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

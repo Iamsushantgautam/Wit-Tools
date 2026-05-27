@@ -35,6 +35,12 @@ const SvgIcon = () => (
     </svg>
 );
 
+const ImageIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 15.75l5.159-5.159a2.25 2.25 0 013.182 0l5.159 5.159m-1.5-1.5l1.409-1.409a2.25 2.25 0 013.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5zm10.5-11.25h.008v.008h-.008V8.25zm.375 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+    </svg>
+);
+
 const CompressIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 9V4.5M9 9H4.5M9 9L3.75 3.75M9 15v4.5M9 15H4.5M9 15l-5.25 5.25M15 9h4.5M15 9V4.5M15 9l5.25-5.25M15 15h4.5M15 15v4.5M15 15l5.25 5.25" />
@@ -98,12 +104,15 @@ const HOME_CATEGORY_ORDER = [
     'Utility Tools',
     'Shopify Tools',
     'Chrome Extension',
-    'Useful Websites'
+    'Design & Icon Websites',
+    'AI & Research Websites',
+    'Developer & Cloud Websites'
 ];
 
 const Home = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isLoading, setIsLoading] = useState(true);
+    const [activeCategory, setActiveCategory] = useState('All');
 
     // Simulate initial loading
     React.useEffect(() => {
@@ -112,44 +121,57 @@ const Home = () => {
     }, []);
 
     const tools = [
-        { id: 'img-to-pdf', title: 'Image to PDF', desc: 'Convert images to high-quality PDF docs.', icon: <PdfIcon />, category: 'Image Tools', color: 'icon-blue', isVisible: true },
-        { id: 'img-resizer', title: 'Image Resizer', desc: 'Change dimensions with high precision.', icon: <CompressIcon />, category: 'Image Tools', color: 'icon-blue', isVisible: true },
-        { id: 'img-optimizer', title: 'Image Optimizer', desc: 'Resize and compress file size in one go.', icon: <BgIcon />, category: 'Image Tools', color: 'icon-green', isVisible: true },
-        { id: 'img-converter', title: 'Image Converter', desc: 'Change format to JPG, PNG, WebP, etc.', icon: <QrIcon />, category: 'Image Tools', color: 'icon-orange', isVisible: true },
-        { id: 'img-compressor', title: 'Image Compressor', desc: 'Reduce file size while keeping quality.', icon: <CompressIcon />, category: 'Image Tools', color: 'icon-green', isVisible: true },
-        { id: 'bg-remover', title: 'Remove BG', desc: 'AI-powered automatic background removal.', icon: <BgIcon />, category: 'Image Tools', color: 'icon-purple', isVisible: true },
-        { id: 'profile-maker', title: 'Profile Maker', desc: 'Create professional avatars with AI.', icon: <UserIcon />, category: 'Utility Tools', color: 'icon-orange', isVisible: true },
-        { id: 'pdf-compressor', title: 'Compress PDF', desc: 'Reduce PDF file size significantly.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-red', isVisible: true },
-        { id: 'pdf-merge', title: 'Merge PDF', desc: 'Combine multiple PDFs into one.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-blue', isVisible: true },
-        { id: 'pdf-split', title: 'Split PDF', desc: 'Extract pages or split into parts.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-red', isVisible: true },
-        { id: 'pdf-page-number', title: 'Page Number', desc: 'Add visible page numbers to PDFs.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-blue', isVisible: true },
-        { id: 'pdf-security', title: 'PDF Password', desc: 'Lock or Unlock your PDF documents.', icon: <SecurityIcon />, category: 'PDF Tools', color: 'icon-purple', isVisible: false },
-        { id: 'pdf-to-img', title: 'PDF to Image', desc: 'Convert PDF pages to individual images.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-red', isVisible: true },
-        { id: 'watermark', title: 'Watermark', desc: 'Add stamps to your Photos & PDFs.', icon: <WatermarkIcon />, category: 'Utility Tools', color: 'icon-blue', isVisible: true },
-        { id: 'qr-generator', title: 'QR Generator', desc: 'Generate custom QR codes instantly.', icon: <QrIcon />, category: 'Utility Tools', color: 'icon-orange', isVisible: true },
-        { id: 'yt-screenshot', title: 'Video Screenshot', desc: 'Capture frames from videos every X seconds.', icon: <VideoIcon />, category: 'Utility Tools', color: 'icon-red', isVisible: true },
-        { id: 'svg-generator', title: 'SVG Wave & Pattern Studio', desc: 'Design layered vector waves and seamless repeating patterns.', icon: <SvgIcon />, category: 'Utility Tools', color: 'icon-purple', isVisible: true },
+        { id: 'img-to-pdf', title: 'Image to PDF', desc: 'Convert images to high-quality PDF docs.', icon: <PdfIcon />, category: 'Image Tools', color: 'icon-blue', tags: ['PDF', 'Convert', 'Image'], isVisible: true },
+        { id: 'img-resizer', title: 'Image Resizer', desc: 'Change dimensions with high precision.', icon: <CompressIcon />, category: 'Image Tools', color: 'icon-blue', tags: ['Resize', 'Dimension', 'Image'], isVisible: true },
+        { id: 'img-optimizer', title: 'Image Optimizer', desc: 'Resize and compress file size in one go.', icon: <BgIcon />, category: 'Image Tools', color: 'icon-green', tags: ['Compress', 'Resize', 'Image'], isVisible: true },
+        { id: 'img-converter', title: 'Image Converter', desc: 'Change format to JPG, PNG, WebP, etc.', icon: <QrIcon />, category: 'Image Tools', color: 'icon-orange', tags: ['Convert', 'Format', 'Image'], isVisible: true },
+        { id: 'png-to-webp', title: 'PNG to WEBP Converter', desc: 'Convert PNG to WEBP in bulk, with premium folder structure support and side-by-side before/after comparison.', icon: <ImageIcon />, category: 'Image Tools', color: 'icon-purple', tags: ['WEBP', 'PNG', 'Convert', 'Bulk'], isVisible: true },
+        { id: 'img-compressor', title: 'Image Compressor', desc: 'Reduce file size while keeping quality.', icon: <CompressIcon />, category: 'Image Tools', color: 'icon-green', tags: ['Compress', 'Optimize', 'Image'], isVisible: true },
+        { id: 'bg-remover', title: 'Remove BG', desc: 'AI-powered automatic background removal.', icon: <BgIcon />, category: 'Image Tools', color: 'icon-purple', tags: ['AI', 'Background', 'Image'], isVisible: true },
+        { id: 'profile-maker', title: 'Profile Maker', desc: 'Create professional avatars with AI.', icon: <UserIcon />, category: 'Utility Tools', color: 'icon-orange', tags: ['AI', 'Avatar', 'Image'], isVisible: true },
+        { id: 'pdf-compressor', title: 'Compress PDF', desc: 'Reduce PDF file size significantly.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-red', tags: ['PDF', 'Compress', 'Optimize'], isVisible: true },
+        { id: 'pdf-merge', title: 'Merge PDF', desc: 'Combine multiple PDFs into one.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-blue', tags: ['PDF', 'Merge', 'Combine'], isVisible: true },
+        { id: 'pdf-split', title: 'Split PDF', desc: 'Extract pages or split into parts.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-red', tags: ['PDF', 'Split', 'Extract'], isVisible: true },
+        { id: 'pdf-page-number', title: 'Page Number', desc: 'Add visible page numbers to PDFs.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-blue', tags: ['PDF', 'Page Numbers'], isVisible: true },
+        { id: 'pdf-security', title: 'PDF Password', desc: 'Lock or Unlock your PDF documents.', icon: <SecurityIcon />, category: 'PDF Tools', color: 'icon-purple', tags: ['PDF', 'Security', 'Password'], isVisible: false },
+        { id: 'pdf-to-img', title: 'PDF to Image', desc: 'Convert PDF pages to individual images.', icon: <PdfIcon />, category: 'PDF Tools', color: 'icon-red', tags: ['PDF', 'Convert', 'Image'], isVisible: true },
+        { id: 'watermark', title: 'Watermark', desc: 'Add stamps to your Photos & PDFs.', icon: <WatermarkIcon />, category: 'Utility Tools', color: 'icon-blue', tags: ['Watermark', 'Security', 'Branding'], isVisible: true },
+        { id: 'qr-generator', title: 'QR Generator', desc: 'Generate custom QR codes instantly.', icon: <QrIcon />, category: 'Utility Tools', color: 'icon-orange', tags: ['QR', 'Generator', 'Utility'], isVisible: true },
+        { id: 'yt-screenshot', title: 'Video Screenshot', desc: 'Capture frames from videos every X seconds.', icon: <VideoIcon />, category: 'Utility Tools', color: 'icon-red', tags: ['Video', 'Screenshot', 'Frame'], isVisible: true },
+        { id: 'svg-generator', title: 'SVG Wave & Pattern Studio', desc: 'Design layered vector waves and seamless repeating patterns.', icon: <SvgIcon />, category: 'Utility Tools', color: 'icon-purple', tags: ['SVG', 'Vector', 'Pattern', 'Wave'], isVisible: true },
 
-        { id: 'shopify-dev', title: 'Shopify Ai Prompts for sections', desc: 'Expert AI prompts for Shopify section developers.', icon: <ShopifyIcon />, category: 'Shopify Tools', color: 'icon-green', isVisible: true },
-        { id: 'shopify-scraper', title: 'Shopify Product Scraper', desc: 'Powerful Chrome extension for bulk extracting Shopify product data.', icon: <ShopifyIcon />, category: 'Chrome Extension', color: 'icon-green', isExternal: true, url: 'https://github.com/Iamsushantgautam/Chrome-extension/tree/main/shopify%20product%20scraper', useFavicon: false, isVisible: true },
-        { id: 'coming-soon', title: 'Media Downloader', desc: 'Download media from various sources.', icon: <VideoIcon />, category: 'Chrome Extension', color: 'icon-blue', isVisible: true },
-        { id: 'coming-soon', title: 'Browser Text Copier', desc: 'Copy text from websites that restrict selection and copy functionality.', icon: <ChromeIcon />, category: 'Chrome Extension', color: 'icon-purple', isVisible: true },
-        { id: 'icons8', title: 'Icons8', desc: 'Premium library for professional icons, photos, and creative assets.', icon: <QrIcon />, category: 'Useful Websites', color: 'icon-green', isExternal: true, url: 'https://icons8.com/', isVisible: true },
-        { id: 'colorhunt', title: 'Color Hunt', desc: 'Curated color palettes for designers and artists. Find the perfect scheme.', icon: <QrIcon />, category: 'Useful Websites', color: 'icon-purple', isExternal: true, url: 'https://colorhunt.co/', isVisible: true },
-        { id: 'witcet', title: 'Witcet.online', desc: 'Visit our partner site for advanced AI resources, creative assets, and more digital utilities.', icon: <WitcetIcon />, category: 'Useful Websites', color: 'icon-purple', isExternal: true, url: 'https://witcet.online', isVisible: false },
-        { id: 'portfolio', title: 'Sushant\'s Portfolio', desc: 'Explore the full creative development portfolio of the developer.', icon: <UserIcon />, category: 'Useful Websites', color: 'icon-blue', isExternal: true, url: 'https://sushant.online', isVisible: false },
-        { id: 'stitch', title: 'Stitch', desc: 'Professional UI and screen creation platform designed for creative developers.', icon: <QrIcon />, category: 'Useful Websites', color: 'icon-blue', isExternal: true, url: 'https://stitch.withgoogle.com/', isVisible: true },
-        { id: 'mokkify', title: 'Mokkify', desc: 'Mokkify.com is a free Shopify mockups generator for creating realistic product photos and videos.', icon: <QrIcon />, category: 'Useful Websites', color: 'icon-blue', isExternal: true, url: 'https://mokkify.com/', isVisible: true },
-        { id: 'notebooklm', title: 'NotebookLM', desc: 'Next-generation AI research and writing environment powered by Google Gemini.', icon: <QrIcon />, category: 'Useful Websites', color: 'icon-purple', isExternal: true, url: 'https://notebooklm.google/', isVisible: true },
-
+        { id: 'shopify-dev', title: 'Shopify Ai Prompts for sections', desc: 'Expert AI prompts for Shopify section developers.', icon: <ShopifyIcon />, category: 'Shopify Tools', color: 'icon-green', tags: ['AI', 'Shopify', 'Prompts', 'Dev'], isVisible: true },
+        { id: 'shopify-apps', title: 'Best Shopify Apps Directory', desc: 'A curated directory of the absolute best Shopify apps to boost conversions, design, and sales.', icon: <ShopifyIcon />, category: 'Shopify Tools', color: 'icon-green', tags: ['Shopify', 'Apps', 'Marketing', 'Ecom'], isVisible: true },
+        { id: 'shopify-scraper', title: 'Shopify Product Scraper', desc: 'Powerful Chrome extension for bulk extracting Shopify product data.', icon: <ShopifyIcon />, category: 'Chrome Extension', color: 'icon-green', isExternal: true, url: 'https://github.com/Iamsushantgautam/Chrome-extension/tree/main/shopify%20product%20scraper', useFavicon: false, tags: ['Shopify', 'Chrome', 'Scraper', 'Extension'], isVisible: true },
+        { id: 'coming-soon', title: 'Media Downloader', desc: 'Download media from various sources.', icon: <VideoIcon />, category: 'Chrome Extension', color: 'icon-blue', tags: ['Chrome', 'Downloader', 'Media'], isVisible: true },
+        { id: 'coming-soon', title: 'Browser Text Copier', desc: 'Copy text from websites that restrict selection and copy functionality.', icon: <ChromeIcon />, category: 'Chrome Extension', color: 'icon-purple', tags: ['Chrome', 'Copy', 'Utility'], isVisible: true },
+        { id: 'icons8', title: 'Icons8', desc: 'Premium library for professional icons, photos, and creative assets.', icon: <QrIcon />, category: 'Design & Icon Websites', color: 'icon-green', isExternal: true, url: 'https://icons8.com/', tags: ['Icons', 'Design', 'Stock'], isVisible: true },
+        { id: 'colorhunt', title: 'Color Hunt', desc: 'Curated color palettes for designers and artists. Find the perfect scheme.', icon: <QrIcon />, category: 'Design & Icon Websites', color: 'icon-purple', isExternal: true, url: 'https://colorhunt.co/', tags: ['Color', 'Palette', 'Design'], isVisible: true },
+        { id: 'witcet', title: 'Witcet.online', desc: 'Visit our partner site for advanced AI resources, creative assets, and more digital utilities.', icon: <WitcetIcon />, category: 'AI & Research Websites', color: 'icon-purple', isExternal: true, url: 'https://witcet.online', tags: ['AI', 'Resources', 'Utilities'], isVisible: false },
+        { id: 'portfolio', title: 'Sushant\'s Portfolio', desc: 'Explore the full creative development portfolio of the developer.', icon: <UserIcon />, category: 'Developer & Cloud Websites', color: 'icon-blue', isExternal: true, url: 'https://sushant.online', tags: ['Portfolio', 'Developer', 'Showcase'], isVisible: false },
+        { id: 'stitch', title: 'Stitch', desc: 'Professional UI and screen creation platform designed for creative developers.', icon: <QrIcon />, category: 'Design & Icon Websites', color: 'icon-blue', isExternal: true, url: 'https://stitch.withgoogle.com/', tags: ['UI', 'Screen', 'Design', 'Google'], isVisible: true },
+        { id: 'mokkify', title: 'Mokkify', desc: 'Mokkify.com is a free Shopify mockups generator for creating realistic product photos and videos.', icon: <QrIcon />, category: 'Design & Icon Websites', color: 'icon-blue', isExternal: true, url: 'https://mokkify.com/', tags: ['Shopify', 'Mockup', 'Product', 'Video'], isVisible: true },
+        { id: 'notebooklm', title: 'NotebookLM', desc: 'Next-generation AI research and writing environment powered by Google Gemini.', icon: <QrIcon />, category: 'AI & Research Websites', color: 'icon-purple', isExternal: true, url: 'https://notebooklm.google/', tags: ['AI', 'Research', 'Notes', 'Google'], isVisible: true },
+        { id: 'aiven', title: 'Aiven', desc: 'Fully managed cloud database services and high-performance MySQL hosting.', icon: <QrIcon />, category: 'Developer & Cloud Websites', color: 'icon-blue', isExternal: true, url: 'https://aiven.io/', tags: ['Database', 'MySQL', 'Cloud', 'Hosting'], isVisible: true },
+        { id: 'brevo', title: 'Brevo', desc: 'High-performance transactional email API, SMTP relay, and email marketing services.', icon: <QrIcon />, category: 'Developer & Cloud Websites', color: 'icon-green', isExternal: true, url: 'https://www.brevo.com/', tags: ['Email', 'SMTP', 'API', 'Marketing'], isVisible: true },
+        { id: 'svgrepo', title: 'SVG Repo', desc: 'Free SVG vectors and icons library with 500,000+ ready-to-use SVGs.', icon: <SvgIcon />, category: 'Design & Icon Websites', color: 'icon-orange', isExternal: true, url: 'https://www.svgrepo.com/', tags: ['SVG', 'Icons', 'Vector', 'Free'], isVisible: true },
+        { id: 'websitemockup', title: 'Website Mockup Generator', desc: 'Generate beautiful, premium device mockups of any website instantly.', icon: <ScreelyIcon />, category: 'Design & Icon Websites', color: 'icon-blue', isExternal: true, url: 'https://websitemockupgenerator.com/', tags: ['Mockup', 'Design', 'Website', 'Preview'], isVisible: true },
+        { id: 'pomelli', title: 'Google Pomelli', desc: 'Experimental AI creative lab by Google for generative design and creative writing.', icon: <QrIcon />, category: 'AI & Research Websites', color: 'icon-purple', isExternal: true, url: 'https://labs.google.com/u/0/pomelli/', tags: ['AI', 'Google', 'Creative', 'Art'], isVisible: true },
+        { id: 'cronjob', title: 'Cron-job.org', desc: 'Free online cron job scheduler to automate HTTP requests, cron jobs, and webhooks.', icon: <QrIcon />, category: 'Developer & Cloud Websites', color: 'icon-green', isExternal: true, url: 'https://console.cron-job.org/login', tags: ['Cron', 'Automation', 'DevOps', 'Schedule'], isVisible: true },
+        { id: 'twilio', title: 'Twilio', desc: 'Build and manage SMS, voice, WhatsApp, and email communication APIs from the Twilio developer console.', icon: <QrIcon />, category: 'Developer & Cloud Websites', color: 'icon-red', isExternal: true, url: 'https://console.twilio.com/', tags: ['SMS', 'API', 'Voice', 'Communication', 'Cloud'], isVisible: true },
     ];
 
-    const filteredTools = tools.filter(tool =>
-        tool.isVisible !== false && (
-            tool.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            tool.desc.toLowerCase().includes(searchTerm.toLowerCase())
-        )
-    );
+    const filteredTools = tools.filter(tool => {
+        if (tool.isVisible === false) return false;
+        const matchCategory = activeCategory === 'All' || tool.category === activeCategory;
+        const q = searchTerm.toLowerCase();
+        const matchSearch = !q ||
+            tool.title.toLowerCase().includes(q) ||
+            tool.desc.toLowerCase().includes(q) ||
+            tool.category.toLowerCase().includes(q) ||
+            (tool.tags && tool.tags.some(tag => tag.toLowerCase().includes(q)));
+        return matchCategory && matchSearch;
+    });
 
     const ToolCardSkeleton = () => (
         <div className="tool-card skeleton">
@@ -170,7 +192,7 @@ const Home = () => {
         </div>
     );
 
-    const categories = ['Image Tools', 'Utility Tools', 'PDF Tools', 'Shopify Tools', 'Chrome Extension', 'Useful Websites'];
+    const categories = ['Image Tools', 'Utility Tools', 'PDF Tools', 'Shopify Tools', 'Chrome Extension', 'Design & Icon Websites', 'AI & Research Websites', 'Developer & Cloud Websites'];
 
     return (
         <div className="home-container">
@@ -181,17 +203,47 @@ const Home = () => {
                 </p>
 
                 <div className="search-container">
-                    <div className="search-bar">
+                    <div className={`search-bar ${searchTerm ? 'has-value' : ''}`}>
                         <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                         </svg>
                         <input
                             type="text"
-                            placeholder="Search for tools (e.g., 'merge', 'compress')..."
+                            placeholder="Search tools, tags, or categories..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
+                        {searchTerm && (
+                            <button className="search-clear-btn" onClick={() => setSearchTerm('')} title="Clear">
+                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        )}
                     </div>
+
+                    {/* Category Filter Pills */}
+                    {/* <div className="home-cat-pills">
+                        {['All', ...HOME_CATEGORY_ORDER].map(cat => (
+                            <button
+                                key={cat}
+                                className={`home-cat-pill ${activeCategory === cat ? 'active' : ''}`}
+                                onClick={() => setActiveCategory(cat)}
+                            >
+                                {cat}
+                            </button>
+                        ))}
+                    </div> */}
+
+                    {/* Results Count */}
+                    {(searchTerm || activeCategory !== 'All') && (
+                        <div className="home-search-meta">
+                            <span className="home-result-count"><strong>{filteredTools.length}</strong> result{filteredTools.length !== 1 ? 's' : ''}</span>
+                            <button className="home-clear-all" onClick={() => { setSearchTerm(''); setActiveCategory('All'); }}>
+                                Clear all filters
+                            </button>
+                        </div>
+                    )}
                 </div>
             </header>
 
@@ -234,12 +286,19 @@ const Home = () => {
                                                     </div>
                                                     <div className="tool-title-wrapper">
                                                         <h3>{tool.title}</h3>
-                                                        <span className="tool-badge">{tool.category.replace(' Tools', '')}</span>
+                                                        <span className="tool-badge">{tool.category.replace(' Tools', '').replace(' Websites', '')}</span>
                                                     </div>
                                                 </div>
 
                                                 <div className="tool-card-body">
                                                     <p>{tool.desc}</p>
+                                                    {tool.tags && tool.tags.length > 0 && (
+                                                        <div className="tool-tags">
+                                                            {tool.tags.map(tag => (
+                                                                <span key={tag} className="tool-tag">{tag}</span>
+                                                            ))}
+                                                        </div>
+                                                    )}
                                                 </div>
 
                                                 {/* <div className="tool-card-footer">

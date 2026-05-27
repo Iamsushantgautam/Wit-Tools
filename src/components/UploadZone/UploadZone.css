@@ -1,0 +1,199 @@
+/* Premium Light Theme UploadZone Stylesheet */
+
+.premium-upload-card {
+    position: relative;
+    width: 100%;
+    background: #ffffff;
+    border: 2px dashed #cbd5e1;
+    border-radius: var(--radius-lg);
+    padding: 4.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* Hover style */
+.premium-upload-card:hover {
+    border-color: var(--primary);
+    background: #faf5ff;
+    box-shadow: 0 12px 20px -8px rgba(79, 70, 229, 0.12);
+}
+
+/* Drag Active State */
+.premium-upload-card.drag-active {
+    border-color: var(--primary);
+    background: #f5f3ff;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1), 0 10px 20px -5px rgba(79, 70, 229, 0.15);
+    transform: scale(0.99);
+}
+
+/* Subtle background glow element */
+.decor-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 50% 0%, rgba(79, 70, 229, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.upload-main-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Icon style */
+.upload-circle-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: rgba(79, 70, 229, 0.08);
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.08);
+    transition: all 0.3s ease;
+}
+
+.premium-upload-card:hover .upload-circle-icon {
+    background: var(--primary);
+    color: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 16px rgba(79, 70, 229, 0.25);
+}
+
+/* Text headlines */
+.upload-headlines {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.main-title {
+    font-size: 1.45rem;
+    font-weight: 700;
+    color: #1e293b; /* Highly readable dark slate */
+    letter-spacing: -0.015em;
+}
+
+.description-subtitle {
+    font-size: 0.95rem;
+    color: #64748b; /* Sleek medium gray */
+    font-weight: 500;
+}
+
+/* Custom limits badge */
+.limit-info-badge {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary);
+    background: rgba(79, 70, 229, 0.06);
+    padding: 0.35rem 0.85rem;
+    border-radius: 20px;
+    border: 1px solid rgba(79, 70, 229, 0.1);
+    margin-bottom: 2rem;
+    letter-spacing: 0.01em;
+}
+
+/* Buttons row */
+.upload-buttons-container {
+    display: flex;
+    gap: 0.85rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Buttons */
+.action-button-primary,
+.action-button-secondary {
+    height: 46px;
+    padding: 0 1.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    user-select: none;
+}
+
+.action-button-primary {
+    background: var(--primary);
+    color: #ffffff;
+    border: 1px solid var(--primary);
+    box-shadow: 0 4px 10px rgba(79, 70, 229, 0.2);
+}
+
+.action-button-primary:hover {
+    background: var(--primary-hover);
+    border-color: var(--primary-hover);
+    transform: translateY(-1.5px);
+    box-shadow: 0 6px 15px rgba(79, 70, 229, 0.3);
+}
+
+.action-button-primary:active {
+    transform: translateY(0);
+}
+
+.action-button-secondary {
+    background: #ffffff;
+    color: #1e293b;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.action-button-secondary:hover {
+    background: #f8fafc;
+    border-color: #94a3b8;
+    color: #0f172a;
+    transform: translateY(-1.5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.action-button-secondary:active {
+    transform: translateY(0);
+}
+
+/* Responsive styles */
+@media (max-width: 640px) {
+    .premium-upload-card {
+        padding: 3rem 1.25rem;
+    }
+    
+    .main-title {
+        font-size: 1.25rem;
+    }
+    
+    .description-subtitle {
+        font-size: 0.88rem;
+    }
+    
+    .upload-buttons-container {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.75rem;
+    }
+    
+    .action-button-primary,
+    .action-button-secondary {
+        width: 100%;
+    }
+}
