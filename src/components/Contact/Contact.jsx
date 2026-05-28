@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import './Contact.css';
 
 const Contact = () => {
@@ -12,8 +11,7 @@ const Contact = () => {
     const [status, setStatus] = useState({ type: '', msg: '' });
     const [loading, setLoading] = useState(false);
 
-    // YOU WILL NEED TO REPLACE THIS WITH YOUR ACTUAL FORMSPREE ID
-    const FORM_ID = "xpzeqeqp"; // User can replace this later
+    const FORMSUBMIT_URL = 'https://formsubmit.co/iamsushantgautam@gmail.com';
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,13 +23,38 @@ const Contact = () => {
         setStatus({ type: '', msg: '' });
 
         try {
-            const response = await axios.post(`https://formspree.io/f/${FORM_ID}`, formData);
-            if (response.status === 200) {
-                setStatus({ type: 'success', msg: 'Thank you! Your message has been sent successfully.' });
+            const response = await fetch(FORMSUBMIT_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+                body: JSON.stringify({
+                    name: formData.name,
+                    email: formData.email,
+                    subject: `[Wit Tools] ${formData.subject}`,
+                    message: formData.message,
+                    _captcha: 'false',
+                    _template: 'table',
+                }),
+            });
+
+            // Log raw response for debugging
+            const text = await response.text();
+            console.log('FormSubmit response status:', response.status);
+            console.log('FormSubmit response body:', text);
+
+            let result;
+            try { result = JSON.parse(text); } catch { result = {}; }
+
+            if (response.ok) {
+                setStatus({ type: 'success', msg: '✅ Thank you! Your message has been sent successfully. We\'ll get back to you soon.' });
                 setFormData({ name: '', email: '', subject: 'General Inquiry', message: '' });
+            } else if (response.status === 422) {
+                setStatus({ type: 'error', msg: '📬 Please activate FormSubmit first — check your inbox for the confirmation email from FormSubmit.' });
+            } else {
+                setStatus({ type: 'error', msg: result.message || `Submission failed (${response.status}). Please try again.` });
             }
         } catch (error) {
-            setStatus({ type: 'error', msg: 'Oops! Something went wrong. Please try again later.' });
+            console.error('FormSubmit fetch error:', error);
+            setStatus({ type: 'error', msg: 'Network error — please check your connection and try again.' });
         } finally {
             setLoading(false);
         }

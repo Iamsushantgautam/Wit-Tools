@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import usePWAInstall from '../../hooks/usePWAInstall';
 import './Navbar.css';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [expanded, setExpanded] = useState('img'); // Default or null
+    const { canInstall, installApp } = usePWAInstall();
 
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
     const toggleExpand = (cat) => setExpanded(expanded === cat ? null : cat);
@@ -63,6 +65,12 @@ const Navbar = () => {
 
                     <Link to="/about" className="nav-link">About</Link>
                     <Link to="/contact" className="nav-link">Contact</Link>
+                    {canInstall && (
+                        <button id="nav-install-btn" className="nav-install-btn" onClick={installApp} aria-label="Install App">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 16l-4-4h3V4h2v8h3l-4 4z"/><path d="M20 18H4v2h16v-2z"/></svg>
+                            Install App
+                        </button>
+                    )}
                 </div>
 
                 <div className="nav-actions">
@@ -135,6 +143,12 @@ const Navbar = () => {
                 <div className="mobile-footer-links">
                     <Link to="/about" onClick={closeAll}>About Platform</Link>
                     <Link to="/contact" onClick={closeAll}>Get in Touch</Link>
+                    {canInstall && (
+                        <button id="mobile-install-btn" className="mobile-install-btn" onClick={() => { installApp(); closeAll(); }} aria-label="Install App">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 16l-4-4h3V4h2v8h3l-4 4z"/><path d="M20 18H4v2h16v-2z"/></svg>
+                            Install Wit Tools
+                        </button>
+                    )}
                 </div>
             </div>
         </nav>

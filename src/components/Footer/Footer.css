@@ -199,3 +199,34 @@
         text-align: center;
     }
 }
+
+/* PWA Install Button — Footer */
+.footer-install-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+    padding: 0.65rem 1.4rem;
+    background: rgba(255, 255, 255, 0.15);
+    color: white;
+    border: 1.5px solid rgba(255, 255, 255, 0.4);
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    cursor: pointer;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+    white-space: nowrap;
+}
+
+.footer-install-btn:hover {
+    background: rgba(255, 255, 255, 0.28);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.footer-install-btn:active {
+    transform: translateY(0);
+    opacity: 0.85;
+}

@@ -104,6 +104,7 @@ const HOME_CATEGORY_ORDER = [
     'Utility Tools',
     'Shopify Tools',
     'Chrome Extension',
+    'Useful Extensions',
     'Design & Icon Websites',
     'AI & Research Websites',
     'Developer & Cloud Websites'
@@ -143,6 +144,12 @@ const Home = () => {
         { id: 'shopify-dev', title: 'Shopify Ai Prompts for sections', desc: 'Expert AI prompts for Shopify section developers.', icon: <ShopifyIcon />, category: 'Shopify Tools', color: 'icon-green', tags: ['AI', 'Shopify', 'Prompts', 'Dev'], isVisible: true },
         { id: 'shopify-apps', title: 'Best Shopify Apps Directory', desc: 'A curated directory of the absolute best Shopify apps to boost conversions, design, and sales.', icon: <ShopifyIcon />, category: 'Shopify Tools', color: 'icon-green', tags: ['Shopify', 'Apps', 'Marketing', 'Ecom'], isVisible: true },
         { id: 'shopify-scraper', title: 'Shopify Product Scraper', desc: 'Powerful Chrome extension for bulk extracting Shopify product data.', icon: <ShopifyIcon />, category: 'Chrome Extension', color: 'icon-green', isExternal: true, url: 'https://github.com/Iamsushantgautam/Chrome-extension/tree/main/shopify%20product%20scraper', useFavicon: false, tags: ['Shopify', 'Chrome', 'Scraper', 'Extension'], isVisible: true },
+        { id: 'session-buddy', title: 'Session Buddy', desc: 'Save & restore all your browser tabs in one click. Organize sessions by name, recover from crashes, and manage tab groups effortlessly.', icon: <ChromeIcon />, category: 'Useful Extensions', color: 'icon-blue', isExternal: true, url: 'https://chromewebstore.google.com/detail/session-buddy/edacconmaakjimmfgnblocblbcdcpbko', useFavicon: true, faviconDomain: 'sessionbuddy.com', tags: ['Chrome', 'Tabs', 'Session', 'Productivity', 'Recovery'], isVisible: true },
+        { id: 'wappalyzer', title: 'Wappalyzer', desc: 'Instantly detect the tech stack behind any website — React, Next.js, WordPress, Cloudflare, analytics, payment gateways, and more.', icon: <ChromeIcon />, category: 'Useful Extensions', color: 'icon-purple', isExternal: true, url: 'https://chromewebstore.google.com/detail/wappalyzer-technology-pro/gppongmhjkpfnbhagpmjfkannfbllamg', useFavicon: true, faviconDomain: 'wappalyzer.com', tags: ['Chrome', 'Tech Stack', 'Detect', 'Research', 'Developer'], isVisible: true },
+        { id: 'colorzilla', title: 'ColorZilla', desc: 'Pick any color from any webpage, get HEX/RGB codes instantly, and generate beautiful gradients with ease.', icon: <ChromeIcon />, category: 'Useful Extensions', color: 'icon-orange', isExternal: true, url: 'https://chromewebstore.google.com/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp', useFavicon: true, faviconDomain: 'colorzilla.com', tags: ['Chrome', 'Color', 'HEX', 'RGB', 'Design', 'Gradient'], isVisible: true },
+        { id: 'gofullpage', title: 'GoFullPage', desc: 'Capture a full-page screenshot of any website in one click — no cropping, no clipping, just a perfect capture every time.', icon: <ChromeIcon />, category: 'Useful Extensions', color: 'icon-green', isExternal: true, url: 'https://chromewebstore.google.com/detail/gofullpage-full-page-scre/fdpohaocaechadadgiefbiolo', useFavicon: true, faviconDomain: 'gofullpage.com', tags: ['Chrome', 'Screenshot', 'Full Page', 'Capture', 'Design'], isVisible: true },
+        { id: 'imageye', title: 'Image Downloader - Imageye', desc: 'Find and download all images on any webpage in one click. Filter by size, type, and URL — bulk save with ease.', icon: <ChromeIcon />, category: 'Useful Extensions', color: 'icon-blue', isExternal: true, url: 'https://chromewebstore.google.com/detail/image-downloader-imageye/agionbommeaifngbhincahgmoflcikhm', useFavicon: true, faviconDomain: 'imageye.net', tags: ['Chrome', 'Image', 'Downloader', 'Bulk', 'Utility'], isVisible: true },
+        { id: 'universal-video-downloader', title: 'Universal Video Downloader', desc: 'Download videos from almost any website — detect and save streaming videos, movies, clips, and more with one click.', icon: <ChromeIcon />, category: 'Useful Extensions', color: 'icon-red', isExternal: true, url: 'https://chromewebstore.google.com/detail/universal-video-downloade/cogmkaeijhlcloobdpjnljohnglhbkam', iconUrl: 'https://lh3.googleusercontent.com/5HikfDXlEzO3pNwUKZ7J2oMPwEinvl7FzWl_HWtIQs2JVYfQQI7bm7TE6jKBSAv2YxajJZZKbL-zNdWH7Hw5TT8=s128', tags: ['Chrome', 'Video', 'Downloader', 'Stream', 'Utility'], isVisible: true },
         { id: 'coming-soon', title: 'Media Downloader', desc: 'Download media from various sources.', icon: <VideoIcon />, category: 'Chrome Extension', color: 'icon-blue', tags: ['Chrome', 'Downloader', 'Media'], isVisible: true },
         { id: 'coming-soon', title: 'Browser Text Copier', desc: 'Copy text from websites that restrict selection and copy functionality.', icon: <ChromeIcon />, category: 'Chrome Extension', color: 'icon-purple', tags: ['Chrome', 'Copy', 'Utility'], isVisible: true },
         { id: 'icons8', title: 'Icons8', desc: 'Premium library for professional icons, photos, and creative assets.', icon: <QrIcon />, category: 'Design & Icon Websites', color: 'icon-green', isExternal: true, url: 'https://icons8.com/', tags: ['Icons', 'Design', 'Stock'], isVisible: true },
@@ -192,7 +199,7 @@ const Home = () => {
         </div>
     );
 
-    const categories = ['Image Tools', 'Utility Tools', 'PDF Tools', 'Shopify Tools', 'Chrome Extension', 'Design & Icon Websites', 'AI & Research Websites', 'Developer & Cloud Websites'];
+    const categories = ['Image Tools', 'Utility Tools', 'PDF Tools', 'Shopify Tools', 'Chrome Extension', 'Useful Extensions', 'Design & Icon Websites', 'AI & Research Websites', 'Developer & Cloud Websites'];
 
     return (
         <div className="home-container">
@@ -272,15 +279,22 @@ const Home = () => {
                                             <>
                                                 <div className="tool-card-top">
                                                     <div className={`tool-icon-wrapper ${tool.color}`}>
-                                                        {tool.isExternal && tool.url && tool.useFavicon !== false ? (
+                                                        {tool.iconUrl ? (
                                                             <img
-                                                                src={`https://www.google.com/s2/favicons?domain=${new URL(tool.url).hostname}&sz=64`}
+                                                                src={tool.iconUrl}
+                                                                alt={tool.title}
+                                                                className="tool-favicon"
+                                                                onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }}
+                                                            />
+                                                        ) : tool.isExternal && tool.url && tool.useFavicon !== false ? (
+                                                            <img
+                                                                src={`https://www.google.com/s2/favicons?domain=${tool.faviconDomain || new URL(tool.url).hostname}&sz=128`}
                                                                 alt={tool.title}
                                                                 className="tool-favicon"
                                                                 onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'block'; }}
                                                             />
                                                         ) : null}
-                                                        <div style={{ display: (tool.isExternal && tool.url && tool.useFavicon !== false) ? 'none' : 'block' }}>
+                                                        <div style={{ display: (tool.iconUrl || (tool.isExternal && tool.url && tool.useFavicon !== false)) ? 'none' : 'block' }}>
                                                             {tool.icon}
                                                         </div>
                                                     </div>

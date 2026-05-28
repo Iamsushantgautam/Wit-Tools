@@ -320,3 +320,56 @@
         font-size: 1.25rem;
     }
 }
+
+/* PWA Install Button — Desktop Nav */
+.nav-install-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 1rem;
+    background: linear-gradient(135deg, #0b72e6, #4f46e5);
+    color: white;
+    border: none;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 2px 12px rgba(11, 114, 230, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    letter-spacing: 0.01em;
+}
+
+.nav-install-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(11, 114, 230, 0.45);
+}
+
+.nav-install-btn:active {
+    transform: translateY(0);
+}
+
+/* PWA Install Button — Mobile Menu */
+.mobile-install-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    padding: 0.85rem 1.25rem;
+    background: linear-gradient(135deg, #0b72e6, #4f46e5);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md, 12px);
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(11, 114, 230, 0.3);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    margin-top: 0.25rem;
+}
+
+.mobile-install-btn:active {
+    opacity: 0.85;
+    transform: scale(0.98);
+}

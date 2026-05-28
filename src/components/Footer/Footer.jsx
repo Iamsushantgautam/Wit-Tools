@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import usePWAInstall from '../../hooks/usePWAInstall';
 import './Footer.css';
 
 const Footer = () => {
+    const { canInstall, installApp } = usePWAInstall();
     return (
         <footer className="main-footer">
             <div className="footer-content">
@@ -24,6 +26,12 @@ const Footer = () => {
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20M2 12h20" /></svg>
                         </a>
                     </div>
+                    {canInstall && (
+                        <button id="footer-install-btn" className="footer-install-btn" onClick={installApp} aria-label="Install Wit Tools App">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 16l-4-4h3V4h2v8h3l-4 4z"/><path d="M20 18H4v2h16v-2z"/></svg>
+                            Install Wit Tools
+                        </button>
+                    )}
                 </div>
 
                 <div className="footer-section links-section">
