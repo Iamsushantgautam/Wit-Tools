@@ -53,6 +53,7 @@ const Navbar = () => {
                                 <Link to="/profile-maker">Passport Photo</Link>
                                 <Link to="/watermark">Watermark</Link>
                                 <Link to="/qr-generator">QR Generator</Link>
+                                <Link to="/google-drive-downloader">Google Drive Downloader</Link>
                                 <Link to="/shopify-dev">Shopify Dev Hub</Link>
                                 <a href="https://github.com/Iamsushantgautam/Chrome-extension/tree/main/shopify%20product%20scraper" target="_blank" rel="noopener noreferrer">Shopify Scraper (Ext)</a>
                                 <a href="https://icons8.com" target="_blank" rel="noopener noreferrer">Icons8 (Assets)</a>
@@ -133,6 +134,7 @@ const Navbar = () => {
                         <Link to="/profile-maker" onClick={closeAll}>Passport Photo Maker</Link>
                         <Link to="/watermark" onClick={closeAll}>Add Watermark</Link>
                         <Link to="/qr-generator" onClick={closeAll}>QR Generator</Link>
+                        <Link to="/google-drive-downloader" onClick={closeAll}>Google Drive Downloader</Link>
                         <Link to="/shopify-dev" onClick={closeAll}>Shopify Dev Hub</Link>
                         <a href="https://github.com/Iamsushantgautam/Chrome-extension/tree/main/shopify%20product%20scraper" target="_blank" rel="noopener noreferrer" onClick={closeAll}>Shopify Scraper (Ext)</a>
                         <a href="https://icons8.com" target="_blank" rel="noopener noreferrer" onClick={closeAll}>Icons8 Creative Hub</a>

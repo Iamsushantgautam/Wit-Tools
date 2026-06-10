@@ -31,6 +31,7 @@ import PdfPageNumber from './Tools/PdfPageNumber/PdfPageNumber';
 import YTVideoScreenshot from './Tools/YTVideoScreenshot/YTVideoScreenshot';
 import SvgGenerator from './Tools/SvgGenerator/SvgGenerator';
 import PngToWebp from './Tools/PngToWebp/PngToWebp';
+import GooglDriveLinkConvertTODownoaldable from './Tools/GooglDriveLinkConvertTODownoaldable/GooglDriveLinkConvertTODownoaldable';
 
 import PrivacyPolicy from './components/Legal/PrivacyPolicy';
 import Terms from './components/Legal/Terms';
@@ -73,6 +74,7 @@ function App() {
           <Route path="/yt-screenshot" element={<YTVideoScreenshot />} />
           <Route path="/svg-generator" element={<SvgGenerator />} />
           <Route path="/png-to-webp" element={<PngToWebp />} />
+          <Route path="/google-drive-downloader" element={<GooglDriveLinkConvertTODownoaldable />} />
 
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/terms" element={<Terms />} />

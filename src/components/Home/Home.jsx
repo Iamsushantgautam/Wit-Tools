@@ -59,6 +59,12 @@ const VideoIcon = () => (
     </svg>
 );
 
+const DownloadIcon = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" />
+    </svg>
+);
+
 const SecurityIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
         <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
@@ -140,6 +146,7 @@ const Home = () => {
         { id: 'qr-generator', title: 'QR Generator', desc: 'Generate custom QR codes instantly.', icon: <QrIcon />, category: 'Utility Tools', color: 'icon-orange', tags: ['QR', 'Generator', 'Utility'], isVisible: true },
         { id: 'yt-screenshot', title: 'Video Screenshot', desc: 'Capture frames from videos every X seconds.', icon: <VideoIcon />, category: 'Utility Tools', color: 'icon-red', tags: ['Video', 'Screenshot', 'Frame'], isVisible: true },
         { id: 'svg-generator', title: 'SVG Wave & Pattern Studio', desc: 'Design layered vector waves and seamless repeating patterns.', icon: <SvgIcon />, category: 'Utility Tools', color: 'icon-purple', tags: ['SVG', 'Vector', 'Pattern', 'Wave'], isVisible: true },
+        { id: 'google-drive-downloader', title: 'Google Drive Direct Link', desc: 'Convert shareable Google Drive links into instant direct download links.', icon: <DownloadIcon />, category: 'Utility Tools', color: 'icon-green', tags: ['Google Drive', 'Convert', 'Downloader'], isVisible: true },
 
         { id: 'shopify-dev', title: 'Shopify Ai Prompts for sections', desc: 'Expert AI prompts for Shopify section developers.', icon: <ShopifyIcon />, category: 'Shopify Tools', color: 'icon-green', tags: ['AI', 'Shopify', 'Prompts', 'Dev'], isVisible: true },
         { id: 'shopify-apps', title: 'Best Shopify Apps Directory', desc: 'A curated directory of the absolute best Shopify apps to boost conversions, design, and sales.', icon: <ShopifyIcon />, category: 'Shopify Tools', color: 'icon-green', tags: ['Shopify', 'Apps', 'Marketing', 'Ecom'], isVisible: true },
