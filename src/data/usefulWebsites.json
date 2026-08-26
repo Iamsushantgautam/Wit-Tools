@@ -1,0 +1,218 @@
+[
+  {
+    "id": "icons8",
+    "title": "Icons8",
+    "desc": "Premium library for professional icons, photos, and creative assets.",
+    "category": "Design & Icon Websites",
+    "color": "icon-green",
+    "isExternal": true,
+    "url": "https://icons8.com/",
+    "useFavicon": true,
+    "faviconDomain": "icons8.com",
+    "tags": [
+      "Icons",
+      "Design",
+      "Stock"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "colorhunt",
+    "title": "Color Hunt",
+    "desc": "Curated color palettes for designers and artists. Find the perfect scheme.",
+    "category": "Design & Icon Websites",
+    "color": "icon-purple",
+    "isExternal": true,
+    "url": "https://colorhunt.co/",
+    "useFavicon": true,
+    "faviconDomain": "colorhunt.co",
+    "tags": [
+      "Color",
+      "Palette",
+      "Design"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "stitch",
+    "title": "Stitch",
+    "desc": "Professional UI and screen creation platform designed for creative developers.",
+    "category": "Design & Icon Websites",
+    "color": "icon-blue",
+    "isExternal": true,
+    "url": "https://stitch.withgoogle.com/",
+    "useFavicon": true,
+    "faviconDomain": "stitch.withgoogle.com",
+    "tags": [
+      "UI",
+      "Screen",
+      "Design",
+      "Google"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "mokkify",
+    "title": "Mokkify",
+    "desc": "Mokkify.com is a free Shopify mockups generator for creating realistic product photos and videos.",
+    "category": "Design & Icon Websites",
+    "color": "icon-blue",
+    "isExternal": true,
+    "url": "https://mokkify.com/",
+    "useFavicon": true,
+    "faviconDomain": "mokkify.com",
+    "tags": [
+      "Shopify",
+      "Mockup",
+      "Product",
+      "Video"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "notebooklm",
+    "title": "NotebookLM",
+    "desc": "Next-generation AI research and writing environment powered by Google Gemini.",
+    "category": "AI & Research Websites",
+    "color": "icon-purple",
+    "isExternal": true,
+    "url": "https://notebooklm.google/",
+    "useFavicon": true,
+    "faviconDomain": "notebooklm.google",
+    "tags": [
+      "AI",
+      "Research",
+      "Notes",
+      "Google"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "aiven",
+    "title": "Aiven",
+    "desc": "Fully managed cloud database services and high-performance MySQL hosting.",
+    "category": "Developer & Cloud Websites",
+    "color": "icon-blue",
+    "isExternal": true,
+    "url": "https://aiven.io/",
+    "useFavicon": true,
+    "faviconDomain": "aiven.io",
+    "tags": [
+      "Database",
+      "MySQL",
+      "Cloud",
+      "Hosting"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "brevo",
+    "title": "Brevo",
+    "desc": "High-performance transactional email API, SMTP relay, and email marketing services.",
+    "category": "Developer & Cloud Websites",
+    "color": "icon-green",
+    "isExternal": true,
+    "url": "https://www.brevo.com/",
+    "useFavicon": true,
+    "faviconDomain": "brevo.com",
+    "tags": [
+      "Email",
+      "SMTP",
+      "API",
+      "Marketing"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "svgrepo",
+    "title": "SVG Repo",
+    "desc": "Free SVG vectors and icons library with 500,000+ ready-to-use SVGs.",
+    "category": "Design & Icon Websites",
+    "color": "icon-orange",
+    "isExternal": true,
+    "url": "https://www.svgrepo.com/",
+    "useFavicon": true,
+    "faviconDomain": "svgrepo.com",
+    "tags": [
+      "SVG",
+      "Icons",
+      "Vector",
+      "Free"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "websitemockup",
+    "title": "Website Mockup Generator",
+    "desc": "Generate beautiful, premium device mockups of any website instantly.",
+    "category": "Design & Icon Websites",
+    "color": "icon-blue",
+    "isExternal": true,
+    "url": "https://websitemockupgenerator.com/",
+    "useFavicon": true,
+    "faviconDomain": "websitemockupgenerator.com",
+    "tags": [
+      "Mockup",
+      "Design",
+      "Website",
+      "Preview"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "pomelli",
+    "title": "Google Pomelli",
+    "desc": "Experimental AI creative lab by Google for generative design and creative writing.",
+    "category": "AI & Research Websites",
+    "color": "icon-purple",
+    "isExternal": true,
+    "url": "https://labs.google.com/u/0/pomelli/",
+    "useFavicon": true,
+    "faviconDomain": "labs.google.com",
+    "tags": [
+      "AI",
+      "Google",
+      "Creative",
+      "Art"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "cronjob",
+    "title": "Cron-job.org",
+    "desc": "Free online cron job scheduler to automate HTTP requests, cron jobs, and webhooks.",
+    "category": "Developer & Cloud Websites",
+    "color": "icon-green",
+    "isExternal": true,
+    "url": "https://console.cron-job.org",
+    "useFavicon": true,
+    "faviconDomain": "cron-job.org",
+    "iconUrl": "https://icons.duckduckgo.com/ip3/cron-job.org.ico",
+    "tags": [
+      "Cron",
+      "Automation",
+      "DevOps",
+      "Schedule"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "twilio",
+    "title": "Twilio",
+    "desc": "Build and manage SMS, voice, WhatsApp, and email communication APIs from the Twilio developer console.",
+    "category": "Developer & Cloud Websites",
+    "color": "icon-red",
+    "isExternal": true,
+    "url": "https://console.twilio.com/",
+    "useFavicon": true,
+    "faviconDomain": "twilio.com",
+    "tags": [
+      "SMS",
+      "API",
+      "Voice",
+      "Communication",
+      "Cloud"
+    ],
+    "isVisible": true
+  }
+]

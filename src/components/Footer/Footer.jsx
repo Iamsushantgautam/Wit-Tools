@@ -10,6 +10,7 @@ const Footer = () => {
             <div className="footer-content">
                 <div className="footer-section brand-section">
                     <h2 className="footer-logo">
+                        <img src="/favicon.svg" alt="Wit Tools Logo" className="footer-logo-icon" />
                         <span>Wit</span> Tools
                     </h2>
                     <p className="brand-tagline">

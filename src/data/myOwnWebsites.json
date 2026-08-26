@@ -1,0 +1,28 @@
+[
+  {
+    "id": "witcet",
+    "title": "Witcet.online",
+    "desc": "Visit our partner site for advanced AI resources, creative assets, and more digital utilities.",
+    "category": "My Websites",
+    "color": "icon-purple",
+    "isExternal": true,
+    "url": "https://witcet.online",
+    "useFavicon": true,
+    "faviconDomain": "witcet.online",
+    "tags": ["AI", "Resources", "Utilities"],
+    "isVisible": true
+  },
+  {
+    "id": "portfolio",
+    "title": "Sushant's Portfolio",
+    "desc": "Explore the full creative development portfolio of the developer.",
+    "category": "My Websites",
+    "color": "icon-blue",
+    "isExternal": true,
+    "url": "https://sushant.online",
+    "useFavicon": true,
+    "faviconDomain": "sushant.online",
+    "tags": ["Portfolio", "Developer", "Showcase"],
+    "isVisible": true
+  }
+]

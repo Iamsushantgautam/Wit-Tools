@@ -51,11 +51,11 @@ const PdfMerge = () => {
         <div className="tool-container">
             <div className="tool-header-card">
                 <h2>PDF Merge</h2>
-                <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>Combine multiple PDF files into one document</p>
+                <p style={{ color: 'var(--text-muted)', marginTop: '0.25rem' }}>Combine multiple PDF files into one document</p>
             </div>
 
-            <div className={`tool-card merge-content-card ${files.length === 0 ? 'no-hover-arrow' : ''}`}>
-                <div className="merge-workspace" style={{ width: '100%', maxWidth: '900px', margin: '0 auto' }}>
+            {files.length === 0 ? (
+                <div className="tool-card no-hover-arrow">
                     <Upload
                         id="merge-upload"
                         accept=".pdf"
@@ -65,8 +65,10 @@ const PdfMerge = () => {
                         subtitle="Combine multiple documents instantly"
                         limitText="Supported format: PDF only"
                     />
-
-                    {files.length > 0 && (
+                </div>
+            ) : (
+                <div className="tool-card merge-content-card">
+                    <div className="merge-workspace" style={{ width: '100%', maxWidth: '900px', margin: '0 auto' }}>
                         <div className="merge-list">
                             <h3 className="list-title">Selected Documents ({files.length})</h3>
                             <div className="files-stack">
@@ -80,32 +82,42 @@ const PdfMerge = () => {
                                     </div>
                                 ))}
                             </div>
+                            
+                            <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
+                                <Upload
+                                    id="merge-upload-more"
+                                    accept=".pdf"
+                                    multiple={true}
+                                    onUpload={handleFileChange}
+                                    title="Add More PDFs"
+                                    subtitle=""
+                                    limitText=""
+                                />
+                            </div>
                         </div>
-                    )}
 
-                    {!mergedPdfUrl ? (
-                        <div className="action-area">
-                            <button className="btn-primary merge-btn" onClick={mergePdfs} disabled={loading || files.length < 2}>
-                                {loading ? 'Merging PDFs...' : 'Merge All Files'}
-                            </button>
-                            {files.length > 0 && (
+                        {!mergedPdfUrl ? (
+                            <div className="action-area">
+                                <button className="btn-primary merge-btn" onClick={mergePdfs} disabled={loading || files.length < 2}>
+                                    {loading ? 'Merging PDFs...' : 'Merge All Files'}
+                                </button>
                                 <button className="btn-secondary clear-btn" onClick={() => setFiles([])}>Clear All</button>
-                            )}
-                        </div>
-                    ) : (
-                        <div className="result-view">
-                            <div className="success-badge">
-                                <span className="check">✓</span>
-                                PDF Merged Successfully!
                             </div>
-                            <div className="result-actions">
-                                <a href={mergedPdfUrl} download="merged_wit_tools.pdf" className="btn-primary download-merged">Download PDF</a>
-                                <button className="btn-secondary" onClick={() => { setFiles([]); setMergedPdfUrl(null); }}>Start New Merge</button>
+                        ) : (
+                            <div className="result-view">
+                                <div className="success-badge">
+                                    <span className="check">✓</span>
+                                    PDF Merged Successfully!
+                                </div>
+                                <div className="result-actions">
+                                    <a href={mergedPdfUrl} download="merged_wit_tools.pdf" className="btn-primary download-merged">Download PDF</a>
+                                    <button className="btn-secondary" onClick={() => { setFiles([]); setMergedPdfUrl(null); }}>Start New Merge</button>
+                                </div>
                             </div>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     );
 };

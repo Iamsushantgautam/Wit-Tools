@@ -1,63 +1,121 @@
-/* Upload.css */
+/* Upload.css - iLovePDF Style Upload Layout */
 
+.ilovepdf-upload-container,
 .drop-zone.premium-upload {
+    position: relative;
     width: 100%;
-    height: 300px;
+    min-height: 140px;
+    padding: 1.5rem 1rem 0.5rem;
     display: flex;
     flex-direction: column;
+    align-items: center;
     justify-content: center;
-    gap: 1.5rem;
-    background: #f8fafc;
-    border: 2px dashed #e2e8f0;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    cursor: pointer;
+    text-align: center;
+    border: 2px dashed transparent;
+    border-radius: var(--radius-sm);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    background: transparent;
+}
+
+.ilovepdf-upload-container.drag-active,
+.drop-zone.premium-upload.drag-active {
+    border-color: #e5322d;
+    background: rgba(229, 50, 45, 0.04);
     border-radius: var(--radius-md);
 }
 
-.drop-zone.premium-upload:hover {
-    background: #f1f5f9;
-    border-color: var(--primary);
-}
-
-.upload-icon-wrapper {
-    color: var(--primary);
-    background: #eff6ff;
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
+.upload-action-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto;
-    transition: all 0.4s ease;
+    gap: 12px;
+    position: relative;
+    margin-bottom: 0.5rem;
 }
 
-.drop-zone:hover .upload-icon-wrapper {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.1);
+.btn-select-main {
+    background-color: #e5322d;
+    color: #ffffff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    padding: 1.2rem 3.5rem;
+    border-radius: 14px;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 25px -4px rgba(229, 50, 45, 0.42), 0 4px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    user-select: none;
+    line-height: 1.2;
+    text-align: center;
+    letter-spacing: -0.01em;
 }
 
-.upload-text {
+.btn-select-main:hover {
+    background-color: #c8231e;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px -4px rgba(229, 50, 45, 0.55), 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.btn-select-main:active {
+    transform: translateY(0);
+    box-shadow: 0 6px 16px -2px rgba(229, 50, 45, 0.4);
+}
+
+.cloud-buttons-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    text-align: center;
+    gap: 8px;
 }
 
-.upload-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #1e293b;
+.cloud-btn-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background-color: #e5322d;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(229, 50, 45, 0.35);
+    transition: all 0.2s ease;
+    user-select: none;
 }
 
-.upload-subtitle {
-    color: #64748b;
-    font-size: 0.95rem;
-    margin: 0;
+.cloud-btn-circle:hover {
+    background-color: #c8231e;
+    transform: scale(1.08);
+    box-shadow: 0 6px 16px rgba(229, 50, 45, 0.48);
 }
 
-.upload-limit {
-    font-size: 0.8rem;
-    color: #94a3b8;
+.upload-drop-hint {
+    margin-top: 1rem;
+    font-size: 0.98rem;
     font-weight: 500;
+    color: var(--text-muted);
+    letter-spacing: -0.01em;
 }
+
+.upload-limit-info {
+    margin-top: 0.5rem;
+    font-size: 0.82rem;
+    font-weight: 500;
+    color: #90909a;
+}
+
+@media (max-width: 640px) {
+    .btn-select-main {
+        font-size: 1.25rem;
+        padding: 1rem 2rem;
+        border-radius: 10px;
+    }
+    .cloud-btn-circle {
+        width: 38px;
+        height: 38px;
+    }
+}
+
+

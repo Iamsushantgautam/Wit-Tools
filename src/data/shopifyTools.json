@@ -1,0 +1,32 @@
+[
+  {
+    "id": "shopify-dev",
+    "title": "Shopify Ai Prompts for sections",
+    "desc": "Expert AI prompts for Shopify section developers.",
+    "icon": "ShopifyIcon",
+    "category": "Shopify Tools",
+    "color": "icon-green",
+    "tags": [
+      "AI",
+      "Shopify",
+      "Prompts",
+      "Dev"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "shopify-apps",
+    "title": "Best Shopify Apps Directory",
+    "desc": "A curated directory of the absolute best Shopify apps to boost conversions, design, and sales.",
+    "icon": "ShopifyIcon",
+    "category": "Shopify Tools",
+    "color": "icon-green",
+    "tags": [
+      "Shopify",
+      "Apps",
+      "Marketing",
+      "Ecom"
+    ],
+    "isVisible": true
+  }
+]

@@ -1,10 +1,71 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1254 1254" role="img" aria-label="Red W icon">
   <defs>
-    <linearGradient id="witGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#0b72e6;stop-opacity:1" />
-      <stop offset="100%" style="stop-color:#4f46e5;stop-opacity:1" />
+    <linearGradient id="redMain" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ff1b28"/>
+      <stop offset="0.52" stop-color="#f30d1c"/>
+      <stop offset="1" stop-color="#c90012"/>
+    </linearGradient>
+    <linearGradient id="redBright" x1="0" y1="0" x2="0.9" y2="1">
+      <stop offset="0" stop-color="#ff2633"/>
+      <stop offset="1" stop-color="#e70818"/>
+    </linearGradient>
+    <linearGradient id="redDark" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#bd0010"/>
+      <stop offset="1" stop-color="#e20a18"/>
     </linearGradient>
   </defs>
-  <rect width="512" height="512" rx="120" fill="url(#witGradient)" />
-  <text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle" font-family="Arial, sans-serif" font-weight="bold" font-size="280" fill="white">W</text>
+
+  <!-- Main stylized W -->
+  <path fill="url(#redMain)" d="
+    M 123 302
+    L 411 412
+    L 487 703
+    L 625 466
+    L 763 703
+    L 839 412
+    L 1127 302
+    L 763 944
+    L 625 703
+    L 487 944
+    Z"/>
+
+  <!-- Left upper arrow/facet -->
+  <path fill="url(#redDark)" d="
+    M 308 372
+    L 411 412
+    L 481 534
+    L 371 486
+    Z"/>
+
+  <!-- Right upper arrow/facet -->
+  <path fill="url(#redDark)" d="
+    M 946 372
+    L 839 412
+    L 769 534
+    L 879 486
+    Z"/>
+
+  <!-- Left bright face -->
+  <path fill="url(#redBright)" d="
+    M 123 302
+    L 411 412
+    L 487 703
+    L 423 828
+    Z"/>
+
+  <!-- Right bright face -->
+  <path fill="url(#redBright)" d="
+    M 1127 302
+    L 839 412
+    L 763 703
+    L 827 828
+    Z"/>
+
+  <!-- Center face -->
+  <path fill="url(#redBright)" d="
+    M 625 466
+    L 763 703
+    L 625 944
+    L 487 703
+    Z"/>
 </svg>

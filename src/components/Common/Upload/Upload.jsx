@@ -1,37 +1,96 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Upload.css';
 
 const Upload = ({ 
-    id, 
+    id = "file-upload-input", 
     accept, 
     onUpload, 
-    title = "Click to Upload File", 
-    subtitle = "Safe and secure file processing",
+    title = "Select files", 
+    subtitle,
     limitText = "",
     multiple = false
 }) => {
+    const [isDragActive, setIsDragActive] = useState(false);
+
+    const handleDragOver = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsDragActive(true);
+    };
+
+    const handleDragLeave = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsDragActive(false);
+    };
+
+    const handleDrop = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        setIsDragActive(false);
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+            onUpload(multiple ? Array.from(e.dataTransfer.files) : e.dataTransfer.files[0]);
+        }
+    };
+
+    const handleFileChange = (e) => {
+        if (e.target.files && e.target.files.length > 0) {
+            onUpload(multiple ? Array.from(e.target.files) : e.target.files[0]);
+        }
+    };
+
+    // Format button text based on title / accept prop
+    const getButtonText = () => {
+        if (!title || title === "Click to Upload File") {
+            if (accept?.includes("pdf")) return "Select PDF files";
+            if (accept?.includes("image")) return "Select Image files";
+            return "Select files";
+        }
+        if (title.toLowerCase().startsWith("click to upload")) {
+            const topic = title.replace(/click to upload/i, "").trim();
+            return `Select ${topic || "files"}`;
+        }
+        return title;
+    };
+
+    const buttonText = getButtonText();
+
+    // Determine drop hint text based on file types
+    const dropText = accept?.includes("pdf") ? "or drop PDFs here" : accept?.includes("image") ? "or drop images here" : "or drop files here";
+
     return (
-        <label htmlFor={id} className="drop-zone premium-upload">
-            <div className="upload-icon-wrapper">
-                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"/>
-                </svg>
+        <div 
+            className={`ilovepdf-upload-container ${isDragActive ? 'drag-active' : ''}`}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+        >
+            <div className="upload-action-wrapper">
+                <label htmlFor={id} className="btn-select-main">
+                    {buttonText}
+                    <input 
+                        id={id} 
+                        type="file" 
+                        accept={accept} 
+                        multiple={multiple}
+                        onChange={handleFileChange} 
+                        style={{ display: 'none' }} 
+                    />
+                </label>
             </div>
-            <div className="upload-text">
-                <span className="upload-title">{title}</span>
-                {subtitle && <p className="upload-subtitle">{subtitle}</p>}
-                {limitText && <span className="upload-limit">{limitText}</span>}
+
+            <div className="upload-drop-hint">
+                {dropText}
             </div>
-            <input 
-                id={id} 
-                type="file" 
-                accept={accept} 
-                multiple={multiple}
-                onChange={(e) => onUpload(multiple ? Array.from(e.target.files) : e.target.files[0])} 
-                style={{ display: 'none' }} 
-            />
-        </label>
+
+            {limitText && (
+                <div className="upload-limit-info">
+                    {limitText}
+                </div>
+            )}
+        </div>
     );
 };
 
 export default Upload;
+

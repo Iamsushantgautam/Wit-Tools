@@ -1,0 +1,269 @@
+[
+  {
+    "id": "img-to-pdf",
+    "title": "Image to PDF",
+    "desc": "Convert images to high-quality PDF docs.",
+    "icon": "IconImage",
+    "category": "Image Tools",
+    "color": "icon-yellow",
+    "tags": [
+      "PDF",
+      "Convert",
+      "Image"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "img-resizer",
+    "title": "Image Resizer",
+    "desc": "Change dimensions with high precision.",
+    "icon": "IconCrop",
+    "category": "Image Tools",
+    "color": "icon-cyan",
+    "tags": [
+      "Resize",
+      "Dimension",
+      "Image"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "img-optimizer",
+    "title": "Image Optimizer",
+    "desc": "Resize and compress file size in one go.",
+    "icon": "IconImage",
+    "category": "Image Tools",
+    "color": "icon-green",
+    "tags": [
+      "Compress",
+      "Resize",
+      "Image"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "img-converter",
+    "title": "Image Converter",
+    "desc": "Change format to JPG, PNG, WebP, etc.",
+    "icon": "IconImage",
+    "category": "Image Tools",
+    "color": "icon-orange",
+    "tags": [
+      "Convert",
+      "Format",
+      "Image"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "png-to-webp",
+    "title": "PNG to WEBP Converter",
+    "desc": "Convert PNG to WEBP in bulk, with premium folder structure support and side-by-side before/after comparison.",
+    "icon": "IconImage",
+    "category": "Image Tools",
+    "color": "icon-purple",
+    "tags": [
+      "WEBP",
+      "PNG",
+      "Convert",
+      "Bulk"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "img-compressor",
+    "title": "Image Compressor",
+    "desc": "Reduce file size while keeping quality.",
+    "icon": "IconCompress",
+    "category": "Image Tools",
+    "color": "icon-green",
+    "tags": [
+      "Compress",
+      "Optimize",
+      "Image"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "bg-remover",
+    "title": "Remove BG",
+    "desc": "AI-powered automatic background removal.",
+    "icon": "IconCrop",
+    "category": "Image Tools",
+    "color": "icon-purple",
+    "tags": [
+      "AI",
+      "Background",
+      "Image"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "profile-maker",
+    "title": "Profile Maker",
+    "desc": "Create professional avatars with AI.",
+    "icon": "IconImage",
+    "category": "Utility Tools",
+    "color": "icon-orange",
+    "tags": [
+      "AI",
+      "Avatar",
+      "Image"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "pdf-compressor",
+    "title": "Compress PDF",
+    "desc": "Reduce PDF file size significantly.",
+    "icon": "IconCompress",
+    "category": "PDF Tools",
+    "color": "icon-red",
+    "tags": [
+      "PDF",
+      "Compress",
+      "Optimize"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "pdf-merge",
+    "title": "Merge PDF",
+    "desc": "Combine multiple PDFs into one.",
+    "icon": "IconMerge",
+    "category": "PDF Tools",
+    "color": "icon-red",
+    "tags": [
+      "PDF",
+      "Merge",
+      "Combine"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "pdf-split",
+    "title": "Split PDF",
+    "desc": "Extract pages or split into parts.",
+    "icon": "IconSplit",
+    "category": "PDF Tools",
+    "color": "icon-red",
+    "tags": [
+      "PDF",
+      "Split",
+      "Extract"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "pdf-page-number",
+    "title": "Page Number",
+    "desc": "Add visible page numbers to PDFs.",
+    "icon": "IconPageNum",
+    "category": "PDF Tools",
+    "color": "icon-red",
+    "tags": [
+      "PDF",
+      "Page Numbers"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "pdf-security",
+    "title": "PDF Password",
+    "desc": "Lock or Unlock your PDF documents.",
+    "icon": "IconLock",
+    "category": "PDF Tools",
+    "color": "icon-red",
+    "tags": [
+      "PDF",
+      "Security",
+      "Password"
+    ],
+    "isVisible": false
+  },
+  {
+    "id": "pdf-to-img",
+    "title": "PDF to Image",
+    "desc": "Convert PDF pages to individual images.",
+    "icon": "IconImage",
+    "category": "PDF Tools",
+    "color": "icon-red",
+    "tags": [
+      "PDF",
+      "Convert",
+      "Image"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "watermark",
+    "title": "Watermark",
+    "desc": "Add stamps to your Photos & PDFs.",
+    "icon": "IconImage",
+    "category": "Utility Tools",
+    "color": "icon-purple",
+    "tags": [
+      "Watermark",
+      "Security",
+      "Branding"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "qr-generator",
+    "title": "QR Generator",
+    "desc": "Generate custom QR codes instantly.",
+    "icon": "IconQr",
+    "category": "Utility Tools",
+    "color": "icon-purple",
+    "tags": [
+      "QR",
+      "Generator",
+      "Utility"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "yt-screenshot",
+    "title": "Video Screenshot",
+    "desc": "Capture frames from videos every X seconds.",
+    "icon": "IconVideo",
+    "category": "Utility Tools",
+    "color": "icon-purple",
+    "tags": [
+      "Video",
+      "Screenshot",
+      "Frame"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "svg-generator",
+    "title": "SVG Wave & Pattern Studio",
+    "desc": "Design layered vector waves and seamless repeating patterns.",
+    "icon": "IconDoc",
+    "category": "Utility Tools",
+    "color": "icon-purple",
+    "tags": [
+      "SVG",
+      "Vector",
+      "Pattern",
+      "Wave"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "google-drive-downloader",
+    "title": "Google Drive Direct Link",
+    "desc": "Convert shareable Google Drive links into instant direct download links.",
+    "icon": "IconCloud",
+    "category": "Utility Tools",
+    "color": "icon-purple",
+    "tags": [
+      "Google Drive",
+      "Convert",
+      "Downloader"
+    ],
+    "isVisible": true
+  }
+]
