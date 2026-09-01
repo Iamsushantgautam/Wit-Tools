@@ -25,7 +25,7 @@ import {
     ShopifyIcon,
     ChromeIcon,
     IconChatgpt
-} from '../components/common/Icons';
+} from '../components/Common/Icons';
 
 export {
     IconMerge,

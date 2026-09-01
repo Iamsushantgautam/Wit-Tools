@@ -15,7 +15,7 @@ import {
     IconVideo,
     IconShopify,
     IconChatgpt
-} from '../common/Icons';
+} from '../Common/Icons';
 
 // Top direct navigation links
 export const TOP_NAV_LINKS = [
