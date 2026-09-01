@@ -15,13 +15,24 @@
 }
 
 .footer-content {
-    display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
-    gap: 3.5rem;
-    max-width: 1300px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 2rem 2.5rem;
+    max-width: 1400px;
     margin: 0 auto;
     position: relative;
     z-index: 2;
+}
+
+.brand-section {
+    flex: 1.5 1 260px;
+    max-width: 340px;
+}
+
+.links-section {
+    flex: 1 1 140px;
 }
 
 .footer-section h3 {
@@ -188,15 +199,22 @@
 
 @media (max-width: 1024px) {
     .footer-content {
-        grid-template-columns: 1fr 1fr;
-        gap: 2.5rem;
+        gap: 2rem;
+    }
+
+    .brand-section {
+        flex: 1 1 100%;
+        max-width: 100%;
     }
 }
 
 @media (max-width: 640px) {
     .footer-content {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1.75rem;
+    }
+
+    .links-section {
+        flex: 1 1 130px;
     }
 
     .footer-bottom {

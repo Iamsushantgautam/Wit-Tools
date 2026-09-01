@@ -2,23 +2,46 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#0b72e6" />
+    <!-- Sole Favicon & Touch Icon (public/favicon.svg used everywhere) -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.svg" />
+
+    <!-- Dynamic Domain Canonical & Meta URL Sync -->
+    <script>
+      (function() {
+        try {
+          var origin = window.location.origin;
+          var canonical = document.querySelector('link[rel="canonical"]');
+          if (canonical) canonical.setAttribute('href', origin + window.location.pathname);
+          var ogUrl = document.querySelector('meta[property="og:url"]');
+          if (ogUrl) ogUrl.setAttribute('content', origin + window.location.pathname);
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- Performance & Preconnect Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+
+    <!-- PWA Meta & Status Bar Theme Color -->
+    <meta name="theme-color" content="#e5322d" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#e5322d" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#e5322d" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Wit Tools" />
-    <link rel="apple-touch-icon" href="/favicon.svg" />
-    <meta name="msapplication-TileColor" content="#0b72e6" />
+    <meta name="msapplication-TileColor" content="#e5322d" />
     <meta name="msapplication-TileImage" content="/favicon.svg" />
 
     <meta name="google-site-verification" content="yQ5dy99gJBGL0vU_EHdUCDBIZYs6CgH7ze7HGxYjq9k" />
     
     <!-- Primary SEO Meta Tags -->
-    <link rel="canonical" href="https://wittools.sushant.online/" />
+    <link rel="canonical" href="https://wittools.vercel.app/" />
     <meta name="description" content="Wit Tools is a free, fast, and secure all-in-one web utility suite. Compress PDFs, merge/split PDFs, convert images, remove backgrounds, generate QR codes, and more instantly online." />
     <meta name="keywords" content="online tools, free utilities, image to pdf, pdf compressor, bg remover, qr code generator, pdf merge, image resizer, profile photo maker, png to webp, web developer tools, shopify developer, web utilities" />
     <meta name="author" content="Wit Tools" />
@@ -26,16 +49,16 @@
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://wittools.sushant.online/" />
+    <meta property="og:url" content="https://wittools.vercel.app/" />
     <meta property="og:title" content="Wit Tools - Free Online PDF, Image, & Web Utilities" />
     <meta property="og:description" content="Access premium free online tools instantly: convert images to PDF, compress & split PDFs, remove backgrounds, generate QR codes, and more, all with zero install." />
-    <meta property="og:image" content="https://wittools.sushant.online/favicon.svg" />
+    <meta property="og:image" content="/favicon.svg" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:title" content="Wit Tools - Free Online PDF, Image, & Web Utilities" />
     <meta property="twitter:description" content="Access premium free online tools instantly: convert images to PDF, compress & split PDFs, remove backgrounds, generate QR codes, and more." />
-    <meta property="twitter:image" content="https://wittools.sushant.online/favicon.svg" />
+    <meta property="twitter:image" content="/favicon.svg" />
 
     <title>Wit Tools - Every tool you need</title>
   </head>

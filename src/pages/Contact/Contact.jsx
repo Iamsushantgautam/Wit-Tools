@@ -1,5 +1,14 @@
 import React, { useState } from 'react';
+import Button from '../../components/Common/Button/Button';
+import CustomSelect from '../../components/Common/CustomSelect/CustomSelect';
 import './Contact.css';
+
+const SUBJECT_OPTIONS = [
+    { value: 'General Inquiry', label: 'General Inquiry' },
+    { value: 'Bug Report', label: 'Bug Report' },
+    { value: 'Feature Request', label: 'Feature Request' },
+    { value: 'Other', label: 'Other' }
+];
 
 const Contact = () => {
     const [formData, setFormData] = useState({
@@ -11,7 +20,7 @@ const Contact = () => {
     const [status, setStatus] = useState({ type: '', msg: '' });
     const [loading, setLoading] = useState(false);
 
-    const FORMSUBMIT_URL = 'https://formsubmit.co/iamsushantgautam@gmail.com';
+    const WEB3FORMS_ACCESS_KEY = '160d0817-725f-43a4-96ec-ac938f3a477c';
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,55 +32,49 @@ const Contact = () => {
         setStatus({ type: '', msg: '' });
 
         try {
-            const response = await fetch(FORMSUBMIT_URL, {
+            const response = await fetch('https://api.web3forms.com/submit', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
                 body: JSON.stringify({
+                    access_key: WEB3FORMS_ACCESS_KEY,
                     name: formData.name,
                     email: formData.email,
-                    subject: `[Wit Tools] ${formData.subject}`,
+                    subject: `[Wit Tools Contact] ${formData.subject}`,
                     message: formData.message,
-                    _captcha: 'false',
-                    _template: 'table',
+                    from_name: 'Wit Tools Web App'
                 }),
             });
 
-            // Log raw response for debugging
-            const text = await response.text();
-            console.log('FormSubmit response status:', response.status);
-            console.log('FormSubmit response body:', text);
+            const data = await response.json();
 
-            let result;
-            try { result = JSON.parse(text); } catch { result = {}; }
-
-            if (response.ok) {
+            if (data.success) {
                 setStatus({ type: 'success', msg: '✅ Thank you! Your message has been sent successfully. We\'ll get back to you soon.' });
                 setFormData({ name: '', email: '', subject: 'General Inquiry', message: '' });
-            } else if (response.status === 422) {
-                setStatus({ type: 'error', msg: '📬 Please activate FormSubmit first — check your inbox for the confirmation email from FormSubmit.' });
             } else {
-                setStatus({ type: 'error', msg: result.message || `Submission failed (${response.status}). Please try again.` });
+                setStatus({ type: 'error', msg: data.message || 'Submission failed. Please try again.' });
             }
         } catch (error) {
-            console.error('FormSubmit fetch error:', error);
-            setStatus({ type: 'error', msg: 'Network error — please check your connection and try again.' });
+            console.error('Web3Forms submit error:', error);
+            setStatus({ type: 'error', msg: 'Network error — please check your internet connection and try again.' });
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <div className="tool-container contact-container">
-            <div className="tool-header-card">
-                <h2>Contact & Feedback</h2>
-                <p style={{ color: 'var(--text-muted)', marginTop: '0.5rem' }}>We'd love to hear from you!</p>
+        <div className="contact-page-container">
+            <div className="contact-hero-left">
+                <h1 className="contact-title">Contact</h1>
+                <p className="contact-subtitle">
+                    Contact us to report a problem, clarify any doubts about Wit Tools, or just find out more.
+                </p>
             </div>
 
-            <div className="tool-card contact-card">
+            <div className="contact-card-right">
                 <form className="contact-form" onSubmit={handleSubmit}>
-                    <div className="form-grid">
+                    <div className="form-grid-2">
                         <div className="form-group">
-                            <label className="control-label">Full Name</label>
+                            <label className="control-label">Your name*</label>
                             <input
                                 type="text"
                                 className="input-field"
@@ -83,7 +86,7 @@ const Contact = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label className="control-label">Email Address</label>
+                            <label className="control-label">Your email*</label>
                             <input
                                 type="email"
                                 className="input-field"
@@ -97,30 +100,24 @@ const Contact = () => {
                     </div>
 
                     <div className="form-group" style={{ marginTop: '1.25rem' }}>
-                        <label className="control-label">Subject / Topic</label>
-                        <select
-                            className="input-field"
+                        <label className="control-label">General Subject*</label>
+                        <CustomSelect
                             name="subject"
                             value={formData.subject}
+                            options={SUBJECT_OPTIONS}
                             onChange={handleChange}
-                        >
-                            <option value="General Inquiry">General Inquiry</option>
-                            <option value="Bug Report">Bug Report</option>
-                            <option value="Feature Request">Feature Request</option>
-                            <option value="Feedback">Positive Feedback</option>
-                            <option value="Other">Other</option>
-                        </select>
+                        />
                     </div>
 
                     <div className="form-group" style={{ marginTop: '1.25rem' }}>
-                        <label className="control-label">Message / Feedback Details</label>
+                        <label className="control-label">Message / Details*</label>
                         <textarea
                             className="input-field"
                             name="message"
                             value={formData.message}
                             onChange={handleChange}
-                            placeholder="Tell us what you think..."
-                            style={{ minHeight: '150px', resize: 'vertical' }}
+                            placeholder="Describe your request..."
+                            style={{ height: '120px', resize: 'none' }}
                             required
                         ></textarea>
                     </div>
@@ -131,19 +128,12 @@ const Contact = () => {
                         </div>
                     )}
 
-                    <div className="form-actions" style={{ marginTop: '2rem' }}>
-                        <button type="submit" className="btn-primary" style={{ width: '100%' }} disabled={loading}>
+                    <div className="form-submit-row">
+                        <Button type="submit" variant="primary" disabled={loading}>
                             {loading ? 'Sending...' : 'Send Message'}
-                        </button>
+                        </Button>
                     </div>
                 </form>
-
-                <div className="contact-info">
-                    <p>Alternatively, you can reach out directly via GitHub.</p>
-                    <a href="https://github.com/Iamsushantgautam" target="_blank" rel="noopener noreferrer" className="btn-secondary" style={{ width: '100%', textAlign: 'center', marginTop: '0.5rem' }}>
-                        View Developer Profile
-                    </a>
-                </div>
             </div>
         </div>
     );

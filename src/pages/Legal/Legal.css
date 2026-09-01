@@ -1,0 +1,78 @@
+/* Legal Pages Styling - Aligned with Wit Tools Design System */
+
+.legal-page-wrapper {
+    max-width: 1400px !important;
+    width: 100% !important;
+    margin: 0 auto;
+    padding: 2rem 5% 4rem !important;
+    color: var(--text-main, #33333b);
+    box-sizing: border-box;
+}
+
+.legal-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: var(--radius-md, 16px);
+    padding: 3rem 4rem;
+    box-shadow: none;
+    margin-top: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.legal-content section {
+    margin-bottom: 2.25rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.legal-content section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.legal-content h2 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 0.85rem;
+    color: var(--text-tertiary, #1e293b);
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.legal-content p {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-main, #47474f);
+}
+
+.legal-content p:last-child {
+    margin-bottom: 0;
+}
+
+.legal-content ul {
+    margin: 1rem 0;
+    padding-left: 1.25rem;
+}
+
+.legal-content li {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-main, #47474f);
+}
+
+@media (max-width: 640px) {
+    .legal-page-wrapper {
+        padding: 1.25rem 1rem 3rem;
+    }
+
+    .legal-card {
+        padding: 1.5rem 1.25rem;
+        border-radius: 12px;
+    }
+}

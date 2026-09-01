@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import usePWAInstall from '../../hooks/usePWAInstall';
+import { NAV_TOOL_CATEGORIES } from '../Navbar/navData';
 import './Footer.css';
 
 const Footer = () => {
@@ -41,29 +42,26 @@ const Footer = () => {
                         <li><Link to="/">Dashboard</Link></li>
                         <li><Link to="/about">About Hub</Link></li>
                         <li><Link to="/founder">Meet Founder</Link></li>
+                        <li><Link to="/faq">FAQs</Link></li>
                         <li><Link to="/contact">Support Center</Link></li>
                         <li><Link to="/feedback">User Feedback</Link></li>
+                        <li><Link to="/privacy">Privacy Policy</Link></li>
+                        <li><Link to="/terms">Terms & Service</Link></li>
                     </ul>
                 </div>
 
-                <div className="footer-section links-section">
-                    <h3>Power Tools</h3>
-                    <ul>
-                        <li><Link to="/pdf-compressor">PDF Compressor</Link></li>
-                        <li><Link to="/img-compressor">Image Optimizer</Link></li>
-                        <li><Link to="/bg-remover">Background Remover</Link></li>
-                        <li><Link to="/watermark">Asset Watermark</Link></li>
-                        <li><Link to="/qr-generator">Global QR Gen</Link></li>
-                    </ul>
-                </div>
-
-                <div className="footer-section contact-info-section">
-                    <h3>Get in Touch</h3>
-                    <p>Have a custom tool request or need technical support? Feel free to reach out via our feedback form.</p>
-                    {/* <div className="status-badge">
-                        <span className="status-dot"></span> All Systems Operational
-                    </div> */}
-                </div>
+                {NAV_TOOL_CATEGORIES.map((cat) => (
+                    <div key={cat.id} className="footer-section links-section">
+                        <h3>{cat.categoryTitle}</h3>
+                        <ul>
+                            {cat.items.map((item) => (
+                                <li key={item.path + item.title}>
+                                    <Link to={item.path}>{item.title}</Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ))}
             </div>
 
             <div className="footer-bottom">

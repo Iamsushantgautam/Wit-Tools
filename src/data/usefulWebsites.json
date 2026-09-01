@@ -113,6 +113,7 @@
     "color": "icon-green",
     "isExternal": true,
     "url": "https://www.brevo.com/",
+    "iconUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp4k-Sic89PM_asmdtn55pjpciV5P7EmCV_fW7GqNES5joU1unfyQ2S68&s=10",
     "useFavicon": true,
     "faviconDomain": "brevo.com",
     "tags": [
@@ -120,6 +121,24 @@
       "SMTP",
       "API",
       "Marketing"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "resend",
+    "title": "Resend",
+    "desc": "Modern email API for developers to build, test, and deliver transactional emails at scale.",
+    "category": "Developer & Cloud Websites",
+    "color": "icon-purple",
+    "isExternal": true,
+    "url": "https://resend.com/",
+    "useFavicon": true,
+    "faviconDomain": "resend.com",
+    "tags": [
+      "Email",
+      "API",
+      "Transactional",
+      "Developer"
     ],
     "isVisible": true
   },

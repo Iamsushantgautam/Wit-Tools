@@ -10,7 +10,13 @@
     "url": "https://chromewebstore.google.com/detail/session-buddy/edacconmaakjimmfgnblocblbcdcpbko",
     "useFavicon": true,
     "faviconDomain": "sessionbuddy.com",
-    "tags": ["Chrome", "Tabs", "Session", "Productivity", "Recovery"],
+    "tags": [
+      "Chrome",
+      "Tabs",
+      "Session",
+      "Productivity",
+      "Recovery"
+    ],
     "isVisible": true
   },
   {
@@ -24,7 +30,13 @@
     "url": "https://chromewebstore.google.com/detail/wappalyzer-technology-pro/gppongmhjkpfnbhagpmjfkannfbllamg",
     "useFavicon": true,
     "faviconDomain": "wappalyzer.com",
-    "tags": ["Chrome", "Tech Stack", "Detect", "Research", "Developer"],
+    "tags": [
+      "Chrome",
+      "Tech Stack",
+      "Detect",
+      "Research",
+      "Developer"
+    ],
     "isVisible": true
   },
   {
@@ -38,21 +50,14 @@
     "url": "https://chromewebstore.google.com/detail/colorzilla/bhlhnicpbhignbdhedgjhgdocnmhomnp",
     "useFavicon": true,
     "faviconDomain": "colorzilla.com",
-    "tags": ["Chrome", "Color", "HEX", "RGB", "Design", "Gradient"],
-    "isVisible": true
-  },
-  {
-    "id": "gofullpage",
-    "title": "GoFullPage",
-    "desc": "Capture a full-page screenshot of any website in one click — no cropping, no clipping, just a perfect capture every time.",
-    "icon": "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' width='24' height='24'><circle cx='12' cy='12' r='10'/><circle cx='12' cy='12' r='4'/><path d='M12 8c2.2 0 4 1.8 4 4'/><path d='M12 2v6'/><path d='M12 16v6'/><path d='M2 12h6'/><path d='M16 12h6'/></svg>",
-    "category": "Useful Extensions",
-    "color": "icon-green",
-    "isExternal": true,
-    "url": "https://chromewebstore.google.com/detail/gofullpage-full-page-scre/fdpohaocaechadadgiefbiolo",
-    "useFavicon": true,
-    "faviconDomain": "gofullpage.com",
-    "tags": ["Chrome", "Screenshot", "Full Page", "Capture", "Design"],
+    "tags": [
+      "Chrome",
+      "Color",
+      "HEX",
+      "RGB",
+      "Design",
+      "Gradient"
+    ],
     "isVisible": true
   },
   {
@@ -66,20 +71,93 @@
     "url": "https://chromewebstore.google.com/detail/image-downloader-imageye/agionbommeaifngbhincahgmoflcikhm",
     "useFavicon": true,
     "faviconDomain": "imageye.net",
-    "tags": ["Chrome", "Image", "Downloader", "Bulk", "Utility"],
+    "tags": [
+      "Chrome",
+      "Image",
+      "Downloader",
+      "Bulk",
+      "Utility"
+    ],
     "isVisible": true
   },
   {
-    "id": "universal-video-downloader",
-    "title": "Universal Video Downloader",
-    "desc": "Download videos from almost any website — detect and save streaming videos, movies, clips, and more with one click.",
-    "icon": "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' width='24' height='24'><circle cx='12' cy='12' r='10'/><circle cx='12' cy='12' r='4'/><path d='M12 8c2.2 0 4 1.8 4 4'/><path d='M12 2v6'/><path d='M12 16v6'/><path d='M2 12h6'/><path d='M16 12h6'/></svg>",
+    "id": "mobile-view-simulator",
+    "title": "Mobile View — Mobile Simulator",
+    "desc": "Simulate smartphone & tablet viewports directly in Chrome to test responsive web design, mobile layouts, and device previews.",
+    "icon": "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' width='24' height='24'><rect x='5' y='2' width='14' height='20' rx='2' ry='2'/><line x1='12' y1='18' x2='12.01' y2='18'/></svg>",
     "category": "Useful Extensions",
-    "color": "icon-red",
+    "color": "icon-purple",
     "isExternal": true,
-    "url": "https://chromewebstore.google.com/detail/universal-video-downloade/cogmkaeijhlcloobdpjnljohnglhbkam",
-    "iconUrl": "https://lh3.googleusercontent.com/5HikfDXlEzO3pNwUKZ7J2oMPwEinvl7FzWl_HWtIQs2JVYfQQI7bm7TE6jKBSAv2YxajJZZKbL-zNdWH7Hw5TT8=s128",
-    "tags": ["Chrome", "Video", "Downloader", "Stream", "Utility"],
+    "url": "https://chromewebstore.google.com/detail/mobile-view-%E2%80%94-mobile-simu/hocbjiaeeijekejepphjihbpogikmofh",
+    "useFavicon": true,
+    "faviconDomain": "mobileview.app",
+    "tags": [
+      "Chrome",
+      "Mobile",
+      "Simulator",
+      "Responsive",
+      "Developer"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "DESIGN.md-Style-Extractor-TypeUI",
+    "title": "DESIGN.md Style Extractor - TypeUI",
+    "desc": "Extract website design tokens, colors, typography & CSS primitives into a structured DESIGN.md file for AI coding agents.",
+    "icon": "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' width='24' height='24'><rect x='3' y='3' width='18' height='18' rx='2' ry='2'/><path d='M7 7h10'/><path d='M7 12h10'/><path d='M7 17h6'/></svg>",
+    "category": "Useful Extensions",
+    "color": "icon-purple",
+    "isExternal": true,
+    "url": "https://chromewebstore.google.com/detail/designmd-style-extractor/ogpdnchdjiibhobphelbbkemnnemkfma",
+    "iconUrl": "https://lh3.googleusercontent.com/qCZw24cug-aoHMnZNlMC8LsQfLzTcJAFFCT7viZDnbzvuAMKXwi-v3rdeS64dM_xT29F0mVW-QcfScTi--tpdq8NCFg=s120",
+    "tags": [
+      "Chrome",
+      "Design",
+      "AI",
+      "Tokens",
+      "CSS",
+      "Developer"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "video-downloader-professional",
+    "title": "video downloader professional",
+    "desc": "Download videos from websites or collect them in your video list without downloading.",
+    "icon": "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' width='24' height='24'><polygon points='23 7 16 12 23 17 23 7'/><rect x='1' y='5' width='15' height='14' rx='2' ry='2'/></svg>",
+    "category": "Useful Extensions",
+    "color": "icon-green",
+    "isExternal": true,
+    "url": "https://chromewebstore.google.com/detail/video-downloader-professi/elicpjhcidhpjomhibiffojpinpmmpil",
+    "iconUrl": "https://lh3.googleusercontent.com/s-86QIqiZeS3NSGiw95oJAm9ExGyUat2oF3hqOu4xVypfn18HX6LYNwJUtKoSYFRtf4-qBSvBYr41ZZWPqbh5Hh-xrQ=s120",
+    "tags": [
+      "Chrome",
+      "Video",
+      "Downloader",
+      "Media",
+      "Utility"
+    ],
+    "isVisible": true
+  },
+  {
+    "id": "awesome-screen-recorder",
+    "title": "Awesome Screen Recorder & Screenshot",
+    "desc": "Full-page screenshot capture & screen recorder. Annotate, record video, share instantly, and export to MP4.",
+    "icon": "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' width='24' height='24'><rect x='2' y='3' width='20' height='14' rx='2' ry='2'/><line x1='8' y1='21' x2='16' y2='21'/><line x1='12' y1='17' x2='12' y2='21'/></svg>",
+    "category": "Useful Extensions",
+    "color": "icon-blue",
+    "isExternal": true,
+    "url": "https://chromewebstore.google.com/detail/awesome-screen-recorder-s/nlipoenfbbikpbjkfpfillcgkoblgpmj",
+    "iconUrl": "https://www.awesomescreenshot.com/favicon.ico",
+    "useFavicon": true,
+    "faviconDomain": "awesomescreenshot.com",
+    "tags": [
+      "Chrome",
+      "Screen Recorder",
+      "Screenshot",
+      "Capture",
+      "Video"
+    ],
     "isVisible": true
   }
 ]

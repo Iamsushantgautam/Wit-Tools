@@ -8,32 +8,22 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'pwa-192x192.png', 'pwa-512x512.png'],
+      includeAssets: ['favicon.svg'],
       manifest: {
         name: 'Wit Tools - Free Online Utilities',
         short_name: 'Wit Tools',
         description: 'Free, fast & secure all-in-one web utility suite. PDF tools, image tools, QR codes and more.',
-        theme_color: '#0b72e6',
-        background_color: '#0f172a',
+        theme_color: '#e5322d',
+        background_color: '#33333b',
         display: 'standalone',
         scope: '/',
         start_url: '/',
         orientation: 'portrait-primary',
         icons: [
           {
-            src: 'pwa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
-          },
-          {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-          },
-          {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
+            src: 'favicon.svg',
+            sizes: 'any',
+            type: 'image/svg+xml',
             purpose: 'any maskable',
           },
         ],
@@ -74,12 +64,22 @@ export default defineConfig({
     }),
   ],
   build: {
-    chunkSizeWarningLimit: 3000, // 3 MiB warning threshold
+    chunkSizeWarningLimit: 1500,
     rollupOptions: {
       output: {
-        manualChunks: {
-          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
-          'vendor-pdf': ['pdf-lib', 'pdfjs-dist'],
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
+              return 'vendor-core';
+            }
+            if (id.includes('pdf-lib') || id.includes('pdfjs-dist') || id.includes('jspdf')) {
+              return 'vendor-pdf';
+            }
+            if (id.includes('browser-image-compression') || id.includes('react-image-crop') || id.includes('jszip')) {
+              return 'vendor-media';
+            }
+            return 'vendor-utils';
+          }
         },
       },
     },

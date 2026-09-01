@@ -265,5 +265,24 @@
       "Downloader"
     ],
     "isVisible": true
+  },
+  {
+    "id": "chatgpt-tools",
+    "title": "ChatGPT Secret Codes",
+    "desc": "Master slash commands for Content, Marketing, Carousels, PPTs & Thumbnails.",
+    "icon": "IconChatgpt",
+    "category": "Utility Tools",
+    "color": "icon-purple",
+    "tags": [
+      "AI",
+      "ChatGPT",
+      "Prompts",
+      "Marketing",
+      "Content",
+      "Carousel",
+      "PPT",
+      "Thumbnail"
+    ],
+    "isVisible": true
   }
 ]

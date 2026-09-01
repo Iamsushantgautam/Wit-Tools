@@ -252,7 +252,7 @@
     border: 1.5px solid #e2e8f0;
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 1rem;
     height: 100%;
     box-sizing: border-box;
@@ -313,6 +313,7 @@
     gap: 4px;
     flex: 1;
     min-width: 0;
+    height: 100%;
 }
 
 .tool-card h3 {
@@ -341,7 +342,8 @@
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    margin-top: 0.65rem;
+    margin-top: auto;
+    padding-top: 0.65rem;
     flex-wrap: wrap;
 }
 
@@ -514,17 +516,42 @@
     border-color: var(--primary);
 }
 
-/* Skeleton Loading State */
+/* Skeleton Loading State with Smooth Shimmer Animation */
 .skeleton {
     pointer-events: none;
     user-select: none;
+    background-color: #ffffff;
+    border-color: #e2e8f0;
 }
 
 .skeleton-box {
-    background: #e2e2e8;
-    border-radius: var(--radius-xs);
+    background-color: #e2e8f0;
+    border-radius: var(--radius-xs, 8px);
     position: relative;
     overflow: hidden;
+}
+
+.skeleton-box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    transform: translateX(-100%);
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.75) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: skeletonShimmer 1.6s infinite ease-in-out;
+}
+
+@keyframes skeletonShimmer {
+    100% {
+        transform: translateX(100%);
+    }
 }
 
 /* No Results Area */
@@ -560,14 +587,14 @@
     }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1280px) {
     .tool-grid {
         grid-template-columns: repeat(3, 1fr);
         gap: 1.15rem;
     }
 
     .home-container {
-        padding: 2rem 2rem 5rem;
+        padding: 2rem 1.75rem 5rem;
     }
 
     .home-title {
@@ -576,8 +603,13 @@
 }
 
 @media (max-width: 768px) {
+    .tool-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.85rem;
+    }
+
     .home-container {
-        padding: 1.5rem 1.25rem 4rem;
+        padding: 1.5rem 1rem 4rem;
     }
 
     .hero-section {
@@ -635,6 +667,35 @@
 
     .tool-card p {
         font-size: 0.85rem;
+    }
+
+    .partner-banner-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.75rem;
+        gap: 1.5rem;
+    }
+
+    .partner-content h3 {
+        font-size: 1.5rem;
+    }
+
+    .partner-content p {
+        font-size: 1rem;
+    }
+
+    .tool-favicon {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        object-fit: contain;
+        background: white;
+        padding: 2px;
+    }
+
+    .partner-action {
+        width: 100%;
+        justify-content: center;
     }
 }
 
@@ -726,38 +787,4 @@
     background-color: var(--primary);
     color: var(--text-inverse);
     border-color: var(--primary);
-}
-
-@media (max-width: 768px) {
-    .partner-banner-card {
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 1.75rem;
-        gap: 1.5rem;
-    }
-
-    .partner-content h3 {
-        font-size: 1.5rem;
-    }
-}
-
-
-    .partner-content p {
-        font-size: 1rem;
-    }
-
-    .tool-favicon {
-        width: 30px;
-        height: 30px;
-        border-radius: 8px;
-        object-fit: contain;
-        background: white;
-        padding: 2px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    }
-
-    .partner-action {
-        width: 100%;
-        justify-content: center;
-    }
 }

@@ -1,0 +1,96 @@
+/* Custom Select Dropdown Component Styles - Simple, Flat, No Shadow */
+
+.custom-select-container {
+    position: relative;
+    width: 100%;
+    user-select: none;
+    box-sizing: border-box;
+}
+
+.custom-select-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    background-color: #f8fafc;
+    font-size: 0.95rem;
+    color: #1e293b;
+    font-family: inherit;
+    cursor: pointer;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.custom-select-trigger:hover {
+    background-color: #ffffff;
+    border-color: #94a3b8;
+}
+
+.custom-select-container.open .custom-select-trigger {
+    background-color: #ffffff;
+    border-color: var(--primary, #e5322d);
+    box-shadow: none;
+}
+
+.selected-value {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #1e293b;
+    font-weight: 500;
+}
+
+.custom-select-arrow {
+    color: #64748b;
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+}
+
+.custom-select-container.open .custom-select-arrow {
+    transform: rotate(180deg);
+    color: var(--primary, #e5322d);
+}
+
+/* Floating Dropdown Popup - Simple & Flat */
+.custom-select-dropdown {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 4px;
+    box-shadow: none;
+    max-height: 240px;
+    overflow-y: auto;
+}
+
+.custom-select-option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.6rem 0.85rem;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    color: #334155;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.12s ease;
+}
+
+.custom-select-option:hover {
+    background-color: #f1f5f9;
+    color: #0f172a;
+}
+
+.custom-select-option.selected {
+    background-color: #f1f5f9;
+    color: var(--primary, #e5322d);
+    font-weight: 700;
+}

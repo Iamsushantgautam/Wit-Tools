@@ -1,0 +1,114 @@
+/* About Page Styling - Aligned with Legal Pages Design System */
+
+.about-page-wrapper {
+    max-width: 1400px !important;
+    width: 100% !important;
+    margin: 0 auto;
+    padding: 2rem 5% 4rem !important;
+    color: var(--text-main, #33333b);
+    box-sizing: border-box;
+}
+
+.about-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: var(--radius-md, 16px);
+    padding: 3rem 4rem;
+    box-shadow: none;
+    margin-top: 1.5rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.about-content section {
+    margin-bottom: 2.25rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.about-content section:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.about-content h2 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    margin-bottom: 0.85rem;
+    color: var(--text-tertiary, #1e293b);
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.about-content p {
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-main, #47474f);
+}
+
+.about-content ul {
+    margin: 1rem 0;
+    padding-left: 1.25rem;
+}
+
+.about-content li {
+    margin-bottom: 0.75rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--text-main, #47474f);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.25rem;
+}
+
+.feature-item {
+    padding: 1.25rem 1.5rem;
+    background: #f8fafc;
+    border-radius: var(--radius-md, 12px);
+    border: 1px solid var(--border-color, #e2e8f0);
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.feature-item strong {
+    color: #1e293b;
+    font-size: 1rem;
+}
+
+.feature-item span {
+    color: #64748b;
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+
+.about-footer {
+    padding-top: 2rem;
+    border-top: 1px solid #f1f5f9;
+    text-align: center;
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+@media (max-width: 640px) {
+    .about-page-wrapper {
+        padding: 1.25rem 1rem 3rem !important;
+    }
+
+    .about-card {
+        padding: 1.5rem 1.25rem;
+        border-radius: 12px;
+    }
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}

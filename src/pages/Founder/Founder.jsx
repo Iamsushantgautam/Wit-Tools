@@ -17,9 +17,7 @@ const Founder = () => {
                     {/* Left Column: Avatar & Quick Stats */}
                     <div className="founder-sidebar">
                         <div className="founder-avatar-wrap">
-                            <div className="founder-avatar-placeholder">
-                                <span>SG</span>
-                            </div>
+                            <img src="/man.png" alt="Sushant Gautam" className="founder-avatar-img" />
                         </div>
                         <div className="founder-stats">
                             <div className="f-stat-item">
@@ -36,43 +34,27 @@ const Founder = () => {
                             </div>
                         </div>
                         <div className="founder-socials-grid">
-                            <a href="https://sushant.online" target="_blank" rel="noopener noreferrer" className="f-social-card portfolio">
+                            <a href="https://sushant.online" target="_blank" rel="noopener noreferrer" className="f-social-card portfolio" title="Portfolio (sushant.online)" aria-label="Portfolio">
                                 <div className="f-social-icon-box">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                                 </div>
-                                <div className="f-social-info">
-                                    <span className="f-social-name">Portfolio</span>
-                                    <span className="f-social-handle">sushant.online</span>
-                                </div>
                             </a>
 
-                            <a href="https://github.com/Iamsushantgautam" target="_blank" rel="noopener noreferrer" className="f-social-card github">
+                            <a href="https://github.com/Iamsushantgautam" target="_blank" rel="noopener noreferrer" className="f-social-card github" title="GitHub (@Iamsushantgautam)" aria-label="GitHub">
                                 <div className="f-social-icon-box">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
                                 </div>
-                                <div className="f-social-info">
-                                    <span className="f-social-name">GitHub</span>
-                                    <span className="f-social-handle">@Iamsushantgautam</span>
-                                </div>
                             </a>
 
-                            <a href="https://linkedin.com/in/iamsushantgautam" target="_blank" rel="noopener noreferrer" className="f-social-card linkedin">
+                            <a href="https://linkedin.com/in/iamsushantgautam" target="_blank" rel="noopener noreferrer" className="f-social-card linkedin" title="LinkedIn (@iamsushantgautam)" aria-label="LinkedIn">
                                 <div className="f-social-icon-box">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
                                 </div>
-                                <div className="f-social-info">
-                                    <span className="f-social-name">LinkedIn</span>
-                                    <span className="f-social-handle">@iamsushantgautam</span>
-                                </div>
                             </a>
 
-                            <a href="https://www.instagram.com/its_sushant01" target="_blank" rel="noopener noreferrer" className="f-social-card instagram">
+                            <a href="https://www.instagram.com/sushant.webdev" target="_blank" rel="noopener noreferrer" className="f-social-card instagram" title="Instagram (@its_sushant01)" aria-label="Instagram">
                                 <div className="f-social-icon-box">
                                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                                </div>
-                                <div className="f-social-info">
-                                    <span className="f-social-name">Instagram</span>
-                                    <span className="f-social-handle">@its_sushant01</span>
                                 </div>
                             </a>
                         </div>
