@@ -64,18 +64,38 @@ export default defineConfig({
     }),
   ],
   build: {
-    chunkSizeWarningLimit: 1500,
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
         manualChunks(id) {
-          if (id.includes('node_modules')) {
-            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom')) {
+          const normalizedId = id.replace(/\\/g, '/');
+          if (normalizedId.includes('/node_modules/')) {
+            if (
+              normalizedId.includes('/node_modules/react/') ||
+              normalizedId.includes('/node_modules/react-dom/') ||
+              normalizedId.includes('/node_modules/react-router/') ||
+              normalizedId.includes('/node_modules/react-router-dom/') ||
+              normalizedId.includes('/node_modules/scheduler/') ||
+              normalizedId.includes('/node_modules/@remix-run/')
+            ) {
               return 'vendor-core';
             }
-            if (id.includes('pdf-lib') || id.includes('pdfjs-dist') || id.includes('jspdf')) {
-              return 'vendor-pdf';
+            if (normalizedId.includes('/node_modules/pdfjs-dist/')) {
+              return 'vendor-pdfjs';
             }
-            if (id.includes('browser-image-compression') || id.includes('react-image-crop') || id.includes('jszip')) {
+            if (normalizedId.includes('/node_modules/jspdf/')) {
+              return 'vendor-jspdf';
+            }
+            if (normalizedId.includes('/node_modules/pdf-lib/')) {
+              return 'vendor-pdflib';
+            }
+            if (
+              normalizedId.includes('/node_modules/browser-image-compression/') ||
+              normalizedId.includes('/node_modules/react-image-crop/') ||
+              normalizedId.includes('/node_modules/jszip/') ||
+              normalizedId.includes('/node_modules/gif.js/') ||
+              normalizedId.includes('/node_modules/gifenc/')
+            ) {
               return 'vendor-media';
             }
             return 'vendor-utils';
