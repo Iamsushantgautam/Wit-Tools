@@ -13,10 +13,12 @@ const ChatGPTCodeCard = ({ item, onSelect, onCopyPrompt }) => {
     setTimeout(() => setCopiedCode(false), 2000);
   };
 
+  const hasImage = Boolean(item.imageUrl);
+
   return (
-    <div className="wpt-gpt-card" onClick={onSelect}>
+    <div className={`wpt-gpt-card ${hasImage ? 'has-image' : 'no-image'}`} onClick={onSelect}>
       {/* Top Image Preview */}
-      {item.imageUrl && (
+      {hasImage && (
         <div className="wpt-gpt-card-img-box">
           <img src={item.imageUrl} alt={item.title} className="wpt-gpt-card-img" loading="lazy" />
         </div>

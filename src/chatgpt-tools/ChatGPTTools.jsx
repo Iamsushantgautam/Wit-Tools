@@ -15,8 +15,10 @@ const ChatGPTTools = () => {
     }, 2800);
   };
 
-  const filteredCodes = useMemo(() => {
-    return CHATGPT_CODES.filter(item => {
+  const { codesWithImage, codesWithoutImage } = useMemo(() => {
+    const withImg = [];
+    const withoutImg = [];
+    CHATGPT_CODES.forEach(item => {
       const matchesCategory = selectedCategory === 'all' || item.category === selectedCategory;
       const q = searchTerm.toLowerCase().trim();
       const matchesSearch = !q ||
@@ -25,9 +27,19 @@ const ChatGPTTools = () => {
         item.shortDesc.toLowerCase().includes(q) ||
         item.fullDesc?.toLowerCase().includes(q) ||
         (item.bestFor && item.bestFor.some(tag => tag.toLowerCase().includes(q)));
-      return matchesCategory && matchesSearch;
+      
+      if (matchesCategory && matchesSearch) {
+        if (item.imageUrl) {
+          withImg.push(item);
+        } else {
+          withoutImg.push(item);
+        }
+      }
     });
+    return { codesWithImage: withImg, codesWithoutImage: withoutImg };
   }, [searchTerm, selectedCategory]);
+
+  const totalFilteredCount = codesWithImage.length + codesWithoutImage.length;
 
   return (
     <div className="gpt-page-container">
@@ -81,7 +93,7 @@ const ChatGPTTools = () => {
 
       {/* Main Content Area */}
       <main className="gpt-main-content">
-        {filteredCodes.length === 0 ? (
+        {totalFilteredCount === 0 ? (
           <div className="gpt-no-results">
             <div className="gpt-no-results-icon">🤖</div>
             <h3>No ChatGPT secret codes found matching "{searchTerm}"</h3>
@@ -91,19 +103,59 @@ const ChatGPTTools = () => {
             </button>
           </div>
         ) : (
-          <div className="gpt-codes-grid">
-            {filteredCodes.map(item => (
-              <ChatGPTCodeCard
-                key={item.id}
-                item={item}
-                onSelect={() => {
-                  navigator.clipboard.writeText(item.promptTemplate);
-                  showToast(`✓ Master prompt for ${item.code} copied!`);
-                }}
-                onCopyPrompt={(msg) => showToast(msg)}
-              />
-            ))}
-          </div>
+          <>
+            {/* Visual Prompt Templates & Generators (Cards with image) - SHOWN FIRST */}
+            {codesWithImage.length > 0 && (
+              <section className="gpt-section-container">
+                <div className="gpt-section-header">
+                  <div className="gpt-section-title-box">
+                    <span className="gpt-section-icon">🎨</span>
+                    <h3 className="gpt-section-title">Visual Prompt Templates & Generators</h3>
+                  </div>
+                  <span className="gpt-section-badge">{codesWithImage.length} templates</span>
+                </div>
+                <div className="gpt-codes-grid">
+                  {codesWithImage.map(item => (
+                    <ChatGPTCodeCard
+                      key={item.id}
+                      item={item}
+                      onSelect={() => {
+                        navigator.clipboard.writeText(item.promptTemplate);
+                        showToast(`✓ Master prompt for ${item.code} copied!`);
+                      }}
+                      onCopyPrompt={(msg) => showToast(msg)}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
+
+            {/* Quick Slash Commands (Cards without image) */}
+            {codesWithoutImage.length > 0 && (
+              <section className="gpt-section-container">
+                <div className="gpt-section-header">
+                  <div className="gpt-section-title-box">
+                    <span className="gpt-section-icon">⚡</span>
+                    <h3 className="gpt-section-title">Quick Slash Commands & Shortcuts</h3>
+                  </div>
+                  <span className="gpt-section-badge">{codesWithoutImage.length} shortcuts</span>
+                </div>
+                <div className="gpt-codes-grid">
+                  {codesWithoutImage.map(item => (
+                    <ChatGPTCodeCard
+                      key={item.id}
+                      item={item}
+                      onSelect={() => {
+                        navigator.clipboard.writeText(item.promptTemplate);
+                        showToast(`✓ Master prompt for ${item.code} copied!`);
+                      }}
+                      onCopyPrompt={(msg) => showToast(msg)}
+                    />
+                  ))}
+                </div>
+              </section>
+            )}
+          </>
         )}
       </main>
     </div>

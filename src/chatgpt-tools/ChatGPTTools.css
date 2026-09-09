@@ -293,6 +293,50 @@
   margin-top: 0.5rem;
 }
 
+.gpt-section-container {
+  margin-bottom: 2.5rem;
+}
+
+.gpt-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border-color, #e2e2e8);
+}
+
+.gpt-section-title-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.gpt-section-icon {
+  font-size: 1.3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.gpt-section-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-tertiary, #33333b);
+  letter-spacing: -0.01em;
+}
+
+.gpt-section-badge {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-muted, #707078);
+  background: var(--bg-main, #f5f5fa);
+  padding: 4px 12px;
+  border-radius: 20px;
+  border: 1px solid var(--border-color, #e2e2e8);
+}
+
 .gpt-codes-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
