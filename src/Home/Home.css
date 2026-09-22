@@ -263,7 +263,7 @@
     display: none !important;
 }
 
-.tool-card::after {
+.tool-card:not(.no-hover-arrow)::after {
     content: '' !important;
     display: block !important;
     position: absolute;
@@ -277,7 +277,7 @@
     box-sizing: border-box;
 }
 
-.tool-card:hover::after {
+.tool-card:not(.no-hover-arrow):hover::after {
     opacity: 1;
     transform: scale(1);
 }

@@ -8,7 +8,8 @@ const Upload = ({
     title = "Select files", 
     subtitle,
     limitText = "",
-    multiple = false
+    multiple = false,
+    acceptFormat
 }) => {
     const [isDragActive, setIsDragActive] = useState(false);
 
@@ -41,6 +42,7 @@ const Upload = ({
 
     // Format button text based on title / accept prop
     const getButtonText = () => {
+        if (acceptFormat) return `Select ${acceptFormat} images`;
         if (!title || title === "Click to Upload File") {
             if (accept?.includes("pdf")) return "Select PDF files";
             if (accept?.includes("image")) return "Select Image files";
@@ -56,7 +58,13 @@ const Upload = ({
     const buttonText = getButtonText();
 
     // Determine drop hint text based on file types
-    const dropText = accept?.includes("pdf") ? "or drop PDFs here" : accept?.includes("image") ? "or drop images here" : "or drop files here";
+    const dropText = acceptFormat
+        ? `or drop ${acceptFormat} images here`
+        : accept?.includes("pdf")
+            ? "or drop PDFs here"
+            : accept?.includes("image")
+                ? "or drop images here"
+                : "or drop files here";
 
     return (
         <div 

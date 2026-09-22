@@ -152,6 +152,21 @@ select:focus-visible {
   padding: 0.5rem 0 !important;
 }
 
+.tool-card.no-hover-arrow:hover {
+  border-color: transparent !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.tool-container .tool-card.no-hover-arrow,
+.tool-container .tool-card.no-hover-arrow:hover {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  border-radius: 0 !important;
+}
+
 .tool-card:not(.no-hover-arrow) {
   background-color: var(--card-bg);
   padding: 2rem;

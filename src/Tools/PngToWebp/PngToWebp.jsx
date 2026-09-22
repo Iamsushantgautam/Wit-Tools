@@ -3,7 +3,7 @@ import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { jsPDF } from 'jspdf';
 import './PngToWebp.css';
-import UploadZone from '../../components/UploadZone/UploadZone';
+import Upload from '../../components/Common/Upload/Upload';
 import ToolHeader from '../../components/ToolHeader/ToolHeader';
 import CompareModal from '../../components/CompareModal/CompareModal';
 
@@ -993,7 +993,13 @@ const PngToWebp = () => {
                 </div>
 
                 {files.length === 0 ? (
-                    <UploadZone onUpload={processUpload} acceptFormat={globalInputFormat} />
+                    <Upload
+                        onUpload={processUpload}
+                        accept="image/*"
+                        multiple
+                        acceptFormat={globalInputFormat}
+                        limitText="Maximum 100 files • 500 MB total limit"
+                    />
                 ) : (
                     /* WORKSPACE STATE */
                     <div className="workspace-grid">
