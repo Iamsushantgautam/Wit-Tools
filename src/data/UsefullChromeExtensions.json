@@ -159,5 +159,27 @@
       "Video"
     ],
     "isVisible": true
+  },
+  {
+    "id": "floto-design-feedback",
+    "title": "Floto: Design Feedback",
+    "desc": "Audit live pages for usability, copy, and accessibility issues, compare implementations with Figma designs, and turn findings into actionable fixes.",
+    "icon": "<svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' width='24' height='24'><path d='M4 19.5V4.5h16v15H4Z'/><path d='M8 15l2.5-3 2 2 3.5-5'/><circle cx='8' cy='8' r='1'/></svg>",
+    "category": "Useful Extensions",
+    "color": "icon-purple",
+    "isExternal": true,
+    "url": "https://chromewebstore.google.com/detail/floto-design-feedback/gnkckbifdpiibmmopohgdbjnfccghccc",
+    "iconUrl": "https://lh3.googleusercontent.com/_-LPGqD_pDNJjZThKT8Ig7TcQ7aIEyi4qePTNgYbxN97ChUyMnK6V1frf36lVIS8CyGOurAfBTVQlKc-Eu7LOIBLbA=s120",
+    "useFavicon": true,
+    "faviconDomain": "floto.ai",
+    "tags": [
+      "Chrome",
+      "Design",
+      "Feedback",
+      "Accessibility",
+      "Figma",
+      "UX"
+    ],
+    "isVisible": true
   }
 ]

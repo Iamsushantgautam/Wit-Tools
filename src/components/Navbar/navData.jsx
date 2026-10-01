@@ -87,6 +87,7 @@ export const NAV_TOOL_CATEGORIES = [
             { title: 'Video Screenshot', path: '/yt-screenshot', iconBadgeClass: 'badge-purple', icon: <IconVideo /> },
             { title: 'Drive Direct Link', path: '/google-drive-downloader', iconBadgeClass: 'badge-purple', icon: <IconCloud /> },
             { title: 'ChatGPT Secret Codes', path: '/chatgpt-tools', iconBadgeClass: 'badge-purple', icon: <IconChatgpt /> }
+            ,{ title: 'WitPin Tab Organizer', path: '/witpin', iconBadgeClass: 'badge-purple', icon: <IconCloud /> }
         ]
     },
     {

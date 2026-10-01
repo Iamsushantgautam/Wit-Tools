@@ -94,5 +94,36 @@
       "Utility"
     ],
     "isVisible": true
+  },
+  {
+    "id": "witpin",
+    "title": "WitPin – Tab & Website Organizer",
+    "desc": "Organize tabs and save websites into focused workspaces. Keep your browsing tidy with quick keyboard shortcuts and local-first storage.",
+    "icon": "<svg viewBox='0 0 28 28' width='28' height='28' aria-hidden='true'><rect width='28' height='28' fill='#e5322d'/><path d='M10 5h8l-1 5 3 3v2H8v-2l3-3-1-5Zm4 10-.5 7' fill='#fff' stroke='#fff' stroke-width='1.7' stroke-linecap='round' stroke-linejoin='round'/></svg>",
+    "category": "Chrome Extension",
+    "color": "icon-red",
+    "isExternal": true,
+    "url": "/witpin",
+    "useFavicon": false,
+    "buttons": [
+      {
+        "label": "Website",
+        "url": "/witpin",
+        "primary": true
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/Iamsushantgautam/WitPin--Tab-and-Website-Organizer",
+        "icon": "github"
+      }
+    ],
+    "tags": [
+      "Chrome",
+      "Tabs",
+      "Bookmarks",
+      "Productivity",
+      "Extension"
+    ],
+    "isVisible": true
   }
 ]

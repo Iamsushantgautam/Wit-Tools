@@ -40,9 +40,10 @@ const GooglDriveLinkConvertTODownoaldable = lazy(() => import('./Tools/GooglDriv
 
 const PrivacyPolicy = lazy(() => import('./pages/Legal/PrivacyPolicy'));
 const Terms = lazy(() => import('./pages/Legal/Terms'));
-const ShopifyDev = lazy(() => import('./Shopify/ShopifyDev'));
-const ShopifyApps = lazy(() => import('./Shopify/ShopifyApps'));
+const ShopifyDev = lazy(() => import('./pages/Shopify/ShopifyDev'));
+const ShopifyApps = lazy(() => import('./pages/Shopify/ShopifyApps'));
 const ChatGPTTools = lazy(() => import('./chatgpt-tools/ChatGPTTools'));
+const WitPin = lazy(() => import('./WitPin/WitPin'));
 const NotFound = lazy(() => import('./components/NotFound/NotFound'));
 
 const PageFallback = () => (
@@ -93,6 +94,7 @@ function App() {
             <Route path="/shopify-apps" element={<ShopifyApps />} />
             <Route path="/chatgpt-tools" element={<ChatGPTTools />} />
             <Route path="/chatgpt-secret-codes" element={<ChatGPTTools />} />
+            <Route path="/witpin" element={<WitPin />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
