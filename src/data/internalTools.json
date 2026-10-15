@@ -99,8 +99,8 @@
     "isVisible": true
   },
   {
-    "id": "profile-maker",
-    "title": "Profile Maker",
+    "id": "passport-photo-maker ",
+    "title": "Passport Photo Maker",
     "desc": "Create professional avatars with AI.",
     "icon": "IconImage",
     "category": "Utility Tools",

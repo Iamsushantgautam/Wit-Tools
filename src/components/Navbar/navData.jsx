@@ -73,7 +73,7 @@ export const NAV_TOOL_CATEGORIES = [
             { title: 'Format Converter', path: '/img-converter', iconBadgeClass: 'badge-cyan', icon: <IconImage /> },
             { title: 'PNG to WEBP', path: '/png-to-webp', iconBadgeClass: 'badge-cyan', icon: <IconImage /> },
             { title: 'Remove Background', path: '/bg-remover', iconBadgeClass: 'badge-cyan', icon: <IconCrop /> },
-            { title: 'Passport Photo Maker', path: '/profile-maker', iconBadgeClass: 'badge-cyan', icon: <IconImage /> }
+            { title: 'Passport Photo Maker', path: '/passport-photo-maker', iconBadgeClass: 'badge-cyan', icon: <IconImage /> }
         ]
     },
     {

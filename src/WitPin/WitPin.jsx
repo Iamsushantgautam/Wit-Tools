@@ -1,4 +1,3 @@
-import React from 'react';
 import witpinPreview from '../assets/WitPin-img/witpin.webp';
 import './WitPin.css';
 

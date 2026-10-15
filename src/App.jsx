@@ -28,7 +28,7 @@ const PdfSplit = lazy(() => import('./Tools/PdfSplit/PdfSplit'));
 const Watermark = lazy(() => import('./Tools/Watermark/Watermark'));
 const ImgConverter = lazy(() => import('./Tools/ImgConverter/ImgConverter'));
 const PdfSecurity = lazy(() => import('./Tools/PdfSecurity/PdfSecurity'));
-const ProfilePhotoMaker = lazy(() => import('./Tools/ProfilePhotoMaker/ProfilePhotoMaker'));
+const PassportPhotoMaker = lazy(() => import('./Tools/PassportPhotoMaker/PassportPhotoMaker'));
 const ImgResizer = lazy(() => import('./Tools/ImgResizer/ImgResizer'));
 const ImgOptimizer = lazy(() => import('./Tools/ImgOptimizer/ImgOptimizer'));
 const PdfToImg = lazy(() => import('./Tools/PdfToImg/PdfToImg'));
@@ -78,7 +78,7 @@ function App() {
             <Route path="/watermark" element={<Watermark />} />
             <Route path="/img-converter" element={<ImgConverter />} />
             <Route path="/pdf-security" element={<PdfSecurity />} />
-            <Route path="/profile-maker" element={<ProfilePhotoMaker />} />
+            <Route path="/passport-photo-maker" element={<PassportPhotoMaker />} />
             <Route path="/qr-generator" element={<QrGenerator />} />
             <Route path="/bg-remover" element={<BgRemover />} />
             <Route path="/pdf-to-img" element={<PdfToImg />} />

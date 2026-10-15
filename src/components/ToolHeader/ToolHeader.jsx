@@ -1,4 +1,3 @@
-import React from 'react';
 import './ToolHeader.css';
 
 const ToolHeader = ({ title, subtitle, theme = 'light' }) => {

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import usePWAInstall from '../../hooks/usePWAInstall';
 import { NAV_TOOL_CATEGORIES } from '../Navbar/navData';

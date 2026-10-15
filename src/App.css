@@ -2,15 +2,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-body {
-  margin: 0;
-  font-family: 'Inter', 'Poppins', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #f0f4f9;
-  color: #1f2937;
-}
-
 .app-container {
   min-height: 100vh;
   display: flex;
@@ -20,10 +11,8 @@ body {
 .content {
   flex-grow: 1;
   position: relative;
-}
-
-* {
-  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Global transitions for links/buttons */
@@ -31,6 +20,7 @@ a,
 button {
   transition: all 0.2s ease;
 }
+
 
 .page-fallback {
   display: flex;

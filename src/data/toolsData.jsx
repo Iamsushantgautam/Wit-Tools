@@ -1,4 +1,3 @@
-import React from 'react';
 import internalTools from './internalTools.json';
 import shopifyTools from './shopifyTools.json';
 import chromeExtensions from './chromeExtensions.json';
@@ -26,28 +25,6 @@ import {
     ChromeIcon,
     IconChatgpt
 } from '../components/Common/Icons';
-
-export {
-    IconMerge,
-    IconSplit,
-    IconCompress,
-    IconDoc,
-    IconPdf,
-    IconImage,
-    IconPageNum,
-    IconWatermark,
-    IconLock,
-    IconCrop,
-    IconQr,
-    IconCloud,
-    IconVideo,
-    UserIcon,
-    WitcetIcon,
-    ScreelyIcon,
-    ShopifyIcon,
-    ChromeIcon,
-    IconChatgpt
-};
 
 const iconMap = {
     IconMerge: <IconMerge />,

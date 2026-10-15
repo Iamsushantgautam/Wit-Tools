@@ -1,4 +1,3 @@
-import React from 'react';
 import ToolHeader from '../../components/ToolHeader/ToolHeader';
 import './About.css';
 
